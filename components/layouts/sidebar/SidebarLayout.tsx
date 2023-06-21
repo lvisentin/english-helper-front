@@ -6,7 +6,7 @@ export interface ISidebarLayout {}
 const SidebarLayout: React.FC<ISidebarLayout> = () => {
   return (
     <nav className={styles.nav}>
-      <input className={styles.input} placeholder="Search..." />
+      <input className={`${styles.input} input`} placeholder="Search..." />
       <Link href="/">Home </Link>
       <Link href="/about">About</Link>
       <Link href="/contact">Contact</Link>
