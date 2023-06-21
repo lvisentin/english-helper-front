@@ -7,15 +7,17 @@ import { GlobalStateContext } from '@/context/GlobalState/Context';
 import { GlobalStateProvider } from '@/context/GlobalState/Provider';
 
 const Home: NextPageWithLayout = () => {
-  const { globalState, dispatch } = useContext(GlobalStateContext)
+  const { globalState, dispatch } = useContext(GlobalStateContext);
 
-  const updateGlobalState = () => dispatch({type: 'type1'})
+  const updateGlobalState = () => dispatch({ type: 'type1' });
 
   return (
     <section className={styles.main}>
       <h1 className={styles.title}>current branch: develop</h1>
-      <h2 className={'p-10 pl-0'}>{ globalState?.user?.name }</h2>
-      <button className={'btn'} onClick={updateGlobalState}>show state</button>
+      <h2 className={'p-10 pl-0'}>{globalState?.user?.name}</h2>
+      <button className={'btn'} onClick={updateGlobalState}>
+        show state
+      </button>
     </section>
   );
 };
