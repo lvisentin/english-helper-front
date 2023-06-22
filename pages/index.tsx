@@ -1,6 +1,5 @@
 import { GlobalStateContext } from '@/context/GlobalState/Context';
 import { GlobalStateProvider } from '@/context/GlobalState/Provider';
-import { writingService } from '@/shared/services/writing/WritingService';
 import { useContext, useEffect } from 'react';
 import PrimaryLayout from '../components/layouts/primary/PrimaryLayout';
 import SidebarLayout from '../components/layouts/sidebar/SidebarLayout';
@@ -13,7 +12,7 @@ const Home: NextPageWithLayout = () => {
   const updateGlobalState = () => dispatch({ type: 'type1' });
 
   useEffect(() => {
-    writingService.getWritings();
+    // writingService.getWritings();
   }, []);
 
   return (

@@ -1,10 +1,14 @@
 import axios from 'axios';
 import { userService } from '../user/UserService';
+import {
+  GetWritingsResponse,
+  NewWritingResponse,
+} from './WritingService.model';
 class WritingService {
   private API_URL = process.env.API_URL;
   private authToken = userService.getAuthToken();
 
-  getWritings() {
+  getWritings(): Promise<GetWritingsResponse> {
     return axios.get(`${this.API_URL}/feedbacks`, {
       params: {
         type: 'text',
@@ -16,7 +20,12 @@ class WritingService {
     });
   }
 
-  newWriting(context: string, input: string, title: string, file_url?: string) {
+  newWriting(
+    context: string,
+    input: string,
+    title: string,
+    file_url?: string
+  ): Promise<NewWritingResponse> {
     return axios.post(`${this.API_URL}/feedbacks`, {
       params: {
         title,
