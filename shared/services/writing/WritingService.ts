@@ -15,6 +15,21 @@ class WritingService {
       },
     });
   }
+
+  newWriting(context: string, input: string, title: string, file_url?: string) {
+    return axios.post(`${this.API_URL}/feedbacks`, {
+      params: {
+        title,
+        input,
+        context,
+        file_url,
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.authToken}`,
+      },
+    });
+  }
 }
 
 export const writingService = new WritingService();
