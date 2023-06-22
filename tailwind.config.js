@@ -6,6 +6,12 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      sm: '480px',
+      md: '768px',
+      lg: '976px',
+      xl: '1440px',
+    },
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -15,4 +21,31 @@ module.exports = {
     },
   },
   plugins: [require('daisyui')],
+  daisyui: {
+    themes: [
+      {
+        light: {
+          ...require('daisyui/src/theming/themes')['[data-theme=light]'],
+          primary: 'mediumblue',
+          secondary: '#e0e7ff',
+          '.btn-primary': {
+            color: '#fff',
+            backgroundColor: 'mediumblue',
+            borderColor: 'mediumblue',
+          },
+          '.btn-secondary': {
+            color: 'mediumblue',
+            backgroundColor: '#fff',
+            borderColor: 'mediumblue',
+          },
+          '.btn-secondary:hover': {
+            backgroundColor: 'mediumblue',
+            color: '#fff',
+            borderColor: '#fff',
+          },
+        },
+      },
+      'dark',
+    ],
+  },
 };
