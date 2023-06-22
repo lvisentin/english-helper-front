@@ -1,6 +1,6 @@
 import { GlobalStateContext } from '@/context/GlobalState/Context';
 import { GlobalStateProvider } from '@/context/GlobalState/Provider';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import PrimaryLayout from '../components/layouts/primary/PrimaryLayout';
 import SidebarLayout from '../components/layouts/sidebar/SidebarLayout';
 import styles from '../styles/Home.module.scss';
@@ -10,10 +10,6 @@ const Home: NextPageWithLayout = () => {
   const { globalState, dispatch } = useContext(GlobalStateContext);
 
   const updateGlobalState = () => dispatch({ type: 'type1' });
-
-  useEffect(() => {
-    // writingService.getWritings();
-  }, []);
 
   return (
     <section className={styles.main}>
