@@ -1,3 +1,4 @@
+import { ThemeContext } from '@/context/Theme/ThemeContext';
 import {
   IconLookup,
   faArrowRightFromBracket,
@@ -12,6 +13,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
 import styles from './SidebarLayout.module.scss';
 
 export interface ISidebarLayout {}
@@ -51,11 +53,23 @@ const SidebarLayout: React.FC<ISidebarLayout> = () => {
     },
   ];
 
+  const themeContext = useContext(ThemeContext);
+  const { darkMode } = themeContext.theme;
+
+  function toggleTheme() {
+    if (darkMode) {
+      themeContext.dispatch({ type: 'light' });
+    } else {
+      themeContext.dispatch({ type: 'dark' });
+    }
+  }
+
   const router = useRouter();
 
   return (
     <nav className={styles.nav}>
       <div className="navContent">
+        {`${darkMode}`}
         <div className={styles.user}>
           <img src="https://placehold.it/50x50" alt="Avatar" width={50} />
           <div className={`${styles.userInfo} hidden md:block`}>
@@ -100,13 +114,13 @@ const SidebarLayout: React.FC<ISidebarLayout> = () => {
           </li>
         </ul>
 
-        <li className={styles.footerItem}>
+        <li className={`${styles.footerItem} ${styles.nightMode}`}>
           <FontAwesomeIcon icon={faMoon} className={styles.icon} />
           <span>Night mode</span>
           <input
+            onClick={() => toggleTheme()}
             type="checkbox"
             className="toggle toggle-sm hidden md:block"
-            checked
           />
         </li>
       </div>

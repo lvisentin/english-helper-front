@@ -1,10 +1,11 @@
 import { ThemeState, ThemeStateAction } from '../types';
 
 export const themeReducer = (state: ThemeState, action: ThemeStateAction) => {
+  console.log('action');
   switch (action.type) {
-    case 'LIGHTMODE':
+    case 'light':
       return { darkMode: false };
-    case 'DARKMODE':
+    case 'dark':
       return { darkMode: true };
     default:
       return state;

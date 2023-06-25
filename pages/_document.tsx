@@ -4,10 +4,13 @@ import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 class MyDocument extends Document {
   static contextType = ThemeContext;
+
   render() {
     return (
       <ThemeProvider>
-        <Html data-theme={(this.context as any)?.theme.theme}>
+        <Html
+          data-theme={(this.context as any)?.theme.darkMode ? 'dark' : 'light'}
+        >
           <Head>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" />

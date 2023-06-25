@@ -85,6 +85,12 @@ $sidebar-background: hsl(var(--b1));
   }
 }
 
+.nightMode {
+  &:hover {
+    background-color: transparent;
+  }
+}
+
 .navFooter ul {
   border-bottom: 1px solid $white;
 }

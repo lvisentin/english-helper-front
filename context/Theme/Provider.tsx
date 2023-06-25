@@ -5,7 +5,7 @@ import { ThemeState, ThemeStateAction } from './types';
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, dispatch] = useReducer<Reducer<ThemeState, ThemeStateAction>>(
     themeReducer,
-    { theme: 'dark' }
+    { darkMode: false }
   );
 
   function themeReducer(themeState: ThemeState, action: ThemeStateAction) {
