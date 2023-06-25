@@ -1,7 +1,8 @@
-$sidebar-green: #2e8a99;
-$sidebar-blue: #0e2954;
-$active-bg: #e8eaf6;
-$sidebar-border: #e8eaf6;
+$white: hsl(var(--ac));
+$sidebar-blue: hsl(var(--p));
+$active-bg: hsl(var(--a));
+$sidebar-border: hsl(var(--s));
+$sidebar-background: hsl(var(--b1));
 
 .nav {
   height: 100%;
@@ -11,6 +12,7 @@ $sidebar-border: #e8eaf6;
   width: 250px;
   padding: 32px 16px;
   border-right: 1px solid #e8eaf6;
+  background-color: $sidebar-background;
 }
 
 .user {
@@ -27,7 +29,7 @@ $sidebar-border: #e8eaf6;
   .userInfo {
     margin-left: 10px;
     .userName {
-      color: $sidebar-green;
+      color: $active-bg;
       font-weight: 500;
     }
 
@@ -63,28 +65,28 @@ $sidebar-border: #e8eaf6;
   &:hover {
     background-color: $active-bg;
     span {
-      color: $sidebar-green;
+      color: $white;
     }
     .icon {
-      color: $sidebar-green;
+      color: $white;
     }
   }
 
   .icon {
     width: 16px;
     height: auto;
-    color: $sidebar-blue;
+    color: $white;
   }
 
   span {
     font-size: 16px;
     font-weight: 500;
-    color: $sidebar-blue;
+    color: $white;
   }
 }
 
 .navFooter ul {
-  border-bottom: 1px solid $sidebar-border;
+  border-bottom: 1px solid $white;
 }
 
 @media only screen and (max-width: theme('screens.md')) {
