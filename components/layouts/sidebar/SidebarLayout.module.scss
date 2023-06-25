@@ -1,11 +1,16 @@
+$sidebar-green: #2e8a99;
+$sidebar-blue: #0e2954;
+$active-bg: #e8eaf6;
+$sidebar-border: #e8eaf6;
+
 .nav {
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 250px;
-  background-color: #fafafa;
-  padding: 32px;
-  border-right: 1px solid #eaeaea;
+  padding: 32px 16px;
+  border-right: 1px solid #e8eaf6;
 }
 
 .user {
@@ -22,7 +27,8 @@
   .userInfo {
     margin-left: 10px;
     .userName {
-      color: var(--primary-color);
+      color: $sidebar-green;
+      font-weight: 500;
     }
 
     .userEmail {
@@ -38,19 +44,66 @@
     padding: 0;
     list-style-type: none;
     margin: 0;
+  }
+}
 
-    li {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 0 12px;
+.itemsList li,
+.footerItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0 12px;
+  padding: 12px;
+  margin: 6px 0;
+  border-radius: 8px;
+  transition: all ease-in-out 0.2s;
+  cursor: pointer;
 
-      span {
-        text-transform: uppercase;
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--primary-color);
+  &.active,
+  &:hover {
+    background-color: $active-bg;
+    span {
+      color: $sidebar-green;
+    }
+    .icon {
+      color: $sidebar-green;
+    }
+  }
+
+  .icon {
+    width: 16px;
+    height: auto;
+    color: $sidebar-blue;
+  }
+
+  span {
+    font-size: 16px;
+    font-weight: 500;
+    color: $sidebar-blue;
+  }
+}
+
+.navFooter ul {
+  border-bottom: 1px solid $sidebar-border;
+}
+
+@media only screen and (max-width: theme('screens.md')) {
+  .nav {
+    width: 72px;
+    padding: 16px;
+
+    .user {
+      img {
+        width: 39px;
+        height: 39px;
+        min-width: unset;
       }
     }
+  }
+}
+
+@media only screen and (min-width: theme('screens.lg')) {
+  .nav {
+    width: 250px;
   }
 }
