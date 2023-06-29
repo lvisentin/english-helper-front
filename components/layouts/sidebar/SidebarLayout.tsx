@@ -23,7 +23,17 @@ export interface MenuItem {
 }
 
 const SidebarLayout: React.FC<ISidebarLayout> = () => {
-  function toggleTheme() {}
+  function toggleTheme() {
+    const isDarkMode = !!(
+      document.documentElement.getAttribute('data-theme') === 'dark'
+    );
+
+    if (isDarkMode) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  }
 
   const menuItems: MenuItem[] = [
     {
