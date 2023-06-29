@@ -1,4 +1,4 @@
-export const MailSVG = () => {
+export const MailSVG = ({ className }: { className?: string }) => {
   return (
     <>
       <svg
@@ -7,7 +7,7 @@ export const MailSVG = () => {
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="w-6 h-6"
+        className={`${className} w-6 h-6`}
       >
         <path
           strokeLinecap="round"

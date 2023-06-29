@@ -1,9 +1,9 @@
-import Link from 'next/link';
-import { LockSVG } from '@/resources/svg/LockSVG';
-import { MailSVG } from '@/resources/svg/MailSVG';
 import { EyeSVG } from '@/resources/svg/EyeSVG';
 import { EyeSlashSVG } from '@/resources/svg/EyeSlashSVG';
-
+import { LockSVG } from '@/resources/svg/LockSVG';
+import { MailSVG } from '@/resources/svg/MailSVG';
+import Link from 'next/link';
+import styles from './Login.module.scss';
 export default function LoginPage() {
   return (
     <>
@@ -16,10 +16,9 @@ export default function LoginPage() {
           >
             <h2 className={'text-center mt-0'}>Bem vindo de volta!</h2>
             <p className={'text-center'}>
-              Novo aqui?{' '}
+              Novo aqui?
               <span className={'prose-a:hover:underline'}>
                 <Link href={'#'} className={'text-primary'}>
-                  {' '}
                   Crie uma conta
                 </Link>
               </span>
@@ -31,7 +30,7 @@ export default function LoginPage() {
               </label>
               <label className="input-group">
                 <span>
-                  <MailSVG />
+                  <MailSVG className={styles.svg} />
                 </span>
                 <input
                   type="text"
@@ -47,7 +46,7 @@ export default function LoginPage() {
               </label>
               <label className="input-group">
                 <span>
-                  <LockSVG />
+                  <LockSVG className={styles.svg} />
                 </span>
                 <input
                   type="password"
@@ -58,8 +57,8 @@ export default function LoginPage() {
                 <span>
                   <label className={'swap'}>
                     <input type={'checkbox'} />
-                    <EyeSVG className={'swap-on'} />
-                    <EyeSlashSVG className={'swap-off'} />
+                    <EyeSVG className={`swap-on ${styles.svg}`} />
+                    <EyeSlashSVG className={`swap-off ${styles.svg}`} />
                   </label>
                 </span>
               </label>
