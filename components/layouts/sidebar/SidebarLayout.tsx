@@ -9,7 +9,7 @@ const SidebarLayout: React.FC<ISidebarLayout> = () => {
       <input className={`${styles.input} input`} placeholder="Search..." />
       <Link href="/">Home </Link>
       <Link href="/about">About</Link>
-      <Link href="/contact">Contact</Link>
+      <Link href="/login">Login</Link>
     </nav>
   );
 };
