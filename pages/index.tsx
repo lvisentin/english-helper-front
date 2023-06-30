@@ -15,7 +15,10 @@ const Home: NextPageWithLayout = () => {
     <section className={styles.main}>
       <h1 className={styles.title}>current branch: develop</h1>
       <h2 className={'p-10 pl-0'}>{globalState?.user?.name}</h2>
-      <button className={'btn'} onClick={updateGlobalState}>
+      <button className={'btn btn-primary'} onClick={updateGlobalState}>
+        show state
+      </button>
+      <button className={'btn btn-secondary'} onClick={updateGlobalState}>
         show state
       </button>
     </section>

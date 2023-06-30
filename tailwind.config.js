@@ -28,6 +28,8 @@ module.exports = {
           ...require('daisyui/src/theming/themes')['[data-theme=light]'],
           primary: 'mediumblue',
           secondary: '#e0e7ff',
+          accent: '#2e8a99',
+          accentContent: '#e8eaf6',
           '.btn-primary': {
             color: '#fff',
             backgroundColor: 'mediumblue',
