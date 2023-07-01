@@ -1,6 +1,9 @@
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 import type { AppProps } from 'next/app';
 import '../styles/globals.scss';
 import { NextPageWithLayout } from './page';
+config.autoAddCss = false;
 
 interface AppPropsWithLayout extends AppProps {
   Component: NextPageWithLayout;
