@@ -1,5 +1,7 @@
 import { Inter } from 'next/font/google';
 import '../styles/globals.scss';
+import PrimaryLayout from '@/components/layouts/primary/PrimaryLayout';
+import { GlobalStateProvider } from '@/context/GlobalState/Provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,7 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="light">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <GlobalStateProvider>
+          <PrimaryLayout>{children}</PrimaryLayout>
+        </GlobalStateProvider>
+      </body>
     </html>
   );
 }

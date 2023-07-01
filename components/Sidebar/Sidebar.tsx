@@ -1,3 +1,5 @@
+'use client';
+
 import {
   IconLookup,
   faArrowRightFromBracket,
@@ -11,8 +13,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import styles from './SidebarLayout.module.scss';
+import { useRouter } from 'next/navigation';
+import styles from './Sidebar.module.scss';
 
 export interface ISidebarLayout {}
 
@@ -22,7 +24,9 @@ export interface MenuItem {
   route: string;
 }
 
-const SidebarLayout: React.FC<ISidebarLayout> = () => {
+const Sidebar: React.FC<ISidebarLayout> = () => {
+  const router = useRouter();
+
   function toggleTheme() {
     const isDarkMode = !!(
       document.documentElement.getAttribute('data-theme') === 'dark'
@@ -62,8 +66,6 @@ const SidebarLayout: React.FC<ISidebarLayout> = () => {
       route: '/subscription',
     },
   ];
-
-  const router = useRouter();
 
   return (
     <nav className={styles.nav}>
@@ -126,4 +128,4 @@ const SidebarLayout: React.FC<ISidebarLayout> = () => {
   );
 };
 
-export default SidebarLayout;
+export default Sidebar;

@@ -1,3 +1,5 @@
+'use client';
+
 import { GlobalStateContext } from '@/context/GlobalState/Context';
 import { ReactNode, Reducer, useReducer } from 'react';
 import { GlobalState, GlobalStateAction } from '@/context/GlobalState/types';
