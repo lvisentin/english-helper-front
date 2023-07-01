@@ -7,6 +7,7 @@ import loginImgSrc from '@/resources/a-dude.png';
 import TextField from '@/components/TextField/TextField';
 import RadioButton from '@/components/RadioButton/RadioButton';
 import LoginSplitLayout from '@/components/layouts/login/LoginSplitLayout';
+import styles from './SignUp.module.scss'
 
 export default function SignUpPage() {
   return (
@@ -33,7 +34,7 @@ export default function SignUpPage() {
               <Image
                 src={lockSvgSrc}
                 alt={'ad'}
-                className={'w-6 h-6 min-w-6'}
+                className={`w-6 h-6 min-w-6 ${styles.svg}`}
               />
             }
             className={'col-span-6'}
@@ -54,7 +55,7 @@ export default function SignUpPage() {
             placeholder={'Seu telefone com DDD'}
             label={'Telefone'}
             leadingIcon={
-              <Image src={lockSvgSrc} alt={'ad'} className={'w-6 h-6'} />
+              <Image src={lockSvgSrc} alt={'ad'} className={`w-6 h-6 ${styles.svg}`} />
             }
             className={'col-span-10'}
           />
@@ -62,7 +63,7 @@ export default function SignUpPage() {
             placeholder={'Digite aqui seu código de indicação'}
             label={'Código de indicação (opcional)'}
             leadingIcon={
-              <Image src={lockSvgSrc} alt={'ad'} className={'w-6 h-6'} />
+              <Image src={lockSvgSrc} alt={'ad'} className={`w-6 h-6 ${styles.svg}`} />
             }
             className={'col-span-10'}
           />
@@ -70,7 +71,7 @@ export default function SignUpPage() {
             placeholder={'exemplo@email.com'}
             label={'Email'}
             leadingIcon={
-              <Image src={lockSvgSrc} alt={'ad'} className={'w-6 h-6'} />
+              <Image src={lockSvgSrc} alt={'ad'} className={`w-6 h-6 ${styles.svg}`} />
             }
             className={'col-span-10'}
           />
@@ -82,7 +83,7 @@ export default function SignUpPage() {
               'Sua senha deve conter no mínimo uma letra maíuscula, uma letra minúscula, 1 número, 1 símbolo e ter no mínimo 8 caracteres.'
             }
             leadingIcon={
-              <Image src={lockSvgSrc} alt={'ad'} className={'w-6 h-6'} />
+              <Image src={lockSvgSrc} alt={'ad'} className={`w-6 h-6 ${styles.svg}`} />
             }
             trailingIcon={{
               type: 'toggle',
@@ -90,14 +91,14 @@ export default function SignUpPage() {
                 <Image
                   src={eyeSvgSrc}
                   alt={'ad'}
-                  className={'w-6 h-6 swap-on'}
+                  className={`w-6 h-6 swap-on ${styles.svg}`}
                 />
               ),
               secondIcon: (
                 <Image
                   src={eyeSlashSvgSrc}
                   alt={'ad'}
-                  className={'w-6 h-6 swap-off'}
+                  className={`w-6 h-6 swap-off ${styles.svg}`}
                 />
               ),
             }}
@@ -108,7 +109,7 @@ export default function SignUpPage() {
             placeholder={'Confirmar senha'}
             label={'Confirmar senha'}
             leadingIcon={
-              <Image src={lockSvgSrc} alt={'ad'} className={'w-6 h-6'} />
+              <Image src={lockSvgSrc} alt={'ad'} className={`w-6 h-6 ${styles.svg}`} />
             }
             trailingIcon={{
               type: 'toggle',
@@ -116,14 +117,14 @@ export default function SignUpPage() {
                 <Image
                   src={eyeSvgSrc}
                   alt={'ad'}
-                  className={'w-6 h-6 swap-on'}
+                  className={`w-6 h-6 swap-on ${styles.svg}`}
                 />
               ),
               secondIcon: (
                 <Image
                   src={eyeSlashSvgSrc}
                   alt={'ad'}
-                  className={'w-6 h-6 swap-off'}
+                  className={`w-6 h-6 swap-off ${styles.svg}`}
                 />
               ),
             }}

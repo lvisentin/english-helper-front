@@ -7,6 +7,8 @@ import eyeSvgSrc from '@/resources/svg/eye.svg';
 import loginImgSrc from '@/resources/a-dude.png';
 import LoginSplitLayout from '@/components/layouts/login/LoginSplitLayout';
 import TextField from '@/components/TextField/TextField';
+import styles from './Login.module.scss';
+
 
 export default function LoginPage() {
   return (
@@ -35,7 +37,7 @@ export default function LoginPage() {
               <Image
                 src={mailSvgSrc}
                 alt={'icone representando uma carta'}
-                className={'w-6 h-6 max-w-6'}
+                className={`w-6 h-6 max-w-6 ${styles.svg}`}
               />
             }
             className={'col-span-10'}
@@ -48,7 +50,7 @@ export default function LoginPage() {
                 src={lockSvgSrc}
                 alt={'icone representando um cadeado'}
                 width={24}
-                className={'w-6 h-6'}
+                className={`w-6 h-6 ${styles.svg}`}
               />
             }
             trailingIcon={{
@@ -57,14 +59,14 @@ export default function LoginPage() {
                 <Image
                   src={eyeSvgSrc}
                   alt={'icone representando um olho humano'}
-                  className={'w-6 h-6 swap-on'}
+                  className={`w-6 h-6 swap-on ${styles.svg}`}
                 />
               ),
               secondIcon: (
                 <Image
                   src={eyeSlashSvgSrc}
                   alt={'icone representando um olho humano riscado'}
-                  className={'w-6 h-6 swap-off'}
+                  className={`w-6 h-6 swap-off ${styles.svg}`}
                 />
               ),
             }}
@@ -82,7 +84,7 @@ export default function LoginPage() {
       </div>
 
       <div className={'prose h-fit'}>
-        <Image src={loginImgSrc} alt={'ad'} className={'w-full'} />
+        <Image src={loginImgSrc} alt={'ad'} className={`w-full`} />
         <h1 className={'text-white text-center'}>
           Bem vindo ao English Helper
         </h1>
