@@ -5,6 +5,8 @@ import PrimaryLayout from '../components/layouts/primary/PrimaryLayout';
 import SidebarLayout from '../components/layouts/sidebar/SidebarLayout';
 import styles from '../styles/Home.module.scss';
 import { NextPageWithLayout } from './page';
+import HelpButton from '@/components/HelpButton/HelpButton';
+
 
 const Home: NextPageWithLayout = () => {
   const { globalState, dispatch } = useContext(GlobalStateContext);
@@ -21,6 +23,8 @@ const Home: NextPageWithLayout = () => {
       <button className={'btn btn-secondary'} onClick={updateGlobalState}>
         show state
       </button>
+      <HelpButton/>
+
     </section>
   );
 };
