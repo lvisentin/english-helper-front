@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import TextField from '@/components/TextField/TextField';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function AssistantPage() {
   return (
@@ -25,6 +25,7 @@ export default function AssistantPage() {
 
         <form className={'grid grid-cols-10 gap-y-2 pt-4'}>
           <TextField
+            name="question"
             placeholder={'Digite sua pergunta sobre o idioma inglês'}
             className={'col-span-10'}
           />
