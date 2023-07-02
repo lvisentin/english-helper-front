@@ -38,21 +38,29 @@ export default function TextField({
 
   return (
     <>
-      <div className={`form-control ${className}`}>
+      <div className={`p-1 form-control ${className}`}>
         {label && (
           <label className="label">
             <span className="label-text">{label}</span>
           </label>
         )}
-        <label className="not-prose input-group">
-          {leadingIcon && <span>{leadingIcon}</span>}
+        {leadingIcon || trailingIcon ? (
+          <label className="not-prose input-group">
+            {leadingIcon && <span>{leadingIcon}</span>}
+            <input
+              type={toggleState && trailingIcon ? 'password' : 'text'}
+              placeholder={placeholder}
+              className={`input input-bordered flex-grow w-[inherit]`}
+            />
+            {renderTrailingIcon()}
+          </label>
+        ) : (
           <input
-            type={toggleState && trailingIcon ? 'password' : 'text'}
+            type={'text'}
             placeholder={placeholder}
             className={`input input-bordered flex-grow w-[inherit]`}
           />
-          {renderTrailingIcon()}
-        </label>
+        )}
         {helperText && (
           <label className={'label-text'}>
             <span className={'label-text-alt'}>{helperText}</span>

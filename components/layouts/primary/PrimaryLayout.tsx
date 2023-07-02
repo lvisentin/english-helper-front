@@ -13,9 +13,9 @@ const PrimaryLayout: React.FC<IPrimaryLayout> = ({ children }) => {
       <Head>
         <title>Primary Layout Example</title>
       </Head>
-      <div className={styles.main}>
+      <div className={`${styles.main}`}>
         <Sidebar />
-        <main className={'p-8 flex-grow'}>{children}</main>
+        <main className={'p-8 flex-grow bg-slate-100'}>{children}</main>
       </div>
     </>
   );
