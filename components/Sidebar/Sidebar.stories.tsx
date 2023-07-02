@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import Sidebar, { ISidebarLayout } from './Sidebar';
+import Sidebar from './Sidebar';
 
 export default {
   title: 'templates/Sidebar',
@@ -15,5 +15,3 @@ const Template: ComponentStory<typeof Sidebar> = (args) => (
 
 export const Base = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-
-Base.args = {} as ISidebarLayout;

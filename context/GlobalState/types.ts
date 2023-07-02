@@ -1,8 +1,7 @@
 import { Dispatch } from 'react';
-import { User } from '@/models/User';
 
 export interface GlobalState {
-  user?: User;
+  user?: {};
 }
 
 export interface GlobalStateContextType {

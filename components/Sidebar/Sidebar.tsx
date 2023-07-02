@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  IconLookup,
   faArrowRightFromBracket,
   faListUl,
   faMicrophoneLines,
@@ -10,13 +9,14 @@ import {
   faQuestion,
   faReceipt,
   faRobot,
+  IconLookup,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import styles from './Sidebar.module.scss';
-
-export interface ISidebarLayout {}
+import React from 'react';
+import Image from 'next/image';
 
 export interface MenuItem {
   icon: IconLookup;
@@ -24,14 +24,40 @@ export interface MenuItem {
   route: string;
 }
 
-const Sidebar: React.FC<ISidebarLayout> = () => {
-  const router = useRouter();
+const menuItems: MenuItem[] = [
+  {
+    icon: faListUl,
+    text: 'Home',
+    route: '/',
+  },
+  {
+    icon: faPen,
+    text: 'Writing',
+    route: '/writing',
+  },
+  {
+    icon: faMicrophoneLines,
+    text: 'Speaking',
+    route: '/speaking',
+  },
+  {
+    icon: faRobot,
+    text: 'Assistant',
+    route: '/assistant',
+  },
+  {
+    icon: faReceipt,
+    text: 'Minha Assinatura',
+    route: '/subscription',
+  },
+];
+
+const Sidebar: React.FC = () => {
+  const pathname = usePathname();
 
   function toggleTheme() {
-    const isDarkMode = !!(
-      document.documentElement.getAttribute('data-theme') === 'dark'
-    );
-
+    const isDarkMode =
+      document.documentElement.getAttribute('data-theme') === 'dark';
     if (isDarkMode) {
       document.documentElement.setAttribute('data-theme', 'light');
     } else {
@@ -39,39 +65,16 @@ const Sidebar: React.FC<ISidebarLayout> = () => {
     }
   }
 
-  const menuItems: MenuItem[] = [
-    {
-      icon: faListUl,
-      text: 'Home',
-      route: '/',
-    },
-    {
-      icon: faPen,
-      text: 'Writing',
-      route: '/writing',
-    },
-    {
-      icon: faMicrophoneLines,
-      text: 'Speaking',
-      route: '/speaking',
-    },
-    {
-      icon: faRobot,
-      text: 'Assistant',
-      route: '/assistant',
-    },
-    {
-      icon: faReceipt,
-      text: 'Minha Assinatura',
-      route: '/subscription',
-    },
-  ];
-
   return (
     <nav className={styles.nav}>
       <div className="navContent">
         <div className={styles.user}>
-          <img src="https://placehold.it/50x50" alt="Avatar" width={50} />
+          <Image
+            src={'https://placehold.it/50x50'}
+            alt={'Avatar'}
+            width={50}
+            height={50}
+          />
           <div className={`${styles.userInfo} hidden md:block`}>
             <p className={styles.userName}>Lucas Visentin</p>
             <p className={styles.userEmail}>lvise.batista@gmail.com</p>
@@ -83,9 +86,7 @@ const Sidebar: React.FC<ISidebarLayout> = () => {
             {menuItems.map((menuItem, key) => (
               <Link href={menuItem.route} key={key}>
                 <li
-                  className={
-                    router.pathname === menuItem.route ? styles.active : ''
-                  }
+                  className={pathname === menuItem.route ? styles.active : ''}
                 >
                   <FontAwesomeIcon
                     icon={menuItem.icon}
