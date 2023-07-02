@@ -1,16 +1,36 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import mailSvgSrc from '@/resources/svg/mail.svg';
-import lockSvgSrc from '@/resources/svg/lock.svg';
+'use client';
+
+import TextField from '@/components/TextField/TextField';
+import LoginSplitLayout from '@/components/layouts/login/LoginSplitLayout';
+import loginImgSrc from '@/resources/a-dude.png';
 import eyeSlashSvgSrc from '@/resources/svg/eye-slash.svg';
 import eyeSvgSrc from '@/resources/svg/eye.svg';
-import loginImgSrc from '@/resources/a-dude.png';
-import LoginSplitLayout from '@/components/layouts/login/LoginSplitLayout';
-import TextField from '@/components/TextField/TextField';
+import lockSvgSrc from '@/resources/svg/lock.svg';
+import mailSvgSrc from '@/resources/svg/mail.svg';
+import LoadingButton from '@/shared/components/LoadingButton/LoadingButton';
+import { userService } from '@/shared/services/user/UserService';
+import { Formik } from 'formik';
+import Image from 'next/image';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { useState } from 'react';
 import styles from './Login.module.scss';
 
-
 export default function LoginPage() {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  function login(email: string, password: string) {
+    console.log('email, password', userService);
+    setLoading(true);
+    userService
+      .signIn(email, password)
+      .then((response) => {
+        setLoading(false);
+        redirect('');
+      })
+      .finally(() => setLoading(false));
+  }
+
   return (
     <LoginSplitLayout>
       <div
@@ -29,58 +49,89 @@ export default function LoginPage() {
           </span>
         </p>
 
-        <form className={'grid grid-cols-10 gap-x-4 gap-y-2'}>
-          <TextField
-            placeholder={'Seu email'}
-            label={'Email'}
-            leadingIcon={
-              <Image
-                src={mailSvgSrc}
-                alt={'icone representando uma carta'}
-                className={`w-6 h-6 max-w-6 ${styles.svg}`}
-              />
-            }
-            className={'col-span-10'}
-          />
-          <TextField
-            placeholder={'Sua senha'}
-            label={'Senha'}
-            leadingIcon={
-              <Image
-                src={lockSvgSrc}
-                alt={'icone representando um cadeado'}
-                width={24}
-                className={`w-6 h-6 ${styles.svg}`}
-              />
-            }
-            trailingIcon={{
-              type: 'toggle',
-              initialIcon: (
-                <Image
-                  src={eyeSvgSrc}
-                  alt={'icone representando um olho humano'}
-                  className={`w-6 h-6 swap-on ${styles.svg}`}
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          onSubmit={(values) => login(values.email, values.password)}
+        >
+          {({
+            values,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+          }) => (
+            <>
+              <form className={'grid grid-cols-10 gap-x-4 gap-y-2'}>
+                <TextField
+                  placeholder={'Seu email'}
+                  label={'Email'}
+                  name="email"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                  leadingIcon={
+                    <Image
+                      src={mailSvgSrc}
+                      alt={'icone representando uma carta'}
+                      className={`w-6 h-6 max-w-6 ${styles.svg}`}
+                    />
+                  }
+                  className={'col-span-10'}
                 />
-              ),
-              secondIcon: (
-                <Image
-                  src={eyeSlashSvgSrc}
-                  alt={'icone representando um olho humano riscado'}
-                  className={`w-6 h-6 swap-off ${styles.svg}`}
+                <TextField
+                  placeholder={'Sua senha'}
+                  label={'Senha'}
+                  name="password"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                  leadingIcon={
+                    <Image
+                      src={lockSvgSrc}
+                      alt={'icone representando um cadeado'}
+                      width={24}
+                      className={`w-6 h-6 ${styles.svg}`}
+                    />
+                  }
+                  trailingIcon={{
+                    type: 'toggle',
+                    initialIcon: (
+                      <Image
+                        src={eyeSvgSrc}
+                        alt={'icone representando um olho humano'}
+                        className={`w-6 h-6 swap-on ${styles.svg}`}
+                      />
+                    ),
+                    secondIcon: (
+                      <Image
+                        src={eyeSlashSvgSrc}
+                        alt={'icone representando um olho humano riscado'}
+                        className={`w-6 h-6 swap-off ${styles.svg}`}
+                      />
+                    ),
+                  }}
+                  className={'col-span-10'}
                 />
-              ),
-            }}
-            className={'col-span-10'}
-          />
-        </form>
+              </form>
 
-        <p className={'text-right my-4'}>
-          <span className={'prose-a:no-underline prose-a:hover:underline'}>
-            <Link href={'#'}>Esqueceu sua senha?</Link>
-          </span>
-        </p>
+              <p className={'text-right my-4'}>
+                <span
+                  className={'prose-a:no-underline prose-a:hover:underline'}
+                >
+                  <Link href={'#'}>Esqueceu sua senha?</Link>
+                </span>
+              </p>
 
-        <button className={'btn btn-primary mt-6'}>Entrar</button>
+              <LoadingButton
+                loading={loading || isSubmitting}
+                disabled={loading || isSubmitting}
+                className={`${styles.loginBtn} btn btn-primary mt-6`}
+              >
+                Entrar
+              </LoadingButton>
+            </>
+          )}
+        </Formik>
       </div>
 
       <div className={'prose h-fit'}>

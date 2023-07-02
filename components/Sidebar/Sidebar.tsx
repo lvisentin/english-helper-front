@@ -14,9 +14,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import styles from './Sidebar.module.scss';
 import React from 'react';
-import Image from 'next/image';
+import styles from './Sidebar.module.scss';
 
 export interface MenuItem {
   icon: IconLookup;
@@ -69,12 +68,7 @@ const Sidebar: React.FC = () => {
     <nav className={styles.nav}>
       <div className="navContent">
         <div className={styles.user}>
-          <Image
-            src={'https://placehold.it/50x50'}
-            alt={'Avatar'}
-            width={50}
-            height={50}
-          />
+          <img src={'https://placehold.it/50x50'} alt={'Avatar'} />
           <div className={`${styles.userInfo} hidden md:block`}>
             <p className={styles.userName}>Lucas Visentin</p>
             <p className={styles.userEmail}>lvise.batista@gmail.com</p>

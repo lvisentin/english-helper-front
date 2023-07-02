@@ -3,3 +3,11 @@
   height: 20px;
   min-height: 20px;
 }
+
+.loginBtn {
+  width: 100%;
+
+  &[disabled] {
+    border: none;
+  }
+}
