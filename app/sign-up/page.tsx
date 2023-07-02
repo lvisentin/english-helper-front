@@ -1,13 +1,13 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import lockSvgSrc from '@/resources/svg/lock.svg';
-import eyeSvgSrc from '@/resources/svg/eye.svg';
-import eyeSlashSvgSrc from '@/resources/svg/eye-slash.svg';
-import loginImgSrc from '@/resources/a-dude.png';
-import TextField from '@/components/TextField/TextField';
 import RadioButton from '@/components/RadioButton/RadioButton';
+import TextField from '@/components/TextField/TextField';
 import LoginSplitLayout from '@/components/layouts/login/LoginSplitLayout';
-import styles from './SignUp.module.scss'
+import loginImgSrc from '@/resources/a-dude.png';
+import eyeSlashSvgSrc from '@/resources/svg/eye-slash.svg';
+import eyeSvgSrc from '@/resources/svg/eye.svg';
+import lockSvgSrc from '@/resources/svg/lock.svg';
+import Image from 'next/image';
+import Link from 'next/link';
+import styles from './SignUp.module.scss';
 
 export default function SignUpPage() {
   return (
@@ -28,6 +28,7 @@ export default function SignUpPage() {
         </p>
         <form className={'grid grid-cols-10 gap-x-4 gap-y-2'}>
           <TextField
+            name="firstName"
             placeholder={'Primeiro nome'}
             label={'Primeiro nome'}
             leadingIcon={
@@ -52,38 +53,58 @@ export default function SignUpPage() {
           </div>
 
           <TextField
+            name="phone"
             placeholder={'Seu telefone com DDD'}
             label={'Telefone'}
             leadingIcon={
-              <Image src={lockSvgSrc} alt={'ad'} className={`w-6 h-6 ${styles.svg}`} />
+              <Image
+                src={lockSvgSrc}
+                alt={'ad'}
+                className={`w-6 h-6 ${styles.svg}`}
+              />
             }
             className={'col-span-10'}
           />
           <TextField
+            name="referral"
             placeholder={'Digite aqui seu código de indicação'}
             label={'Código de indicação (opcional)'}
             leadingIcon={
-              <Image src={lockSvgSrc} alt={'ad'} className={`w-6 h-6 ${styles.svg}`} />
+              <Image
+                src={lockSvgSrc}
+                alt={'ad'}
+                className={`w-6 h-6 ${styles.svg}`}
+              />
             }
             className={'col-span-10'}
           />
           <TextField
+            name="email"
             placeholder={'exemplo@email.com'}
             label={'Email'}
             leadingIcon={
-              <Image src={lockSvgSrc} alt={'ad'} className={`w-6 h-6 ${styles.svg}`} />
+              <Image
+                src={lockSvgSrc}
+                alt={'ad'}
+                className={`w-6 h-6 ${styles.svg}`}
+              />
             }
             className={'col-span-10'}
           />
 
           <TextField
+            name="password"
             placeholder={'Sua senha'}
             label={'Senha'}
             helperText={
               'Sua senha deve conter no mínimo uma letra maíuscula, uma letra minúscula, 1 número, 1 símbolo e ter no mínimo 8 caracteres.'
             }
             leadingIcon={
-              <Image src={lockSvgSrc} alt={'ad'} className={`w-6 h-6 ${styles.svg}`} />
+              <Image
+                src={lockSvgSrc}
+                alt={'ad'}
+                className={`w-6 h-6 ${styles.svg}`}
+              />
             }
             trailingIcon={{
               type: 'toggle',
@@ -106,10 +127,15 @@ export default function SignUpPage() {
           />
 
           <TextField
+            name="confirmPassword"
             placeholder={'Confirmar senha'}
             label={'Confirmar senha'}
             leadingIcon={
-              <Image src={lockSvgSrc} alt={'ad'} className={`w-6 h-6 ${styles.svg}`} />
+              <Image
+                src={lockSvgSrc}
+                alt={'ad'}
+                className={`w-6 h-6 ${styles.svg}`}
+              />
             }
             trailingIcon={{
               type: 'toggle',

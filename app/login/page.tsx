@@ -1,14 +1,13 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import mailSvgSrc from '@/resources/svg/mail.svg';
-import lockSvgSrc from '@/resources/svg/lock.svg';
+import TextField from '@/components/TextField/TextField';
+import LoginSplitLayout from '@/components/layouts/login/LoginSplitLayout';
+import loginImgSrc from '@/resources/a-dude.png';
 import eyeSlashSvgSrc from '@/resources/svg/eye-slash.svg';
 import eyeSvgSrc from '@/resources/svg/eye.svg';
-import loginImgSrc from '@/resources/a-dude.png';
-import LoginSplitLayout from '@/components/layouts/login/LoginSplitLayout';
-import TextField from '@/components/TextField/TextField';
+import lockSvgSrc from '@/resources/svg/lock.svg';
+import mailSvgSrc from '@/resources/svg/mail.svg';
+import Image from 'next/image';
+import Link from 'next/link';
 import styles from './Login.module.scss';
-
 
 export default function LoginPage() {
   return (
@@ -31,6 +30,7 @@ export default function LoginPage() {
 
         <form className={'grid grid-cols-10 gap-x-4 gap-y-2'}>
           <TextField
+            name="email"
             placeholder={'Seu email'}
             label={'Email'}
             leadingIcon={
@@ -43,6 +43,7 @@ export default function LoginPage() {
             className={'col-span-10'}
           />
           <TextField
+            name="password"
             placeholder={'Sua senha'}
             label={'Senha'}
             leadingIcon={
