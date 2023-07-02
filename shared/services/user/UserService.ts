@@ -10,7 +10,7 @@ class UserService {
   private API_URL = process.env.API_URL;
 
   getCurrentUser(): CurrentUser {
-    if (!this._authToken) {
+    if (!this.getAuthToken()) {
       return {
         isLoggedIn: false,
       };
@@ -26,6 +26,7 @@ class UserService {
     }
 
     this._authToken = localStorage.getItem('authToken');
+    return this._authToken;
   }
 
   signIn(email: string, password: string) {
