@@ -7,13 +7,13 @@ const customInstance = axios.create({
   timeout: 10000,
 });
 
-const requestHandler = (request) => {
+const requestHandler = (request: any) => {
   request.headers.Authorization = `Bearer ${userService.getAuthToken()}`;
 
   return request;
 };
 
-const responseHandler = (response) => {
+const responseHandler = (response: any) => {
   if (response.status === 401) {
     console.error('UNAUTHENTICATED');
   }
@@ -21,7 +21,7 @@ const responseHandler = (response) => {
   return response;
 };
 
-const errorHandler = (error) => {
+const errorHandler = (error: any) => {
   if (error.response.status === 401) {
     console.error('UNAUTHENTICATED');
   }
