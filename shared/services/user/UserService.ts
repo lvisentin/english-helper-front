@@ -1,9 +1,24 @@
 import axios from 'axios';
 import { LoginResponse } from './UserService.model';
 
+export interface CurrentUser {
+  isLoggedIn: boolean;
+}
+
 class UserService {
   private _authToken: string | null = null;
   private API_URL = process.env.API_URL;
+
+  getCurrentUser(): CurrentUser {
+    if (!this._authToken) {
+      return {
+        isLoggedIn: false,
+      };
+    }
+    return {
+      isLoggedIn: true,
+    };
+  }
 
   getAuthToken() {
     if (this._authToken) {
