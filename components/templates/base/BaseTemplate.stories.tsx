@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import BaseTemplate, { IBaseTemplate } from './BaseTemplate';
+import BaseTemplate from './BaseTemplate';
 
 export default {
   title: 'templates/BaseTemplate',
@@ -16,4 +16,4 @@ const Template: ComponentStory<typeof BaseTemplate> = (args) => (
 export const Base = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 
-Base.args = {} as IBaseTemplate;
+Base.args = {} as typeof BaseTemplate;
