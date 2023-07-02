@@ -6,6 +6,7 @@ export interface LoadingButtonProps {
   className?: string;
   disabled?: boolean;
   onClick?: () => any;
+  type?: 'button' | 'submit';
 }
 
 function LoadingButton({
@@ -13,12 +14,14 @@ function LoadingButton({
   loading,
   disabled,
   className,
+  type,
   onClick,
 }: LoadingButtonProps) {
   return (
     <button
       className={className ? className : 'btn btn-primary'}
       disabled={loading || disabled}
+      type={type ? type : 'button'}
       onClick={onClick}
     >
       {loading ? (
