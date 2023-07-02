@@ -1,6 +1,6 @@
 import TextField from '@/components/TextField/TextField';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function NewWritingPage() {
   return (
@@ -22,12 +22,14 @@ export default function NewWritingPage() {
 
         <form className={'grid grid-cols-10 gap-y-2 pt-4'}>
           <TextField
+            name="title"
             placeholder={'Digite um titulo para identificar o feedback'}
             label={'Titulo'}
             className={'col-span-10'}
           />
 
           <TextField
+            name="context"
             placeholder={'A meeting with my boss'}
             label={'Contexto'}
             className={'col-span-10'}

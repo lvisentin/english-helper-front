@@ -6,7 +6,11 @@ class UserService {
       return this._authToken;
     }
 
-    this._authToken = localStorage.getItem('authToken');
+    if (typeof window !== 'undefined') {
+      this._authToken = localStorage.getItem('authToken');
+    }
+
+    return this._authToken;
   }
 }
 
