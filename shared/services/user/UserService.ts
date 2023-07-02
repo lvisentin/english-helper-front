@@ -14,15 +14,18 @@ class UserService {
   }
 
   signIn(email: string, password: string) {
-    return axios.post<LoginResponse>(`${this.API_URL}/auth/login`, {
-      params: {
+    return axios.post<LoginResponse>(
+      `${this.API_URL}/auth/login`,
+      {
         email,
         password,
       },
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
   }
 
   setUserToken(token: string) {

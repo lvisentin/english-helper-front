@@ -9,6 +9,8 @@ import lockSvgSrc from '@/resources/svg/lock.svg';
 import mailSvgSrc from '@/resources/svg/mail.svg';
 import LoadingButton from '@/shared/components/LoadingButton/LoadingButton';
 import { userService } from '@/shared/services/user/UserService';
+import { LoginResponse } from '@/shared/services/user/UserService.model';
+import { AxiosResponse } from 'axios';
 import { Formik } from 'formik';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,13 +22,16 @@ export default function LoginPage() {
   const [loading, setLoading] = useState<boolean>(false);
 
   function login(email: string, password: string) {
-    console.log('email, password', userService);
     setLoading(true);
     userService
       .signIn(email, password)
-      .then((response) => {
+      .then(({ data }: AxiosResponse<LoginResponse>) => {
         setLoading(false);
+        userService.setUserToken(data.token);
         redirect('');
+      })
+      .catch((err) => {
+        setLoading(false);
       })
       .finally(() => setLoading(false));
   }
@@ -53,15 +58,12 @@ export default function LoginPage() {
           initialValues={{ email: '', password: '' }}
           onSubmit={(values) => login(values.email, values.password)}
         >
-          {({
-            values,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            isSubmitting,
-          }) => (
+          {({ values, handleChange, handleBlur, handleSubmit }) => (
             <>
-              <form className={'grid grid-cols-10 gap-x-4 gap-y-2'}>
+              <form
+                className={'grid grid-cols-10 gap-x-4 gap-y-2'}
+                onSubmit={handleSubmit}
+              >
                 <TextField
                   placeholder={'Seu email'}
                   label={'Email'}
@@ -112,23 +114,26 @@ export default function LoginPage() {
                   }}
                   className={'col-span-10'}
                 />
+
+                <div className={'flex flex-col w-full col-span-10'}>
+                  <p className={'text-right my-4'}>
+                    <span
+                      className={'prose-a:no-underline prose-a:hover:underline'}
+                    >
+                      <Link href={'#'}>Esqueceu sua senha?</Link>
+                    </span>
+                  </p>
+
+                  <LoadingButton
+                    loading={loading}
+                    disabled={loading}
+                    className={`${styles.loginBtn} btn btn-primary mt-6`}
+                    type="submit"
+                  >
+                    Entrar
+                  </LoadingButton>
+                </div>
               </form>
-
-              <p className={'text-right my-4'}>
-                <span
-                  className={'prose-a:no-underline prose-a:hover:underline'}
-                >
-                  <Link href={'#'}>Esqueceu sua senha?</Link>
-                </span>
-              </p>
-
-              <LoadingButton
-                loading={loading || isSubmitting}
-                disabled={loading || isSubmitting}
-                className={`${styles.loginBtn} btn btn-primary mt-6`}
-              >
-                Entrar
-              </LoadingButton>
             </>
           )}
         </Formik>
