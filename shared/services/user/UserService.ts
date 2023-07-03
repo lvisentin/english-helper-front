@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LoginResponse } from './UserService.model';
+import { LoginResponse, SignUpResponse } from './UserService.model';
 
 export interface CurrentUser {
   isLoggedIn: boolean;
@@ -38,6 +38,30 @@ class UserService {
       {
         email,
         password,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+  }
+
+  signUp(
+    name: string,
+    email: string,
+    password: string,
+    phone_number: string,
+    referral_code: string
+  ) {
+    return axios.post<SignUpResponse>(
+      `${this.API_URL}/auth/register`,
+      {
+        name,
+        email,
+        phone_number,
+        password,
+        referral_code,
       },
       {
         headers: {

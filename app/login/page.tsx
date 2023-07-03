@@ -30,7 +30,7 @@ export default function LoginPage() {
         userService.setUserToken(data.token);
         redirect('');
       })
-      .catch((err) => {
+      .catch(() => {
         setLoading(false);
       })
       .finally(() => setLoading(false));

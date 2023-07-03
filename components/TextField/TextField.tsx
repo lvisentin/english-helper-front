@@ -14,6 +14,7 @@ export default function TextField({
   onBlur,
   value,
   name,
+  errors,
 }: TextFieldProps) {
   const [toggleState, setToggleState] = useState(true);
 
@@ -75,7 +76,12 @@ export default function TextField({
         )}
         {helperText && (
           <label className={'label-text'}>
-            <span className={'label-text-alt'}>{helperText}</span>
+            <span className={`label-text-alt`}>{helperText}</span>
+          </label>
+        )}
+        {errors && (
+          <label className={'label-text'}>
+            <span className={`label-text-alt error text-error`}>{errors}</span>
           </label>
         )}
       </div>

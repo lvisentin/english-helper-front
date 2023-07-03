@@ -11,3 +11,12 @@ export interface UserWithoutSensitiveInfo {
   updatedAt: string;
   plan: string;
 }
+
+export interface SignUpResponse {
+  message: string;
+  token: string;
+}
+
+export interface CreatedUser {
+  user: UserWithoutSensitiveInfo;
+}
