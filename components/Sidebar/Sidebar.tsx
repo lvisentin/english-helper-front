@@ -32,22 +32,22 @@ const menuItems: MenuItem[] = [
   {
     icon: faPen,
     text: 'Writing',
-    route: '/writing',
+    route: '/internal/writing',
   },
   {
     icon: faMicrophoneLines,
     text: 'Speaking',
-    route: '/speaking',
+    route: '/internal/speaking',
   },
   {
     icon: faRobot,
     text: 'Assistant',
-    route: '/assistant',
+    route: '/internal/assistant',
   },
   {
     icon: faReceipt,
     text: 'Minha Assinatura',
-    route: '/subscription',
+    route: '/internal/subscription',
   },
 ];
 
