@@ -14,7 +14,7 @@ const InternalLayout: React.FC<IInternalLayout> = ({ children }) => {
       </Head>
       <div className={`main flex flex-row h-full w-full`}>
         <Sidebar />
-        <main className={'p-8 flex-grow bg-slate-100'}>{children}</main>
+        <main className={'p-8 flex-grow bg-default'}>{children}</main>
       </div>
     </>
   );

@@ -18,6 +18,19 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+
+      typography: {
+        h1: {
+          css: {
+            color: '#333',
+          },
+        },
+        p: {
+          css: {
+            color: '#333',
+          },
+        },
+      },
     },
   },
   plugins: [require('@tailwindcss/typography'), require('daisyui')],
@@ -25,29 +38,23 @@ module.exports = {
     themes: [
       {
         light: {
-          ...require('daisyui/src/theming/themes')['[data-theme=light]'],
-          primary: 'mediumblue',
-          secondary: '#e0e7ff',
-          accent: '#2e8a99',
-          accentContent: '#e8eaf6',
-          '.btn-primary': {
-            color: '#fff',
-            backgroundColor: 'mediumblue',
-            borderColor: 'mediumblue',
-          },
-          '.btn-secondary': {
-            color: 'mediumblue',
-            backgroundColor: '#fff',
-            borderColor: 'mediumblue',
-          },
-          '.btn-secondary:hover': {
-            backgroundColor: 'mediumblue',
-            color: '#fff',
-            borderColor: '#fff',
+          primary: '#2B4E99',
+          secondary: '#4D9966',
+          accent1: '#CC7A00',
+          accent2: '#CC224D',
+          background: '#21293D',
+          text: '#F2F5F8',
+          link: '#82AAFF',
+          success: '#00A550',
+          warning: '#DAAA00',
+          error: '#FF1A4D',
+          '.bg-default': {
+            backgroundColor: '#F2F5F8',
+            color: '#333333',
           },
         },
       },
-      'dark',
+      // 'dark',
     ],
   },
 };

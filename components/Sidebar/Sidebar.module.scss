@@ -1,4 +1,5 @@
-$white: hsl(var(--ac));
+$text-color: hsl(var(--ac));
+$white: #fff;
 $sidebar-blue: hsl(var(--p));
 $active-bg: hsl(var(--a));
 $sidebar-border: hsl(var(--s));
@@ -75,13 +76,13 @@ $sidebar-background: hsl(var(--b1));
   .icon {
     width: 16px;
     height: auto;
-    color: $white;
+    color: $text-color;
   }
 
   span {
     font-size: 16px;
     font-weight: 500;
-    color: $white;
+    color: $text-color;
   }
 }
 
@@ -89,10 +90,6 @@ $sidebar-background: hsl(var(--b1));
   &:hover {
     background-color: transparent;
   }
-}
-
-.navFooter ul {
-  border-bottom: 1px solid $white;
 }
 
 @media only screen and (max-width: theme('screens.md')) {
