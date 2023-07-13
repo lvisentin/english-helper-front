@@ -1,3 +1,5 @@
+$header-background: #21293d;
+
 .content {
   padding: 24px;
   width: 100%;
@@ -8,7 +10,16 @@
   height: fit-content !important;
 }
 
-.dataGridHeader {
-  background: hsl(var(--a));
-  color: hsl(var(--ac));
+.dataGrid .dataGridHeader {
+  background: $header-background;
+  color: #f2f5f8;
+  padding: 0 24px;
+}
+
+.dataGrid * {
+  outline: none !important;
+}
+
+.dataGridIcon {
+  color: white;
 }

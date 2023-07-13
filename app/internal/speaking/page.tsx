@@ -66,15 +66,26 @@ const SpeakingDashboard = () => {
   return (
     <>
       <section className={'grid'}>
-        <header className={'flex justify-between'}>
+        <header className={'flex justify-between w-full'}>
           <div className={'prose'}>
             <h1 className={'mb-0 prose-h1'}>Speaking - Análises Recebidas</h1>
           </div>
+          <button className={'btn btn-primary'}>Solicitar nova análise</button>
         </header>
         {feedbackData.length > 0 && (
           <DataGrid
+            localeText={{
+              MuiTablePagination: {
+                labelDisplayedRows: ({ from, to }) =>
+                  `Mostrando de ${from} até ${to}`,
+                labelRowsPerPage: 'Resultados por página',
+              },
+            }}
             className={`${styles.dataGrid} h-fit mt-6`}
             getRowId={(row) => row._id}
+            classes={{
+              sortIcon: styles.dataGridIcon,
+            }}
             rows={feedbackData}
             columns={columns}
             initialState={{
@@ -84,6 +95,7 @@ const SpeakingDashboard = () => {
             }}
             disableColumnSelector
             disableRowSelectionOnClick
+            disableColumnMenu
             pageSizeOptions={[5, 10]}
           />
         )}
