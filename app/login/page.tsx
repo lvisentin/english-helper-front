@@ -12,11 +12,14 @@ import { AxiosResponse } from 'axios';
 import { Formik } from 'formik';
 import Image from 'next/image';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+
 import { useState } from 'react';
 import styles from './Login.module.scss';
 
 export default function LoginPage() {
+  const { push } = useRouter();
+
   const [loading, setLoading] = useState<boolean>(false);
 
   function login(email: string, password: string) {
@@ -26,7 +29,7 @@ export default function LoginPage() {
       .then(({ data }: AxiosResponse<LoginResponse>) => {
         setLoading(false);
         userService.setUserToken(data.token);
-        redirect('');
+        push('/internal/writing');
       })
       .catch(() => {
         setLoading(false);
@@ -37,7 +40,7 @@ export default function LoginPage() {
   return (
     <div
       className={
-        'prose prose-a:no-underline card bg-base-100 rounded-md w-full max-w-xl sm:p-6 sm:shadow-md sm:border-[1px] sm:border-gray-200'
+        'prose prose-a:no-underline card bg-base-100 rounded-md w-full max-w-xl sm:p-6 sm:shadow-md sm:border-[1px] sm:border-gray-200 mx-auto my-auto'
       }
     >
       <h2 className={'text-center mt-0'}>Bem vindo de volta!</h2>

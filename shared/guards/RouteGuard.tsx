@@ -18,6 +18,7 @@ const RouteGuard = ({ children }: RouteGuardProps) => {
     const authCheck = () => {
       if (!user.isLoggedIn) {
         setAuthorized(false);
+        router.push('/login');
       } else {
         setAuthorized(true);
       }
