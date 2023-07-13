@@ -55,15 +55,15 @@ const Sidebar: React.FC = () => {
   const pathname = usePathname();
   const { push } = useRouter();
 
-  function toggleTheme() {
-    const isDarkMode =
-      document.documentElement.getAttribute('data-theme') === 'dark';
-    if (isDarkMode) {
-      document.documentElement.setAttribute('data-theme', 'light');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
-  }
+  // function toggleTheme() {
+  //   const isDarkMode =
+  //     document.documentElement.getAttribute('data-theme') === 'dark';
+  //   if (isDarkMode) {
+  //     document.documentElement.setAttribute('data-theme', 'light');
+  //   } else {
+  //     document.documentElement.setAttribute('data-theme', 'dark');
+  //   }
+  // }
 
   function logout() {
     userService.signOut().then(() => {

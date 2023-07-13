@@ -1,5 +1,5 @@
-import PrimaryLayout from '@/components/layouts/primary/PrimaryLayout';
-import SidebarLayout from '@/components/layouts/sidebar/SidebarLayout';
+'use client';
+
 import { Feedback } from '@/shared/models/feedbacks/feedback.model';
 import { speakingService } from '@/shared/services/speaking/SpeakingService';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
@@ -16,7 +16,6 @@ const SpeakingDashboard = () => {
       flex: 1,
       minWidth: 200,
       filterable: false,
-      resizable: true,
     },
     {
       field: 'context',
@@ -25,7 +24,6 @@ const SpeakingDashboard = () => {
       flex: 1,
       minWidth: 200,
       filterable: false,
-      resizable: true,
     },
     {
       field: 'status',
@@ -34,7 +32,6 @@ const SpeakingDashboard = () => {
       flex: 1,
       minWidth: 200,
       filterable: false,
-      resizable: true,
     },
     {
       field: 'createdAt',
@@ -43,7 +40,7 @@ const SpeakingDashboard = () => {
       flex: 1,
       minWidth: 200,
       filterable: false,
-      resizable: true,
+
       valueGetter: ({ row }) =>
         new Intl.DateTimeFormat('pt-BR', {
           dateStyle: 'short',
@@ -58,6 +55,7 @@ const SpeakingDashboard = () => {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
       speakingService.getSpeakings().then(({ data }) => {
+        console.log('data', data);
         const { feedbacks } = data;
         setFeedbackData(feedbacks);
         console.log('feedbacks', feedbacks);
@@ -66,34 +64,32 @@ const SpeakingDashboard = () => {
   }, []);
 
   return (
-    <div className={`${styles.content} prose`}>
-      <h2>Speaking - Análises Recebidas</h2>
-      {feedbackData.length > 0 && (
-        <DataGrid
-          className={`${styles.dataGrid}`}
-          getRowId={(row) => row._id}
-          rows={feedbackData}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          disableColumnSelector
-          pageSizeOptions={[5, 10]}
-        />
-      )}
-    </div>
+    <>
+      <section className={'grid'}>
+        <header className={'flex justify-between'}>
+          <div className={'prose'}>
+            <h1 className={'mb-0 prose-h1'}>Speaking - Análises Recebidas</h1>
+          </div>
+        </header>
+        {feedbackData.length > 0 && (
+          <DataGrid
+            className={`${styles.dataGrid} h-fit mt-6`}
+            getRowId={(row) => row._id}
+            rows={feedbackData}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            disableColumnSelector
+            disableRowSelectionOnClick
+            pageSizeOptions={[5, 10]}
+          />
+        )}
+      </section>
+    </>
   );
 };
 
 export default SpeakingDashboard;
-
-SpeakingDashboard.getLayout = (page) => {
-  return (
-    <PrimaryLayout>
-      <SidebarLayout />
-      {page}
-    </PrimaryLayout>
-  );
-};
