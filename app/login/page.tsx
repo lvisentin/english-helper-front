@@ -14,7 +14,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Login.module.scss';
 
 export default function LoginPage() {
@@ -36,6 +36,12 @@ export default function LoginPage() {
       })
       .finally(() => setLoading(false));
   }
+
+  useEffect(() => {
+    if (userService.getAuthToken()) {
+      push('/internal/writing');
+    }
+  }, []);
 
   return (
     <div
