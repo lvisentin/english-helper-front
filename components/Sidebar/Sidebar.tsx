@@ -1,5 +1,6 @@
 'use client';
 
+import { userService } from '@/shared/services/user/UserService';
 import {
   faArrowRightFromBracket,
   faListUl,
@@ -13,7 +14,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import styles from './Sidebar.module.scss';
 
@@ -53,6 +54,7 @@ const menuItems: MenuItem[] = [
 
 const Sidebar: React.FC = () => {
   const pathname = usePathname();
+  const { push } = useRouter();
 
   function toggleTheme() {
     const isDarkMode =
@@ -62,6 +64,12 @@ const Sidebar: React.FC = () => {
     } else {
       document.documentElement.setAttribute('data-theme', 'dark');
     }
+  }
+
+  function logout() {
+    userService.signOut().then(() => {
+      push('/login');
+    });
   }
 
   return (
@@ -100,7 +108,10 @@ const Sidebar: React.FC = () => {
             <FontAwesomeIcon icon={faQuestion} className={styles.icon} />
             <span>Help</span>
           </li>
-          <li className={`${styles.footerItem} ${styles.itemBorder}`}>
+          <li
+            className={`${styles.footerItem} ${styles.itemBorder}`}
+            onClick={() => logout()}
+          >
             <FontAwesomeIcon
               icon={faArrowRightFromBracket}
               className={styles.icon}

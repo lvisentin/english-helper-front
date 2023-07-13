@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '@/shared/configs/axios/instances/default';
 import { LoginResponse, SignUpResponse } from './UserService.model';
 
 export interface CurrentUser {
@@ -69,6 +69,11 @@ class UserService {
         },
       }
     );
+  }
+
+  signOut() {
+    // WIP
+    return new Promise(() => localStorage.removeItem('authToken'));
   }
 
   setUserToken(token: string) {
