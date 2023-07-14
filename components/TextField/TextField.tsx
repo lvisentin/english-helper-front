@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import { TextFieldProps } from '@/components/TextField/TextField.types';
+import { useState } from 'react';
 
 export default function TextField({
   label,
@@ -10,6 +10,11 @@ export default function TextField({
   helperText,
   placeholder,
   className,
+  onChange,
+  onBlur,
+  value,
+  name,
+  errors,
 }: TextFieldProps) {
   const [toggleState, setToggleState] = useState(true);
 
@@ -48,6 +53,10 @@ export default function TextField({
           <label className="not-prose input-group">
             {leadingIcon && <span>{leadingIcon}</span>}
             <input
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              name={name}
               type={toggleState && trailingIcon ? 'password' : 'text'}
               placeholder={placeholder}
               className={`input input-bordered flex-grow w-[inherit]`}
@@ -56,6 +65,10 @@ export default function TextField({
           </label>
         ) : (
           <input
+            onChange={onChange}
+            onBlur={onBlur}
+            value={value}
+            name={name}
             type={'text'}
             placeholder={placeholder}
             className={`input input-bordered flex-grow w-[inherit]`}
@@ -63,7 +76,12 @@ export default function TextField({
         )}
         {helperText && (
           <label className={'label-text'}>
-            <span className={'label-text-alt'}>{helperText}</span>
+            <span className={`label-text-alt`}>{helperText}</span>
+          </label>
+        )}
+        {errors && (
+          <label className={'label-text'}>
+            <span className={`label-text-alt error text-error`}>{errors}</span>
           </label>
         )}
       </div>

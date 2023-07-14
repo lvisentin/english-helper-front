@@ -13,10 +13,16 @@
   outline: none;
 }
 
+*:focus {
+  outline: none !important;
+}
+
 html,
 body {
   width: 100%;
   height: 100%;
+
+  display: flex;
 }
 
 #__next {
