@@ -15,8 +15,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
-import styles from './Sidebar.module.scss';
-
 export interface MenuItem {
   icon: IconLookup;
   text: string;
@@ -55,16 +53,6 @@ const Sidebar: React.FC = () => {
   const pathname = usePathname();
   const { push } = useRouter();
 
-  // function toggleTheme() {
-  //   const isDarkMode =
-  //     document.documentElement.getAttribute('data-theme') === 'dark';
-  //   if (isDarkMode) {
-  //     document.documentElement.setAttribute('data-theme', 'light');
-  //   } else {
-  //     document.documentElement.setAttribute('data-theme', 'dark');
-  //   }
-  // }
-
   function logout() {
     userService.signOut().then(() => {
       push('/login');
@@ -72,62 +60,69 @@ const Sidebar: React.FC = () => {
   }
 
   return (
-    <nav className={styles.nav}>
-      <div className="navContent">
-        <div className={styles.user}>
-          <img src={'https://placehold.it/50x50'} alt={'Avatar'} />
-          <div className={`${styles.userInfo} hidden md:block`}>
-            <p className={styles.userName}>Lucas Visentin</p>
-            <p className={styles.userEmail}>lvise.batista@gmail.com</p>
-          </div>
-        </div>
-
-        <div className={styles.navBody}>
-          <ul className={styles.itemsList}>
-            {menuItems.map((menuItem, key) => (
-              <Link href={menuItem.route} key={key}>
-                <li
-                  className={pathname === menuItem.route ? styles.active : ''}
-                >
-                  <FontAwesomeIcon
-                    icon={menuItem.icon}
-                    className={styles.icon}
-                  />
-                  <span className="hidden md:block">{menuItem.text}</span>
-                </li>
-              </Link>
-            ))}
-          </ul>
+    <nav
+      className={
+        'bg-base-100 w-80 flex flex-col h-screen justify-between shadow-sm'
+      }
+    >
+      <div className={'flex align-items-center pt-8 px-8'}>
+        <img
+          src={'https://placehold.it/50x50'}
+          alt={'Avatar'}
+          className="rounded-full"
+        />
+        <div className={'hidden md:block ml-4'}>
+          <p className={'truncate font-mono'}>Lucas Visentin</p>
+          <p className={'truncate font-mono'}>lvise.batista@gmail.com</p>
         </div>
       </div>
 
-      <div className={styles.navFooter}>
-        <ul>
-          <li className={styles.footerItem}>
-            <FontAwesomeIcon icon={faQuestion} className={styles.icon} />
-            <span>Help</span>
+      <ul className="menu menu-sm lg:menu-md px-4 py-4 mb-auto">
+        <li className="my-4"></li>
+        {menuItems.map((menuItem, key) => (
+          <li key={key}>
+            <Link
+              href={menuItem.route}
+              data-sveltekit-preload-data="hover"
+              className={
+                pathname === menuItem.route
+                  ? 'active h-full text-white p-4'
+                  : 'h-full p-4'
+              }
+            >
+              <FontAwesomeIcon icon={menuItem.icon} className={`h-5 w-5`} />
+              <span className="hidden md:block undefined">{menuItem.text}</span>
+            </Link>
           </li>
-          <li
-            className={`${styles.footerItem} ${styles.itemBorder}`}
-            onClick={() => logout()}
-          >
-            <FontAwesomeIcon
-              icon={faArrowRightFromBracket}
-              className={styles.icon}
-            />
-            <span>Logout</span>
+        ))}
+      </ul>
+      <div className="footer w-full">
+        <ul className="menu menu-sm lg:menu-md px-4 py-4 w-full">
+          <li className="my-4"></li>
+          <li className="w-full">
+            <Link
+              href="/"
+              data-sveltekit-preload-data="hover"
+              className={'h-full p-4'}
+            >
+              <FontAwesomeIcon icon={faQuestion} className={'h-5 w-5'} />
+              <span className="hidden md:block undefined">Help</span>
+            </Link>
+          </li>
+          <li className="w-full">
+            <Link
+              href="/"
+              data-sveltekit-preload-data="hover"
+              className={'h-full p-4'}
+            >
+              <FontAwesomeIcon
+                icon={faArrowRightFromBracket}
+                className={'h-5 w-5'}
+              />
+              <span className="hidden md:block undefined">Logout</span>
+            </Link>
           </li>
         </ul>
-
-        {/* <li className={`${styles.footerItem} ${styles.nightMode}`}>
-          <FontAwesomeIcon icon={faMoon} className={styles.icon} />
-          <span>Night mode</span>
-          <input
-            onClick={() => toggleTheme()}
-            type="checkbox"
-            className="toggle toggle-sm hidden md:block"
-          />
-        </li> */}
       </div>
     </nav>
   );
