@@ -5,7 +5,6 @@ import {
   faArrowRightFromBracket,
   faListUl,
   faMicrophoneLines,
-  faMoon,
   faPen,
   faQuestion,
   faReceipt,
@@ -56,15 +55,15 @@ const Sidebar: React.FC = () => {
   const pathname = usePathname();
   const { push } = useRouter();
 
-  function toggleTheme() {
-    const isDarkMode =
-      document.documentElement.getAttribute('data-theme') === 'dark';
-    if (isDarkMode) {
-      document.documentElement.setAttribute('data-theme', 'light');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
-  }
+  // function toggleTheme() {
+  //   const isDarkMode =
+  //     document.documentElement.getAttribute('data-theme') === 'dark';
+  //   if (isDarkMode) {
+  //     document.documentElement.setAttribute('data-theme', 'light');
+  //   } else {
+  //     document.documentElement.setAttribute('data-theme', 'dark');
+  //   }
+  // }
 
   function logout() {
     userService.signOut().then(() => {
@@ -120,7 +119,7 @@ const Sidebar: React.FC = () => {
           </li>
         </ul>
 
-        <li className={`${styles.footerItem} ${styles.nightMode}`}>
+        {/* <li className={`${styles.footerItem} ${styles.nightMode}`}>
           <FontAwesomeIcon icon={faMoon} className={styles.icon} />
           <span>Night mode</span>
           <input
@@ -128,7 +127,7 @@ const Sidebar: React.FC = () => {
             type="checkbox"
             className="toggle toggle-sm hidden md:block"
           />
-        </li>
+        </li> */}
       </div>
     </nav>
   );
