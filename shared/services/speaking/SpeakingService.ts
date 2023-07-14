@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { userService } from '../user/UserService';
 import {
   GetSpeakingsResponse,
@@ -8,7 +8,7 @@ class SpeakingService {
   private API_URL = process.env.API_URL;
   private authToken = userService.getAuthToken();
 
-  getSpeakings(): Promise<GetSpeakingsResponse> {
+  getSpeakings(): Promise<AxiosResponse<GetSpeakingsResponse>> {
     return axios.get<GetSpeakingsResponse>(`${this.API_URL}/feedbacks`, {
       params: {
         type: 'text',
