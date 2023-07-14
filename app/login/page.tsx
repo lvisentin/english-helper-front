@@ -31,9 +31,6 @@ export default function LoginPage() {
         userService.setUserToken(data.token);
         push('/internal/writing');
       })
-      .catch(() => {
-        setLoading(false);
-      })
       .finally(() => setLoading(false));
   }
 
