@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  important: true,
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -35,26 +36,6 @@ module.exports = {
   },
   plugins: [require('@tailwindcss/typography'), require('daisyui')],
   daisyui: {
-    themes: [
-      {
-        light: {
-          primary: '#2B4E99',
-          secondary: '#4D9966',
-          accent1: '#CC7A00',
-          accent2: '#CC224D',
-          background: '#21293D',
-          text: '#F2F5F8',
-          link: '#82AAFF',
-          success: '#00A550',
-          warning: '#DAAA00',
-          error: '#FF1A4D',
-          '.bg-default': {
-            backgroundColor: '#F2F5F8',
-            color: '#333333',
-          },
-        },
-      },
-      // 'dark',
-    ],
+    themes: ['corporate'],
   },
 };
