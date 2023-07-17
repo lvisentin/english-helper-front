@@ -4,10 +4,16 @@ import { Feedback } from '@/shared/models/feedbacks/feedback.model';
 import { speakingService } from '@/shared/services/speaking/SpeakingService';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from './SpeakingDashboard.module.scss';
 
 const SpeakingDashboard = () => {
+  const { push } = useRouter();
+  function goToNew() {
+    push('/internal/speaking/scenarios');
+  }
+
   const columns: GridColDef[] = [
     {
       field: 'title',
@@ -68,9 +74,13 @@ const SpeakingDashboard = () => {
       <section className={'grid'}>
         <header className={'flex justify-between w-full'}>
           <div className={'prose'}>
-            <h1 className={'mb-0 prose-h1'}>Speaking - Análises Recebidas</h1>
+            <h1 className={'mb-0 prose-h1 pb-1'}>
+              Speaking - Análises Recebidas
+            </h1>
           </div>
-          <button className={'btn btn-primary'}>Solicitar nova análise</button>
+          <button className={'btn btn-primary'} onClick={goToNew}>
+            Solicitar nova análise
+          </button>
         </header>
         {feedbackData.length > 0 && (
           <DataGrid

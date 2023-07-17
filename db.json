@@ -1,0 +1,81 @@
+{
+  "a": {
+    "text": "Durante a reunião de planejamento do sprint, diga para o time que a tarefa sobre o refactor do código de autenticação seria estimada em 5 story points devido ao nível de complexidade",
+    "id": "a",
+    "title": "Sprint Planning",
+    "type": "text",
+    "slug": ""
+  },
+  "scenarios": [
+    {
+      "text": "Durante a reunião de planejamento do sprint, diga para o time que a tarefa sobre o refactor do código de autenticação seria estimada em 5 story points devido ao nível de complexidade",
+      "id": "a",
+      "title": "Sprint Planning",
+      "type": "text",
+      "slug": ""
+    },
+    {
+      "text": "Explique na standup que você teve uma conversa com Jacob sobre um bug específico na AWS e não havia nenhum impedimento que o estivesse afetando no momento.",
+      "id": "ab",
+      "title": "Daily Standup",
+      "type": "text",
+      "slug": ""
+    },
+    {
+      "text": "Explique para um colega em uma discussão técnica o motivo pelo qual você considera framework a melhor do que framework b",
+      "id": "ac",
+      "title": "Technical discussion",
+      "type": "text",
+      "slug": ""
+    },
+    {
+      "text": "Você está numa entrevista para o cargo de software engineer, conte sobre sua experiência, projetos relevantes que já trabalhou e suas melhores habilidades.",
+      "id": "ad",
+      "title": "Mock Interview",
+      "type": "",
+      "slug": ""
+    },
+    {
+      "text": "Durante um code review, explique para Jacob sobre o porque utilizar um for ao invés de um forEach, esse motivo sendo um ganho de performance com a troca.",
+      "id": "ae",
+      "title": "Code review",
+      "type": "text",
+      "slug": ""
+    },
+    {
+      "text": "Você está na sprint retro, fale sobre a última sprint ter sido tranquila e que vocês podem trabalhar em mais 5 story points na proxima sprint.",
+      "id": "ar",
+      "title": "Sprint retro",
+      "type": "text",
+      "slug": ""
+    },
+    {
+      "text": "Durante a standup, comunique que teve uma conversa com Emily sobre um erro de integração com um serviço externo. Explique que não há nenhuma barreira atualmente que esteja prejudicando a resolução desse problema.",
+      "id": "at",
+      "title": "Daily standup 2",
+      "type": "",
+      "slug": "standup2"
+    },
+    {
+      "text": "Na reunião matinal, compartilhe que teve uma discussão com Michael sobre um requisito específico do cliente que não estava claro. Esclareça para a equipe que não há nenhum impedimento que esteja afetando o progresso do trabalho relacionado a esse requisito.",
+      "id": "ya",
+      "title": "Daily Standup 3",
+      "type": "",
+      "slug": "standup3"
+    },
+    {
+      "text": "Durante a daily standup, mencione que teve uma conversa com Lisa sobre uma falha na autenticação do usuário. Informe aos colegas de equipe que não existem impedimentos no momento que estejam dificultando a correção desse problema.",
+      "id": "au",
+      "title": "Daily standup 4",
+      "type": "",
+      "slug": "standup4"
+    },
+    {
+      "text": "Ao se reunir para a standup, relate que teve um diálogo com Daniel sobre a falta de recursos disponíveis para a implementação de uma nova funcionalidade. Garanta à equipe que, no momento, não há obstáculos que estejam impactando o andamento do projeto relacionado a essa funcionalidade específica.",
+      "id": "ai",
+      "title": "Daily standup 5",
+      "type": "",
+      "slug": "standup5"
+    }
+  ]
+}
