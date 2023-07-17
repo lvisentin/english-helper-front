@@ -25,7 +25,7 @@ const menuItems: MenuItem[] = [
   {
     icon: faListUl,
     text: 'Home',
-    route: '/',
+    route: '/internal/dashboard',
   },
   {
     icon: faPen,
@@ -62,7 +62,7 @@ const Sidebar: React.FC = () => {
   return (
     <nav
       className={
-        'bg-base-100 w-80 flex flex-col h-screen justify-between shadow-sm'
+        'bg-base-100 min-w-320 w-80 flex flex-col h-screen justify-between shadow-sm'
       }
     >
       <div className={'flex align-items-center pt-8 px-8'}>
