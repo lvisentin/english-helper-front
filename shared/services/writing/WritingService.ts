@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { userService } from '../user/UserService';
 import {
   GetWritingsResponse,
@@ -8,7 +8,7 @@ class WritingService {
   private API_URL = process.env.API_URL;
   private authToken = userService.getAuthToken();
 
-  getWritings(): Promise<GetWritingsResponse> {
+  getWritings(): Promise<AxiosResponse<GetWritingsResponse>> {
     return axios.get(`${this.API_URL}/feedbacks`, {
       params: {
         type: 'text',
