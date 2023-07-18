@@ -1,7 +1,8 @@
-import { Inter } from 'next/font/google';
-import '../styles/globals.scss';
 import PrimaryLayout from '@/components/layouts/primary/PrimaryLayout';
 import { GlobalStateProvider } from '@/context/GlobalState/Provider';
+import { Inter } from 'next/font/google';
+import { ToastContainer } from 'react-toastify';
+import '../styles/globals.scss';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,6 +19,16 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="light">
       <body className={inter.className}>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          pauseOnHover
+        />
         <GlobalStateProvider>
           <PrimaryLayout>{children}</PrimaryLayout>
         </GlobalStateProvider>
