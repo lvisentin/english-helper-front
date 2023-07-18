@@ -4,11 +4,12 @@ import { Feedback } from '@/shared/models/feedbacks/feedback.model';
 import { speakingService } from '@/shared/services/speaking/SpeakingService';
 import { DataGrid, GridColDef, GridRowId } from '@mui/x-data-grid';
 
+import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from './SpeakingDashboard.module.scss';
 
-const SpeakingDashboard = () => {
+const SpeakingDashboard = (props: any, ref: any) => {
   const [loading, setLoading] = useState<boolean>(false);
   const { push } = useRouter();
   const [feedbackData, setFeedbackData] = useState<Feedback[]>([]);
@@ -78,7 +79,7 @@ const SpeakingDashboard = () => {
   }, []);
 
   return (
-    <>
+    <PageTransition ref={ref}>
       <section className={'grid'}>
         <header className={'flex justify-between w-full'}>
           <div className={'prose'}>
@@ -125,7 +126,7 @@ const SpeakingDashboard = () => {
           )
         )}
       </section>
-    </>
+    </PageTransition>
   );
 };
 
