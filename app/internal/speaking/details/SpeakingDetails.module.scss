@@ -1,0 +1,19 @@
+.outputText {
+  max-height: 500px;
+  overflow: auto;
+}
+
+.outputText::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.outputText::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+
+.outputText::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #c1c1c1;
+}

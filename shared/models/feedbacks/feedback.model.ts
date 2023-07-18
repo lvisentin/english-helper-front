@@ -9,4 +9,5 @@ export interface Feedback {
   duration: Number;
   wordsCount: Number;
   tokenUsage: any;
+  _id?: string;
 }

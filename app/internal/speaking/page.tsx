@@ -2,18 +2,16 @@
 
 import { Feedback } from '@/shared/models/feedbacks/feedback.model';
 import { speakingService } from '@/shared/services/speaking/SpeakingService';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowId } from '@mui/x-data-grid';
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from './SpeakingDashboard.module.scss';
 
 const SpeakingDashboard = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const { push } = useRouter();
-  function goToNew() {
-    push('/internal/speaking/scenarios');
-  }
-
+  const [feedbackData, setFeedbackData] = useState<Feedback[]>([]);
   const columns: GridColDef[] = [
     {
       field: 'title',
@@ -55,18 +53,28 @@ const SpeakingDashboard = () => {
     },
   ];
 
-  const [feedbackData, setFeedbackData] = useState<Feedback[]>([]);
+  function goToNew() {
+    push('/internal/speaking/scenarios');
+  }
 
-  useEffect(() => {
-    const authToken = localStorage.getItem('authToken');
-    if (authToken) {
-      speakingService.getSpeakings().then(({ data }) => {
-        console.log('data', data);
+  function goToDetails(feedbackId: GridRowId) {
+    console.log('feedback', feedbackId);
+    push(`/internal/speaking/details?id=${feedbackId}`);
+  }
+
+  function getFeedbacks() {
+    setLoading(true);
+    speakingService
+      .getSpeakings()
+      .then(({ data }) => {
         const { feedbacks } = data;
         setFeedbackData(feedbacks);
-        console.log('feedbacks', feedbacks);
-      });
-    }
+      })
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    getFeedbacks();
   }, []);
 
   return (
@@ -82,32 +90,39 @@ const SpeakingDashboard = () => {
             Solicitar nova análise
           </button>
         </header>
-        {feedbackData.length > 0 && (
-          <DataGrid
-            localeText={{
-              MuiTablePagination: {
-                labelDisplayedRows: ({ from, to }) =>
-                  `Mostrando de ${from} até ${to}`,
-                labelRowsPerPage: 'Resultados por página',
-              },
-            }}
-            className={`${styles.dataGrid} h-fit mt-6`}
-            getRowId={(row) => row._id}
-            classes={{
-              sortIcon: styles.dataGridIcon,
-            }}
-            rows={feedbackData}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
-              },
-            }}
-            disableColumnSelector
-            disableRowSelectionOnClick
-            disableColumnMenu
-            pageSizeOptions={[5, 10]}
-          />
+        {loading ? (
+          <div className="flex items-center justify-center h-full">
+            <span className="loading loading-spinner loading-lg"></span>
+          </div>
+        ) : (
+          feedbackData.length > 0 && (
+            <DataGrid
+              localeText={{
+                MuiTablePagination: {
+                  labelDisplayedRows: ({ from, to }) =>
+                    `Mostrando de ${from} até ${to}`,
+                  labelRowsPerPage: 'Resultados por página',
+                },
+              }}
+              className={`${styles.dataGrid} h-fit mt-6`}
+              getRowId={(row) => row._id}
+              classes={{
+                sortIcon: styles.dataGridIcon,
+              }}
+              rows={feedbackData}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 5 },
+                },
+              }}
+              disableColumnSelector
+              disableRowSelectionOnClick
+              disableColumnMenu
+              onRowClick={(row) => goToDetails(row.id)}
+              pageSizeOptions={[5, 10]}
+            />
+          )
         )}
       </section>
     </>
