@@ -10,7 +10,8 @@
     "prepare": "husky install",
     "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "db": "json-server --watch db.json --port 4000"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

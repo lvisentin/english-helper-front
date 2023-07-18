@@ -43,7 +43,7 @@ export default function NewSpeaking() {
 
         <main className={'mt-8'}>
           <div className="scenarios">
-            {scenarios.length > 0 &&
+            {scenarios.length > 0 ? (
               scenarios.map((scenario, key) => (
                 <Link
                   key={key}
@@ -59,7 +59,12 @@ export default function NewSpeaking() {
                     </div>
                   </div>
                 </Link>
-              ))}
+              ))
+            ) : (
+              <div className="flex items-center justify-center h-full">
+                <span className="loading loading-spinner loading-lg"></span>
+              </div>
+            )}
           </div>
         </main>
       </section>

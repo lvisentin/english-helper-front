@@ -1,6 +1,7 @@
 import axios from '@/shared/configs/axios/instances/default';
 import { AxiosResponse } from 'axios';
 import {
+  GetSpeakingByIdResponse,
   GetSpeakingsResponse,
   NewSpeakingResponse,
 } from './SpeakingService.model';
@@ -13,6 +14,14 @@ class SpeakingService {
         type: 'text',
       },
     });
+  }
+
+  getSpeakingById(
+    speakingId: string
+  ): Promise<AxiosResponse<GetSpeakingByIdResponse>> {
+    return axios.get<GetSpeakingByIdResponse>(
+      `${this.API_URL}/feedbacks/${speakingId}`
+    );
   }
 
   newSpeaking(
