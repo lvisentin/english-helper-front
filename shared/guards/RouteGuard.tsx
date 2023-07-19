@@ -1,7 +1,7 @@
 'use client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ReactElement, useEffect, useState } from 'react';
-import { useCurrentUser } from '../hooks/useCurrentUser';
+import { userService } from '../services/user/UserService';
 
 export interface RouteGuardProps {
   children: ReactElement;
@@ -12,20 +12,28 @@ const RouteGuard = ({ children }: RouteGuardProps) => {
   const [authorized, setAuthorized] = useState(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const user = useCurrentUser();
 
-  useEffect(() => {
-    const authCheck = () => {
-      if (!user) {
+  function checkUser() {
+    userService
+      .getCurrentUser()
+      .then(({ data }) => {
+        if (!data.user) {
+          setAuthorized(false);
+          router.push('/login');
+        } else {
+          setAuthorized(true);
+        }
+      })
+      .catch(() => {
+        console.error('UNAUTHORIZED USER');
         setAuthorized(false);
         router.push('/login');
-      } else {
-        setAuthorized(true);
-      }
-    };
+      });
+  }
 
-    authCheck();
-  }, [router, pathname, searchParams, user]);
+  useEffect(() => {
+    checkUser();
+  }, [router, pathname, searchParams]);
 
   return authorized ? (
     children

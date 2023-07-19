@@ -3,6 +3,7 @@
 import TextField from '@/components/TextField/TextField';
 import LoadingButton from '@/shared/components/LoadingButton/LoadingButton';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
+import RouteGuard from '@/shared/guards/RouteGuard';
 import { scenariosService } from '@/shared/services/scenarios/ScenariosService';
 import { Scenario } from '@/shared/services/scenarios/ScenariosService.model';
 import { writingService } from '@/shared/services/writing/WritingService';
@@ -58,78 +59,82 @@ export default function NewWriting() {
 
   return (
     <PageTransition>
-      {scenario ? (
-        <section className="grid">
-          <header className={'flex justify-between w-full'}>
-            <div className={'prose max-w-full w-full'}>
-              <h1 className={' prose-h1 pb-1 mb-1'}>{scenario.title}</h1>
-              <h5 className="prose-h5">{scenario.text}</h5>
-            </div>
-            <button
-              className={'btn btn-sm btn-ghost text-xs md:text-sm lg:btn-md'}
-              onClick={goBack}
-            >
-              <FontAwesomeIcon icon={faArrowLeft} />
-              Voltar
-            </button>
-          </header>
+      <RouteGuard>
+        {scenario ? (
+          <section className="grid">
+            <header className={'flex justify-between w-full'}>
+              <div className={'prose max-w-full w-full'}>
+                <h1 className={' prose-h1 pb-1 mb-1'}>{scenario.title}</h1>
+                <h5 className="prose-h5">{scenario.text}</h5>
+              </div>
+              <button
+                className={'btn btn-sm btn-ghost text-xs md:text-sm lg:btn-md'}
+                onClick={goBack}
+              >
+                <FontAwesomeIcon icon={faArrowLeft} />
+                Voltar
+              </button>
+            </header>
 
-          <main className={'mt-4'}>
-            <Formik
-              initialValues={{ title: '', input: '' }}
-              onSubmit={({ title, input }) => sendFeedback(title, input)}
-            >
-              {({ values, handleChange, handleBlur, handleSubmit }) => (
-                <form
-                  className={'flex flex-col justify-end items-end gap-y-2'}
-                  onSubmit={handleSubmit}
-                >
-                  <TextField
-                    name="title"
-                    placeholder={'Digite um titulo para identificar o feedback'}
-                    label={'Titulo'}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.title}
-                    className={'w-full'}
-                  />
-
-                  <div className={'form-control w-full'}>
-                    <label className={'label'}>
-                      <span className={'label-text'}>Texto</span>
-                    </label>
-                    <textarea
-                      className={
-                        'textarea textarea-bordered h-32 resize-none w-full'
+            <main className={'mt-4'}>
+              <Formik
+                initialValues={{ title: '', input: '' }}
+                onSubmit={({ title, input }) => sendFeedback(title, input)}
+              >
+                {({ values, handleChange, handleBlur, handleSubmit }) => (
+                  <form
+                    className={'flex flex-col justify-end items-end gap-y-2'}
+                    onSubmit={handleSubmit}
+                  >
+                    <TextField
+                      name="title"
+                      placeholder={
+                        'Digite um titulo para identificar o feedback'
                       }
-                      name="input"
+                      label={'Titulo'}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      value={values.input}
-                      placeholder={
-                        'Good morning boss, I wanted to let you know ...'
+                      value={values.title}
+                      className={'w-full'}
+                    />
+
+                    <div className={'form-control w-full'}>
+                      <label className={'label'}>
+                        <span className={'label-text'}>Texto</span>
+                      </label>
+                      <textarea
+                        className={
+                          'textarea textarea-bordered h-32 resize-none w-full'
+                        }
+                        name="input"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.input}
+                        placeholder={
+                          'Good morning boss, I wanted to let you know ...'
+                        }
+                      ></textarea>
+                    </div>
+                    <LoadingButton
+                      loading={loading}
+                      className={
+                        'btn w-full btn-primary justify-self-end mt-8 md:w-fit'
                       }
-                    ></textarea>
-                  </div>
-                  <LoadingButton
-                    loading={loading}
-                    className={
-                      'btn w-full btn-primary justify-self-end mt-8 md:w-fit'
-                    }
-                    type="submit"
-                  >
-                    Solicitar análise
-                  </LoadingButton>
-                </form>
-              )}
-            </Formik>
-          </main>
-        </section>
-      ) : (
-        <div className="flex items-center justify-center h-full">
-          <span className="loading loading-spinner loading-lg"></span>
-        </div>
-      )}
+                      type="submit"
+                    >
+                      Solicitar análise
+                    </LoadingButton>
+                  </form>
+                )}
+              </Formik>
+            </main>
+          </section>
+        ) : (
+          <div className="flex items-center justify-center h-full">
+            <span className="loading loading-spinner loading-lg"></span>
+          </div>
+        )}
+      </RouteGuard>
     </PageTransition>
   );
 }
