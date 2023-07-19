@@ -11,7 +11,7 @@ class SpeakingService {
   getSpeakings(): Promise<AxiosResponse<GetSpeakingsResponse>> {
     return axios.get<GetSpeakingsResponse>(`${this.API_URL}/feedbacks`, {
       params: {
-        type: 'text',
+        type: 'audio',
       },
     });
   }

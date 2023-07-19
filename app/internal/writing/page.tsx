@@ -1,10 +1,7 @@
 'use client';
 
 import styles from '@/app/internal/speaking/SpeakingDashboard.module.scss';
-import HelpButton from '@/components/HelpButton/HelpButton';
-import PageTransition, {
-  PageTransitionRef,
-} from '@/shared/components/PageTransition/PageTransition';
+import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { Feedback } from '@/shared/models/feedbacks/feedback.model';
 import { writingService } from '@/shared/services/writing/WritingService';
@@ -53,12 +50,7 @@ const columns: GridColDef[] = [
   },
 ];
 
-export interface WritingProps {}
-
-export default function WritingPage(
-  props: WritingProps,
-  ref: PageTransitionRef
-) {
+export default function WritingPage() {
   const [writingFeedbacks, setWritingFeedbacks] = useState<Feedback[]>([]);
   const [loadingData, setLoadingData] = useState(true);
 
@@ -123,7 +115,6 @@ export default function WritingPage(
               />
             )}
           </div>
-          <HelpButton />
         </section>
       </RouteGuard>
     </PageTransition>
