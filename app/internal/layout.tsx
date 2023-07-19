@@ -1,3 +1,4 @@
+import HelpButton from '@/components/HelpButton/HelpButton';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Head from 'next/head';
 import React from 'react';
@@ -10,6 +11,7 @@ export interface IInternalLayout {
 const InternalLayout: React.FC<IInternalLayout> = ({ children }) => {
   return (
     <>
+      <HelpButton></HelpButton>
       <Head>
         <title>Primary Layout Example</title>
       </Head>
