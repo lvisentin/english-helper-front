@@ -1,5 +1,6 @@
 'use client';
 
+import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import { Feedback } from '@/shared/models/feedbacks/feedback.model';
 import { speakingService } from '@/shared/services/speaking/SpeakingService';
 import { GetSpeakingByIdResponse } from '@/shared/services/speaking/SpeakingService.model';
@@ -42,7 +43,7 @@ export default function SpeakingDetails() {
   }, []);
 
   return (
-    <>
+    <PageTransition>
       <section className={'h-full'}>
         {feedbackData ? (
           <>
@@ -113,6 +114,6 @@ export default function SpeakingDetails() {
           </div>
         )}
       </section>
-    </>
+    </PageTransition>
   );
 }

@@ -1,9 +1,32 @@
 'use client';
-import PageTransition from '@/shared/components/PageTransition/PageTransition';
 
-function Dashboard(props: any, ref: any) {
+import PageTransition from '@/shared/components/PageTransition/PageTransition';
+import { scenariosService } from '@/shared/services/scenarios/ScenariosService';
+import { Scenario } from '@/shared/services/scenarios/ScenariosService.model';
+import { AxiosResponse } from 'axios';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
+function Dashboard() {
+  const [scenarios, setScenarios] = useState<Scenario[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  function getScenarios() {
+    setLoading(true);
+    scenariosService
+      .getScenarios()
+      .then(({ data }: AxiosResponse<Scenario[]>) => {
+        setScenarios(data);
+      })
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    getScenarios();
+  }, []);
+
   return (
-    <PageTransition ref={ref}>
+    <PageTransition>
       <main className="prose w-full max-w-full">
         <div className="header">
           <h2 className="mt-0">Bem vindo, lucas!</h2>
@@ -25,19 +48,30 @@ function Dashboard(props: any, ref: any) {
         <div className="content">
           <h2 className="mt-5">Praticar cenários</h2>
           <div className="scenarios">
-            <div className="card w-full bg-base-100 shadow-lg">
-              <div className="card-body p-6">
-                <h2 className="card-title m-0">Daily standup</h2>
-                <p className="m-0">
-                  Ao se reunir para a standup, relate que teve um diálogo com
-                  Daniel sobre a falta de recursos disponíveis para a
-                  implementação de uma nova funcionalidade. Garanta à equipe
-                  que, no momento, não há obstáculos que estejam impactando o
-                  andamento do projeto relacionado a essa funcionalidade
-                  específica.
-                </p>
+            {loading ? (
+              <div className="flex items-center justify-center h-full mt-8">
+                <span className="loading loading-spinner loading-lg"></span>
               </div>
-            </div>
+            ) : (
+              scenarios.length > 0 &&
+              scenarios.map((scenario, key) => (
+                <Link
+                  key={key}
+                  href={{
+                    pathname: `/internal/speaking/scenarios/new`,
+                    query: `id=${scenario.id}`,
+                  }}
+                  className="no-underline font-normal"
+                >
+                  <div className="card w-full bg-base-100 shadow-lg mb-4 cursor-pointer">
+                    <div className="card-body p-6">
+                      <h2 className="card-title m-0">{scenario.title}</h2>
+                      <p className="m-0">{scenario.text}</p>
+                    </div>
+                  </div>
+                </Link>
+              ))
+            )}
           </div>
         </div>
       </main>

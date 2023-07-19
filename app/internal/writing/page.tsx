@@ -1,13 +1,16 @@
 'use client';
 
-import RouteGuard from '@/shared/guards/RouteGuard';
-import Link from 'next/link';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import styles from '@/app/internal/speaking/SpeakingDashboard.module.scss';
-import { useEffect, useState } from 'react';
+import HelpButton from '@/components/HelpButton/HelpButton';
+import PageTransition, {
+  PageTransitionRef,
+} from '@/shared/components/PageTransition/PageTransition';
+import RouteGuard from '@/shared/guards/RouteGuard';
 import { Feedback } from '@/shared/models/feedbacks/feedback.model';
 import { writingService } from '@/shared/services/writing/WritingService';
-import HelpButton from '@/components/HelpButton/HelpButton';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const columns: GridColDef[] = [
   {
@@ -50,7 +53,12 @@ const columns: GridColDef[] = [
   },
 ];
 
-export default function WritingPage() {
+export interface WritingProps {}
+
+export default function WritingPage(
+  props: WritingProps,
+  ref: PageTransitionRef
+) {
   const [writingFeedbacks, setWritingFeedbacks] = useState<Feedback[]>([]);
   const [loadingData, setLoadingData] = useState(true);
 
@@ -70,21 +78,23 @@ export default function WritingPage() {
     }
   }, []);
   return (
-    <RouteGuard>
-      <>
-        <section className={'pt-8 grid'}>
+    <PageTransition>
+      <RouteGuard>
+        <section className={'grid'}>
           <header className={'flex justify-between pb-6'}>
             <div className={'prose'}>
               <h1 className={'mb-0 pb-1'}>Writing - Análises recebidas</h1>
             </div>
 
             <button className={'btn btn-primary'}>
-              <Link href={'/writing/new'}>Solicitar análise</Link>
+              <Link href={'/writing/new'}>Solicitar nova análise</Link>
             </button>
           </header>
           <div className={'pb-20'}>
             {loadingData ? (
-              <span className="loading loading-dots loading-lg"></span>
+              <div className="flex items-center justify-center h-full mt-8">
+                <span className="loading loading-spinner loading-lg"></span>
+              </div>
             ) : (
               <DataGrid
                 localeText={{
@@ -94,7 +104,7 @@ export default function WritingPage() {
                     labelRowsPerPage: 'Resultados por página',
                   },
                 }}
-                className={`${styles.dataGrid} h-fit mt-6`}
+                className={`${styles.dataGrid} h-fit`}
                 getRowId={(row) => row._id}
                 classes={{
                   sortIcon: styles.dataGridIcon,
@@ -115,7 +125,7 @@ export default function WritingPage() {
           </div>
           <HelpButton />
         </section>
-      </>
-    </RouteGuard>
+      </RouteGuard>
+    </PageTransition>
   );
 }

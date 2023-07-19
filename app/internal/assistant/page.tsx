@@ -1,12 +1,13 @@
+'use client';
 import TextField from '@/components/TextField/TextField';
+import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function AssistantPage() {
   return (
-    <>
-      <header className={'shadow-md h-20 m-[-2rem] mb-0 bg-white'}></header>
-      <section className={'pt-8 grid'}>
+    <PageTransition>
+      <section className={'grid'}>
         <header className={'flex justify-between'}>
           <div className={'prose'}>
             <h1 className={'mb-0'}>Assistente</h1>
@@ -36,6 +37,6 @@ export default function AssistantPage() {
           Perguntar
         </button>
       </section>
-    </>
+    </PageTransition>
   );
 }

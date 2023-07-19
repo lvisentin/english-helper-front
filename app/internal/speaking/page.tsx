@@ -5,6 +5,7 @@ import { speakingService } from '@/shared/services/speaking/SpeakingService';
 import { DataGrid, GridColDef, GridRowId } from '@mui/x-data-grid';
 
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
+import RouteGuard from '@/shared/guards/RouteGuard';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from './SpeakingDashboard.module.scss';
@@ -79,53 +80,55 @@ const SpeakingDashboard = (props: any, ref: any) => {
   }, []);
 
   return (
-    <PageTransition ref={ref}>
-      <section className={'grid'}>
-        <header className={'flex justify-between w-full'}>
-          <div className={'prose'}>
-            <h1 className={'mb-0 prose-h1 pb-1'}>
-              Speaking - Análises Recebidas
-            </h1>
-          </div>
-          <button className={'btn btn-primary'} onClick={goToNew}>
-            Solicitar nova análise
-          </button>
-        </header>
-        {loading ? (
-          <div className="flex items-center justify-center h-full">
-            <span className="loading loading-spinner loading-lg"></span>
-          </div>
-        ) : (
-          feedbackData.length > 0 && (
-            <DataGrid
-              localeText={{
-                MuiTablePagination: {
-                  labelDisplayedRows: ({ from, to }) =>
-                    `Mostrando de ${from} até ${to}`,
-                  labelRowsPerPage: 'Resultados por página',
-                },
-              }}
-              className={`${styles.dataGrid} h-fit mt-6`}
-              getRowId={(row) => row._id}
-              classes={{
-                sortIcon: styles.dataGridIcon,
-              }}
-              rows={feedbackData}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 5 },
-                },
-              }}
-              disableColumnSelector
-              disableRowSelectionOnClick
-              disableColumnMenu
-              onRowClick={(row) => goToDetails(row.id)}
-              pageSizeOptions={[5, 10]}
-            />
-          )
-        )}
-      </section>
+    <PageTransition>
+      <RouteGuard>
+        <section className={'grid'}>
+          <header className={'flex justify-between w-full'}>
+            <div className={'prose'}>
+              <h1 className={'mb-0 prose-h1 pb-1'}>
+                Speaking - Análises Recebidas
+              </h1>
+            </div>
+            <button className={'btn btn-primary'} onClick={goToNew}>
+              Solicitar nova análise
+            </button>
+          </header>
+          {loading ? (
+            <div className="flex items-center justify-center h-full mt-8">
+              <span className="loading loading-spinner loading-lg"></span>
+            </div>
+          ) : (
+            feedbackData.length > 0 && (
+              <DataGrid
+                localeText={{
+                  MuiTablePagination: {
+                    labelDisplayedRows: ({ from, to }) =>
+                      `Mostrando de ${from} até ${to}`,
+                    labelRowsPerPage: 'Resultados por página',
+                  },
+                }}
+                className={`${styles.dataGrid} h-fit mt-6`}
+                getRowId={(row) => row._id}
+                classes={{
+                  sortIcon: styles.dataGridIcon,
+                }}
+                rows={feedbackData}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 5 },
+                  },
+                }}
+                disableColumnSelector
+                disableRowSelectionOnClick
+                disableColumnMenu
+                onRowClick={(row) => goToDetails(row.id)}
+                pageSizeOptions={[5, 10]}
+              />
+            )
+          )}
+        </section>
+      </RouteGuard>
     </PageTransition>
   );
 };

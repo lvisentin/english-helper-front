@@ -1,6 +1,7 @@
 'use client';
 
 import AudioRecorder from '@/shared/components/AudioRecorder/AudioRecorder';
+import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import { scenariosService } from '@/shared/services/scenarios/ScenariosService';
 import { Scenario } from '@/shared/services/scenarios/ScenariosService.model';
 import { speakingService } from '@/shared/services/speaking/SpeakingService';
@@ -48,7 +49,7 @@ export default function NewSpeaking() {
   }
 
   return (
-    <>
+    <PageTransition>
       {scenario ? (
         <section className="grid">
           <header className={'flex justify-between w-full'}>
@@ -78,6 +79,6 @@ export default function NewSpeaking() {
           <span className="loading loading-spinner loading-lg"></span>
         </div>
       )}
-    </>
+    </PageTransition>
   );
 }

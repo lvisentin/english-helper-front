@@ -2,6 +2,7 @@
 
 import TextField from '@/components/TextField/TextField';
 import AudioRecorder from '@/shared/components/AudioRecorder/AudioRecorder';
+import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import { speakingService } from '@/shared/services/speaking/SpeakingService';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -38,7 +39,7 @@ export default function NewSpeaking() {
   }
 
   return (
-    <>
+    <PageTransition>
       <section className="grid">
         <header className={'flex justify-between w-full'}>
           <div className={'prose max-w-full w-full'}>
@@ -104,6 +105,6 @@ export default function NewSpeaking() {
           </Formik>
         </main>
       </section>
-    </>
+    </PageTransition>
   );
 }
