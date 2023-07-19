@@ -14,12 +14,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+import { useCurrentUser } from '@/shared/hooks/useCurrentUser';
 import { useEffect, useState } from 'react';
 import styles from './Login.module.scss';
 
 export default function LoginPage() {
   const { push } = useRouter();
-
+  const user = useCurrentUser();
   const [loading, setLoading] = useState<boolean>(false);
 
   function login(email: string, password: string) {
@@ -29,14 +30,14 @@ export default function LoginPage() {
       .then(({ data }: AxiosResponse<LoginResponse>) => {
         setLoading(false);
         userService.setUserToken(data.token);
-        push('/internal/writing');
+        push('/internal');
       })
       .finally(() => setLoading(false));
   }
 
   useEffect(() => {
-    if (userService.getAuthToken()) {
-      push('/internal/writing');
+    if (!(user._id.length === 0)) {
+      push('/internal');
     }
   }, []);
 

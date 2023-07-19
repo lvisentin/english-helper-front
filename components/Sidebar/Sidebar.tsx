@@ -1,12 +1,10 @@
 'use client';
 
-import { userService } from '@/shared/services/user/UserService';
 import {
   faArrowRightFromBracket,
   faListUl,
   faMicrophoneLines,
   faPen,
-  faQuestion,
   faReceipt,
   faRobot,
   IconLookup,
@@ -54,9 +52,10 @@ const Sidebar: React.FC = () => {
   const { push } = useRouter();
 
   function logout() {
-    userService.signOut().then(() => {
+    localStorage.removeItem('authToken');
+    setTimeout(() => {
       push('/login');
-    });
+    }, 1000);
   }
 
   return (
@@ -100,18 +99,8 @@ const Sidebar: React.FC = () => {
         <ul className="menu menu-sm lg:menu-md px-4 py-4 w-full">
           <li className="my-4"></li>
           <li className="w-full">
-            <Link
-              href="/"
-              data-sveltekit-preload-data="hover"
-              className={'h-full p-4'}
-            >
-              <FontAwesomeIcon icon={faQuestion} className={'h-5 w-5'} />
-              <span className="hidden md:block undefined">Help</span>
-            </Link>
-          </li>
-          <li className="w-full">
-            <Link
-              href="/"
+            <button
+              onClick={logout}
               data-sveltekit-preload-data="hover"
               className={'h-full p-4'}
             >
@@ -120,7 +109,7 @@ const Sidebar: React.FC = () => {
                 className={'h-5 w-5'}
               />
               <span className="hidden md:block undefined">Logout</span>
-            </Link>
+            </button>
           </li>
         </ul>
       </div>

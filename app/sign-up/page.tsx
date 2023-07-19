@@ -37,7 +37,7 @@ export default function SignUpPage() {
   return (
     <div
       className={
-        'prose prose-a:no-underline card bg-base-100 rounded-md w-full max-w-xl sm:p-6 sm:shadow-md sm:border-[1px] sm:border-gray-200'
+        'prose prose-a:no-underline card bg-base-100 rounded-md w-full max-w-xl sm:p-6 sm:shadow-md sm:border-[1px] sm:border-gray-200 mx-auto my-auto'
       }
     >
       <h2 className={'text-center mt-0'}>Crie sua conta</h2>

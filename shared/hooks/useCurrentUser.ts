@@ -15,7 +15,8 @@ export const useCurrentUser = () => {
   useEffect(() => {
     userService
       .getCurrentUser()
-      .then(({ data: { user } }) => setCurrentUser(user));
+      .then(({ data: { user } }) => setCurrentUser(user))
+      .catch(() => console.error('UNAUTHORIZED USER'));
   }, []);
 
   return currentUser;

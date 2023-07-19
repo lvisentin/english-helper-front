@@ -1,6 +1,8 @@
 'use client';
 
 import AudioRecorder from '@/shared/components/AudioRecorder/AudioRecorder';
+import PageTransition from '@/shared/components/PageTransition/PageTransition';
+import RouteGuard from '@/shared/guards/RouteGuard';
 import { scenariosService } from '@/shared/services/scenarios/ScenariosService';
 import { Scenario } from '@/shared/services/scenarios/ScenariosService.model';
 import { speakingService } from '@/shared/services/speaking/SpeakingService';
@@ -48,36 +50,38 @@ export default function NewSpeaking() {
   }
 
   return (
-    <>
-      {scenario ? (
-        <section className="grid">
-          <header className={'flex justify-between w-full'}>
-            <div className={'prose max-w-full w-full'}>
-              <h1 className={' prose-h1 pb-1 mb-1'}>{scenario.title}</h1>
-              <h5 className="prose-h5">{scenario.text}</h5>
-            </div>
-            <button
-              className={'btn btn-sm btn-ghost text-xs md:text-sm lg:btn-md'}
-              onClick={goBack}
-            >
-              <FontAwesomeIcon icon={faArrowLeft} />
-              Voltar
-            </button>
-          </header>
+    <PageTransition>
+      <RouteGuard>
+        {scenario ? (
+          <section className="grid">
+            <header className={'flex justify-between w-full'}>
+              <div className={'prose max-w-full w-full'}>
+                <h1 className={' prose-h1 pb-1 mb-1'}>{scenario.title}</h1>
+                <h5 className="prose-h5">{scenario.text}</h5>
+              </div>
+              <button
+                className={'btn btn-sm btn-ghost text-xs md:text-sm lg:btn-md'}
+                onClick={goBack}
+              >
+                <FontAwesomeIcon icon={faArrowLeft} />
+                Voltar
+              </button>
+            </header>
 
-          <main className={'mt-4'}>
-            <AudioRecorder
-              loading={loading}
-              setAudioFile={setAudio}
-              handleSubmit={() => sendFeedback(scenario.title, scenario.text)}
-            />
-          </main>
-        </section>
-      ) : (
-        <div className="flex items-center justify-center h-full">
-          <span className="loading loading-spinner loading-lg"></span>
-        </div>
-      )}
-    </>
+            <main className={'mt-4'}>
+              <AudioRecorder
+                loading={loading}
+                setAudioFile={setAudio}
+                handleSubmit={() => sendFeedback(scenario.title, scenario.text)}
+              />
+            </main>
+          </section>
+        ) : (
+          <div className="flex items-center justify-center h-full">
+            <span className="loading loading-spinner loading-lg"></span>
+          </div>
+        )}
+      </RouteGuard>
+    </PageTransition>
   );
 }

@@ -6,20 +6,23 @@ import { scenariosService } from '@/shared/services/scenarios/ScenariosService';
 import { Scenario } from '@/shared/services/scenarios/ScenariosService.model';
 import { AxiosResponse } from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-function Dashboard() {
+export default function NewWriting() {
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const { push } = useRouter();
+
+  function goToCustom() {
+    push('/internal/writing/new');
+  }
 
   function getScenarios() {
-    setLoading(true);
     scenariosService
       .getScenarios()
       .then(({ data }: AxiosResponse<Scenario[]>) => {
         setScenarios(data);
-      })
-      .finally(() => setLoading(false));
+      });
   }
 
   useEffect(() => {
@@ -29,41 +32,28 @@ function Dashboard() {
   return (
     <PageTransition>
       <RouteGuard>
-        <main className="prose w-full max-w-full">
-          <div className="header">
-            <h2 className="mt-0">Bem vindo, lucas!</h2>
-            <div className="cards flex align-items-center gap-10">
-              <div className="card w-56 bg-base-100 shadow-lg">
-                <div className="card-body p-6">
-                  <h2 className="card-title m-0">0</h2>
-                  <p className="m-0">Cenários praticados</p>
-                </div>
-              </div>
-              <div className="card w-56 bg-base-100 shadow-lg">
-                <div className="card-body p-6">
-                  <h2 className="card-title m-0">0</h2>
-                  <p className="m-0">Palavras analisadas</p>
-                </div>
-              </div>
+        <section className="grid">
+          <header className={'flex justify-between w-full'}>
+            <div className={'prose'}>
+              <h1 className={'mb-0 prose-h1 pb-1'}>
+                Writing - Selecionar cenário
+              </h1>
             </div>
-          </div>
-          <div className="content">
-            <h2 className="mt-5">Praticar cenários</h2>
+            <button className={'btn btn-primary'} onClick={goToCustom}>
+              Não encontrei o que queria
+            </button>
+          </header>
+
+          <main className={'mt-8'}>
             <div className="scenarios">
-              {loading ? (
-                <div className="flex items-center justify-center h-full mt-8">
-                  <span className="loading loading-spinner loading-lg"></span>
-                </div>
-              ) : (
-                scenarios.length > 0 &&
+              {scenarios.length > 0 ? (
                 scenarios.map((scenario, key) => (
                   <Link
                     key={key}
                     href={{
-                      pathname: `/internal/speaking/scenarios/new`,
+                      pathname: `/internal/writing/scenarios/new`,
                       query: `id=${scenario.id}`,
                     }}
-                    className="no-underline font-normal"
                   >
                     <div className="card w-full bg-base-100 shadow-lg mb-4 cursor-pointer">
                       <div className="card-body p-6">
@@ -73,13 +63,15 @@ function Dashboard() {
                     </div>
                   </Link>
                 ))
+              ) : (
+                <div className="flex items-center justify-center h-full">
+                  <span className="loading loading-spinner loading-lg"></span>
+                </div>
               )}
             </div>
-          </div>
-        </main>
+          </main>
+        </section>
       </RouteGuard>
     </PageTransition>
   );
 }
-
-export default Dashboard;

@@ -51,7 +51,7 @@ class UserService {
 
   signOut() {
     // WIP
-    return new Promise(() => localStorage.removeItem('authToken'));
+    // return new Promise(() => localStorage.removeItem('authToken'));
   }
 
   setUserToken(token: string) {

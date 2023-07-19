@@ -2,7 +2,7 @@ import { HTMLMotionProps, motion } from 'framer-motion';
 import React, { forwardRef } from 'react';
 
 type PageTransitionProps = HTMLMotionProps<'div'>;
-type PageTransitionRef = React.ForwardedRef<HTMLDivElement>;
+export type PageTransitionRef = React.ForwardedRef<HTMLDivElement>;
 
 function PageTransition(
   { children, ...rest }: PageTransitionProps,

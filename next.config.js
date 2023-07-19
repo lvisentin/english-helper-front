@@ -7,9 +7,6 @@ const nextConfig = {
   images: {
     domains: ['placehold.it'],
   },
-  images: {
-    domains: ['placehold.it'],
-  },
 };
 
 module.exports = nextConfig;
