@@ -1,7 +1,7 @@
 'use client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ReactElement, useEffect, useState } from 'react';
-import { userService } from '../services/user/UserService';
+import { useCurrentUser } from '../hooks/useCurrentUser';
 
 export interface RouteGuardProps {
   children: ReactElement;
