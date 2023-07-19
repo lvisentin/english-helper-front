@@ -1,23 +1,17 @@
 import axios from '@/shared/configs/axios/instances/default';
-import { LoginResponse, SignUpResponse } from './UserService.model';
-
-export interface CurrentUser {
-  isLoggedIn: boolean;
-}
+import { AxiosResponse } from 'axios';
+import {
+  GetCurrentUserResponse,
+  LoginResponse,
+  SignUpResponse,
+} from './UserService.model';
 
 class UserService {
   private _authToken: string | null = null;
   private API_URL = process.env.API_URL;
 
-  getCurrentUser(): CurrentUser {
-    if (!this.getAuthToken()) {
-      return {
-        isLoggedIn: false,
-      };
-    }
-    return {
-      isLoggedIn: true,
-    };
+  getCurrentUser(): Promise<AxiosResponse<GetCurrentUserResponse>> {
+    return axios.get<GetCurrentUserResponse>(`${this.API_URL}/auth/user`);
   }
 
   getAuthToken() {
@@ -33,18 +27,10 @@ class UserService {
   }
 
   signIn(email: string, password: string) {
-    return axios.post<LoginResponse>(
-      `${this.API_URL}/auth/login`,
-      {
-        email,
-        password,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    return axios.post<LoginResponse>(`${this.API_URL}/auth/login`, {
+      email,
+      password,
+    });
   }
 
   signUp(
@@ -54,21 +40,13 @@ class UserService {
     phone_number: string,
     referral_code: string
   ) {
-    return axios.post<SignUpResponse>(
-      `${this.API_URL}/auth/register`,
-      {
-        name,
-        email,
-        phone_number,
-        password,
-        referral_code,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    return axios.post<SignUpResponse>(`${this.API_URL}/auth/register`, {
+      name,
+      email,
+      phone_number,
+      password,
+      referral_code,
+    });
   }
 
   signOut() {
