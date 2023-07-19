@@ -79,7 +79,9 @@ export default function WritingPage() {
             </div>
 
             <button className={'btn btn-primary'}>
-              <Link href={'/writing/new'}>Solicitar nova análise</Link>
+              <Link href={'/internal/writing/scenarios'}>
+                Solicitar nova análise
+              </Link>
             </button>
           </header>
           <div className={'pb-20'}>

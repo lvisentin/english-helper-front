@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from '@/shared/configs/axios/instances/default';
+import { AxiosResponse } from 'axios';
 import { userService } from '../user/UserService';
 import {
   GetWritingsResponse,
@@ -13,30 +14,19 @@ class WritingService {
       params: {
         type: 'text',
       },
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authToken}`,
-      },
     });
   }
 
   newWriting(
     context: string,
     input: string,
-    title: string,
-    file_url?: string
+    title: string
   ): Promise<NewWritingResponse> {
+    console.log('input', input);
     return axios.post(`${this.API_URL}/feedbacks`, {
-      params: {
-        title,
-        input,
-        context,
-        file_url,
-      },
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authToken}`,
-      },
+      title,
+      input,
+      context,
     });
   }
 }
