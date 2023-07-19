@@ -7,6 +7,9 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    minWidth: {
+      320: '320px',
+    },
     screens: {
       sm: '480px',
       md: '768px',
