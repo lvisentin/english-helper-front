@@ -6,10 +6,10 @@ import {
   NewSpeakingResponse,
 } from './SpeakingService.model';
 class SpeakingService {
-  private API_URL = process.env.API_URL;
+  private VERCEL_API_URL = process.env.VERCEL_API_URL;
 
   getSpeakings(): Promise<AxiosResponse<GetSpeakingsResponse>> {
-    return axios.get<GetSpeakingsResponse>(`${this.API_URL}/feedbacks`, {
+    return axios.get<GetSpeakingsResponse>(`${this.VERCEL_API_URL}/feedbacks`, {
       params: {
         type: 'audio',
       },
@@ -20,7 +20,7 @@ class SpeakingService {
     speakingId: string
   ): Promise<AxiosResponse<GetSpeakingByIdResponse>> {
     return axios.get<GetSpeakingByIdResponse>(
-      `${this.API_URL}/feedbacks/${speakingId}`
+      `${this.VERCEL_API_URL}/feedbacks/${speakingId}`
     );
   }
 
@@ -31,7 +31,7 @@ class SpeakingService {
     input?: string,
     file_url?: string
   ): Promise<NewSpeakingResponse> {
-    return axios.post(`${this.API_URL}/feedbacks`, {
+    return axios.post(`${this.VERCEL_API_URL}/feedbacks`, {
       title,
       input,
       context,

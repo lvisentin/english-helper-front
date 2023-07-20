@@ -6,11 +6,11 @@ import {
   NewWritingResponse,
 } from './WritingService.model';
 class WritingService {
-  private API_URL = process.env.API_URL;
+  private VERCEL_API_URL = process.env.VERCEL_API_URL;
   private authToken = userService.getAuthToken();
 
   getWritings(): Promise<AxiosResponse<GetWritingsResponse>> {
-    return axios.get(`${this.API_URL}/feedbacks`, {
+    return axios.get(`${this.VERCEL_API_URL}/feedbacks`, {
       params: {
         type: 'text',
       },
@@ -23,7 +23,7 @@ class WritingService {
     title: string
   ): Promise<NewWritingResponse> {
     console.log('input', input);
-    return axios.post(`${this.API_URL}/feedbacks`, {
+    return axios.post(`${this.VERCEL_API_URL}/feedbacks`, {
       title,
       input,
       context,

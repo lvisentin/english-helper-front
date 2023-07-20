@@ -8,10 +8,12 @@ import {
 
 class UserService {
   private _authToken: string | null = null;
-  private API_URL = process.env.API_URL;
+  private VERCEL_API_URL = process.env.VERCEL_API_URL;
 
   getCurrentUser(): Promise<AxiosResponse<GetCurrentUserResponse>> {
-    return axios.get<GetCurrentUserResponse>(`${this.API_URL}/auth/user`);
+    return axios.get<GetCurrentUserResponse>(
+      `${this.VERCEL_API_URL}/auth/user`
+    );
   }
 
   getAuthToken() {
@@ -27,7 +29,7 @@ class UserService {
   }
 
   signIn(email: string, password: string) {
-    return axios.post<LoginResponse>(`${this.API_URL}/auth/login`, {
+    return axios.post<LoginResponse>(`${this.VERCEL_API_URL}/auth/login`, {
       email,
       password,
     });
@@ -40,7 +42,7 @@ class UserService {
     phone_number: string,
     referral_code: string
   ) {
-    return axios.post<SignUpResponse>(`${this.API_URL}/auth/register`, {
+    return axios.post<SignUpResponse>(`${this.VERCEL_API_URL}/auth/register`, {
       name,
       email,
       phone_number,
