@@ -1,7 +1,7 @@
 import axios from '@/shared/configs/axios/instances/default';
 
 class HelpService {
-  private WEBHOOK_URL = process.env.WEBHOOK_URL;
+  private VERCEL_WEBHOOK_URL = process.env.VERCEL_WEBHOOK_URL;
   private messageTitle = '';
   private messageDescription = '';
   private messageColor = 16776960;
@@ -29,7 +29,7 @@ class HelpService {
       ],
     };
 
-    return axios.post(`${this.WEBHOOK_URL}`, request);
+    return axios.post(`${this.VERCEL_WEBHOOK_URL}`, request);
   }
 }
 
