@@ -43,7 +43,7 @@ const menuItems: MenuItem[] = [
   {
     icon: faReceipt,
     text: 'Minha Assinatura',
-    route: '/internal/subscription',
+    route: '/internal/my-subscription',
   },
 ];
 
