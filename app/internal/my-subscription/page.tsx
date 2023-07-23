@@ -1,5 +1,6 @@
 'use client';
 
+import Loading from '@/shared/components/Loading/Loading';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { subscriptionService } from '@/shared/services/subscription/SubscriptionService';
@@ -55,9 +56,7 @@ export default function MySubscription() {
 
           <main>
             {loading ? (
-              <div className="flex items-center justify-center h-full mt-8">
-                <span className="loading loading-spinner loading-lg"></span>
-              </div>
+              <Loading />
             ) : (
               subscriptionPlans &&
               subscriptionPlans.map((plan, key) => (

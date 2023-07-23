@@ -1,5 +1,6 @@
 'use client';
 
+import Loading from '@/shared/components/Loading/Loading';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { Feedback } from '@/shared/models/feedbacks/feedback.model';
@@ -113,9 +114,7 @@ export default function SpeakingDetails() {
               </main>
             </>
           ) : (
-            <div className="flex items-center justify-center h-full">
-              <span className="loading loading-spinner loading-lg"></span>
-            </div>
+            <Loading />
           )}
         </section>
       </RouteGuard>

@@ -1,6 +1,7 @@
 'use client';
 
 import TextField from '@/components/TextField/TextField';
+import Loading from '@/shared/components/Loading/Loading';
 import LoadingButton from '@/shared/components/LoadingButton/LoadingButton';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
@@ -130,9 +131,7 @@ export default function NewWriting() {
             </main>
           </section>
         ) : (
-          <div className="flex items-center justify-center h-full">
-            <span className="loading loading-spinner loading-lg"></span>
-          </div>
+          <Loading />
         )}
       </RouteGuard>
     </PageTransition>

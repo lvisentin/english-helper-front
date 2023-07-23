@@ -4,6 +4,7 @@ import { Feedback } from '@/shared/models/feedbacks/feedback.model';
 import { speakingService } from '@/shared/services/speaking/SpeakingService';
 import { DataGrid, GridColDef, GridRowId } from '@mui/x-data-grid';
 
+import Loading from '@/shared/components/Loading/Loading';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { useRouter } from 'next/navigation';
@@ -94,9 +95,7 @@ const SpeakingDashboard = (props: any, ref: any) => {
             </button>
           </header>
           {loading ? (
-            <div className="flex items-center justify-center h-full mt-8">
-              <span className="loading loading-spinner loading-lg"></span>
-            </div>
+            <Loading />
           ) : (
             feedbackData.length > 0 && (
               <DataGrid

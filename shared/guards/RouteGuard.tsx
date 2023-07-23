@@ -1,6 +1,7 @@
 'use client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ReactElement, useEffect, useState } from 'react';
+import Loading from '../components/Loading/Loading';
 import { userService } from '../services/user/UserService';
 
 export interface RouteGuardProps {
@@ -39,7 +40,7 @@ const RouteGuard = ({ children }: RouteGuardProps) => {
     children
   ) : (
     <div className={'w-full h-full flex flex-col'}>
-      <span className="loading loading-spinner loading-lg"></span>
+      <Loading />
     </div>
   );
 };
