@@ -1,7 +1,6 @@
 'use client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ReactElement, useEffect, useState } from 'react';
-import Loading from '../components/Loading/Loading';
 import { userService } from '../services/user/UserService';
 
 export interface RouteGuardProps {
@@ -36,13 +35,7 @@ const RouteGuard = ({ children }: RouteGuardProps) => {
     checkUser();
   }, [router, pathname, searchParams]);
 
-  return authorized ? (
-    children
-  ) : (
-    <div className={'w-full h-full flex flex-col'}>
-      <Loading />
-    </div>
-  );
+  return children;
 };
 
 export default RouteGuard;

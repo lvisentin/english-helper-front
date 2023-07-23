@@ -14,3 +14,7 @@ export interface UserSubscription {
   trialStatus: string;
   plan: SubscriptionPlan;
 }
+
+export interface SubscribeResponse {
+  url: string;
+}

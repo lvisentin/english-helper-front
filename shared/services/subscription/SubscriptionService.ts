@@ -1,5 +1,6 @@
 import axios from '@/shared/configs/axios/instances/default';
 import {
+  SubscribeResponse,
   SubscriptionPlan,
   UserSubscription,
 } from './SubscriptionService.model';
@@ -13,6 +14,12 @@ class SubscriptionService {
 
   getSubscriptionStatus() {
     return axios.get<UserSubscription>(`${this.API_URL}/user/subscription`);
+  }
+
+  subscribe(stripeProductId: string) {
+    return axios.post<SubscribeResponse>(`${this.API_URL}/user/subscribe`, {
+      productId: stripeProductId,
+    });
   }
 }
 

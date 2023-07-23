@@ -1,6 +1,7 @@
 'use client';
 
 import Loading from '@/shared/components/Loading/Loading';
+import LoadingButton from '@/shared/components/LoadingButton/LoadingButton';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { subscriptionService } from '@/shared/services/subscription/SubscriptionService';
@@ -11,35 +12,65 @@ import {
 import { secondsToMinutes } from '@/shared/utils/SecondsToMinutes';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 export default function MySubscription() {
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [subscribeLoading, setSubscribeLoading] = useState<boolean>(false);
+  const searchParams = useSearchParams();
   const [subscriptionPlans, setSubscriptionPlans] =
     useState<SubscriptionPlan[]>();
   const [userSubscription, setUserSubscription] = useState<UserSubscription>();
 
   function getUserSubscriptionStatus() {
-    subscriptionService.getSubscriptionStatus().then(({ data }) => {
-      setUserSubscription(data);
-      setLoading(false);
-    });
+    subscriptionService
+      .getSubscriptionStatus()
+      .then(({ data }) => {
+        setUserSubscription(data);
+        setLoading(false);
+      })
+      .catch(() => toast.error('Ocorreu um erro, tente novamente mais tarde.'));
   }
 
   function getAllPlans() {
-    subscriptionService.getAllPlans().then(({ data }) => {
-      setSubscriptionPlans(data);
-      getUserSubscriptionStatus();
-    });
+    subscriptionService
+      .getAllPlans()
+      .then(({ data }) => {
+        setSubscriptionPlans(data);
+        getUserSubscriptionStatus();
+      })
+      .catch(() => toast.error('Ocorreu um erro, tente novamente mais tarde.'));
   }
 
   function subscribe(stripeProductId: string) {
-    console.log(stripeProductId);
+    setSubscribeLoading(true);
+    subscriptionService
+      .subscribe(stripeProductId)
+      .then(({ data: { url } }) => {
+        window.location.href = url;
+      })
+      .catch(() => toast.error('Ocorreu um erro, tente novamente mais tarde.'))
+      .finally(() => setSubscribeLoading(false));
+  }
+
+  function checkRouteParameters() {
+    if (searchParams?.get('success') === 'true') {
+      toast.success('Sua assinatura foi confirmada!', {
+        className: 'text-sm',
+      });
+    }
+    if (searchParams?.get('error') === 'true') {
+      toast.error('Ocorreu um erro, tente novamente mais tarde', {
+        className: 'text-sm',
+      });
+    }
   }
 
   useEffect(() => {
     setLoading(true);
     getAllPlans();
+    checkRouteParameters();
   }, []);
 
   return (
@@ -128,12 +159,13 @@ export default function MySubscription() {
                           Plano Ativo
                         </button>
                       ) : (
-                        <button
+                        <LoadingButton
                           className="btn btn-primary w-full mt-2"
                           onClick={() => subscribe(plan.stripeProductId)}
+                          loading={subscribeLoading}
                         >
-                          Assinar
-                        </button>
+                          {userSubscription ? 'Mudar meu plano' : 'Assinar'}
+                        </LoadingButton>
                       )}
                     </div>
                   </div>
