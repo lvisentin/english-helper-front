@@ -46,9 +46,6 @@ function AudioRecorder({
 
   function clearAudio() {
     setAudio(null);
-    if (handleReset) {
-      handleReset();
-    }
   }
 
   function stopRecording() {
