@@ -81,9 +81,9 @@ const SpeakingDashboard = (props: any, ref: any) => {
   }, []);
 
   return (
-    <PageTransition>
+    <PageTransition className="h-full">
       <RouteGuard>
-        <section className={'grid'}>
+        <section className={'h-full'}>
           <header className={'flex justify-between w-full'}>
             <div className={'prose'}>
               <h1 className={'mb-0 prose-h1 pb-1'}>
@@ -96,35 +96,37 @@ const SpeakingDashboard = (props: any, ref: any) => {
           </header>
           {loading ? (
             <Loading />
+          ) : feedbackData.length > 0 ? (
+            <DataGrid
+              localeText={{
+                MuiTablePagination: {
+                  labelDisplayedRows: ({ from, to }) =>
+                    `Mostrando de ${from} até ${to}`,
+                  labelRowsPerPage: 'Resultados por página',
+                },
+              }}
+              className={`${styles.dataGrid} h-fit mt-6`}
+              getRowId={(row) => row._id}
+              classes={{
+                sortIcon: styles.dataGridIcon,
+              }}
+              rows={feedbackData}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 5 },
+                },
+              }}
+              disableColumnSelector
+              disableRowSelectionOnClick
+              disableColumnMenu
+              onRowClick={(row) => goToDetails(row.id)}
+              pageSizeOptions={[5, 10]}
+            />
           ) : (
-            feedbackData.length > 0 && (
-              <DataGrid
-                localeText={{
-                  MuiTablePagination: {
-                    labelDisplayedRows: ({ from, to }) =>
-                      `Mostrando de ${from} até ${to}`,
-                    labelRowsPerPage: 'Resultados por página',
-                  },
-                }}
-                className={`${styles.dataGrid} h-fit mt-6`}
-                getRowId={(row) => row._id}
-                classes={{
-                  sortIcon: styles.dataGridIcon,
-                }}
-                rows={feedbackData}
-                columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
-                  },
-                }}
-                disableColumnSelector
-                disableRowSelectionOnClick
-                disableColumnMenu
-                onRowClick={(row) => goToDetails(row.id)}
-                pageSizeOptions={[5, 10]}
-              />
-            )
+            <div className="flex items-center justify-center h-full">
+              <span>Por enquanto você não solicitou nenhuma análise.</span>
+            </div>
           )}
         </section>
       </RouteGuard>

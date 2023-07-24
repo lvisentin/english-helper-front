@@ -71,9 +71,9 @@ export default function WritingPage() {
     }
   }, []);
   return (
-    <PageTransition>
+    <PageTransition className="h-full">
       <RouteGuard>
-        <section className={'grid'}>
+        <section className="h-full">
           <header className={'flex justify-between pb-6'}>
             <div className={'prose'}>
               <h1 className={'mb-0 pb-1'}>Writing - Análises recebidas</h1>
@@ -85,10 +85,10 @@ export default function WritingPage() {
               </Link>
             </button>
           </header>
-          <div className={'pb-20'}>
+          <div className={'pb-20 h-full'}>
             {loadingData ? (
               <Loading />
-            ) : (
+            ) : writingFeedbacks.length > 0 ? (
               <DataGrid
                 localeText={{
                   MuiTablePagination: {
@@ -114,6 +114,10 @@ export default function WritingPage() {
                 disableColumnMenu
                 pageSizeOptions={[5, 10]}
               />
+            ) : (
+              <div className="flex items-center justify-center h-full">
+                <span>Por enquanto você não solicitou nenhuma análise.</span>
+              </div>
             )}
           </div>
         </section>
