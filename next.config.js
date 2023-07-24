@@ -7,7 +7,6 @@ const nextConfig = {
   images: {
     domains: ['placehold.it'],
   },
-  optimizeFonts: false,
 };
 
 module.exports = nextConfig;
