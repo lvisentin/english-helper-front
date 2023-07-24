@@ -30,6 +30,7 @@ export default function LoginPage() {
       .then(({ data }: AxiosResponse<LoginResponse>) => {
         setLoading(false);
         userService.setUserToken(data.token);
+        userService.setUserData(data.userWithoutSensitiveInfo);
         push('/internal');
       })
       .finally(() => setLoading(false));

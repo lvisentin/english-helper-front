@@ -1,5 +1,7 @@
 'use client';
 
+import { userService } from '@/shared/services/user/UserService';
+import { UserWithoutSensitiveInfo } from '@/shared/services/user/UserService.model';
 import {
   faArrowRightFromBracket,
   faListUl,
@@ -12,7 +14,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 export interface MenuItem {
   icon: IconLookup;
   text: string;
@@ -50,6 +52,7 @@ const menuItems: MenuItem[] = [
 const Sidebar: React.FC = () => {
   const pathname = usePathname();
   const { push } = useRouter();
+  const [userData, setUserData] = useState<UserWithoutSensitiveInfo>();
 
   function logout() {
     localStorage.removeItem('authToken');
@@ -57,6 +60,17 @@ const Sidebar: React.FC = () => {
       push('/login');
     }, 1000);
   }
+
+  function getUserData() {
+    const userDataResponse = userService.getUserData();
+    if (userDataResponse) {
+      setUserData(userDataResponse);
+    }
+  }
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <nav
@@ -71,8 +85,8 @@ const Sidebar: React.FC = () => {
           className="rounded-full"
         />
         <div className={'hidden md:block ml-4'}>
-          <p className={'truncate font-mono'}>Lucas Visentin</p>
-          <p className={'truncate font-mono'}>lvise.batista@gmail.com</p>
+          <p className={'truncate font-mono'}>{userData?.name}</p>
+          <p className={'truncate font-mono'}>{userData?.email}</p>
         </div>
       </div>
 

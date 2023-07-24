@@ -4,6 +4,7 @@ import {
   GetCurrentUserResponse,
   LoginResponse,
   SignUpResponse,
+  UserWithoutSensitiveInfo,
 } from './UserService.model';
 
 class UserService {
@@ -60,6 +61,18 @@ class UserService {
 
   setUserToken(token: string) {
     localStorage.setItem('authToken', token);
+  }
+
+  getUserData() {
+    const convertedUser = localStorage.getItem('userData');
+    if (!convertedUser) {
+      return;
+    }
+    return JSON.parse(convertedUser);
+  }
+
+  setUserData(userData: UserWithoutSensitiveInfo) {
+    localStorage.setItem('userData', JSON.stringify(userData));
   }
 }
 
