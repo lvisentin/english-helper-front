@@ -35,13 +35,7 @@ const RouteGuard = ({ children }: RouteGuardProps) => {
     checkUser();
   }, [router, pathname, searchParams]);
 
-  return authorized ? (
-    children
-  ) : (
-    <div className={'w-full h-full flex flex-col'}>
-      <span className="loading loading-spinner loading-lg"></span>
-    </div>
-  );
+  return children;
 };
 
 export default RouteGuard;

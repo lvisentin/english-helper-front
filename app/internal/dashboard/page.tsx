@@ -1,5 +1,6 @@
 'use client';
 
+import Loading from '@/shared/components/Loading/Loading';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { scenariosService } from '@/shared/services/scenarios/ScenariosService';
@@ -51,9 +52,7 @@ function Dashboard() {
             <h2 className="mt-5">Praticar cenários</h2>
             <div className="scenarios">
               {loading ? (
-                <div className="flex items-center justify-center h-full mt-8">
-                  <span className="loading loading-spinner loading-lg"></span>
-                </div>
+                <Loading />
               ) : (
                 scenarios.length > 0 &&
                 scenarios.map((scenario, key) => (

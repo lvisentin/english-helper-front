@@ -1,6 +1,7 @@
 'use client';
 
 import AudioRecorder from '@/shared/components/AudioRecorder/AudioRecorder';
+import Loading from '@/shared/components/Loading/Loading';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { scenariosService } from '@/shared/services/scenarios/ScenariosService';
@@ -77,9 +78,7 @@ export default function NewSpeaking() {
             </main>
           </section>
         ) : (
-          <div className="flex items-center justify-center h-full">
-            <span className="loading loading-spinner loading-lg"></span>
-          </div>
+          <Loading />
         )}
       </RouteGuard>
     </PageTransition>

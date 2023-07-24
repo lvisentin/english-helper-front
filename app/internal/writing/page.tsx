@@ -1,6 +1,7 @@
 'use client';
 
 import styles from '@/app/internal/speaking/SpeakingDashboard.module.scss';
+import Loading from '@/shared/components/Loading/Loading';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { Feedback } from '@/shared/models/feedbacks/feedback.model';
@@ -86,9 +87,7 @@ export default function WritingPage() {
           </header>
           <div className={'pb-20'}>
             {loadingData ? (
-              <div className="flex items-center justify-center h-full mt-8">
-                <span className="loading loading-spinner loading-lg"></span>
-              </div>
+              <Loading />
             ) : (
               <DataGrid
                 localeText={{
