@@ -8,7 +8,7 @@ class ScenariosService {
   }
 
   getScenarioById(scenarioId: string) {
-    return axios.get(`${this.VERCEL_API_URL}/${scenarioId}`);
+    return axios.get(`${this.VERCEL_API_URL}/scenarios/${scenarioId}`);
   }
 }
 

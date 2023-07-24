@@ -1,7 +1,9 @@
 export interface Scenario {
-  text: string;
+  _id: string;
   title: string;
-  type?: string;
-  slug: string;
-  id: string;
+  type: string;
+  text: string;
+  prompt: string;
+  createdAt: string;
+  updatedAt: string;
 }

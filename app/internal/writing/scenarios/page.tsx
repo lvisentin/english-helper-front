@@ -53,7 +53,7 @@ export default function NewWriting() {
                     key={key}
                     href={{
                       pathname: `/internal/writing/scenarios/new`,
-                      query: `id=${scenario.id}`,
+                      query: `id=${scenario._id}`,
                     }}
                   >
                     <div className="card w-full bg-base-100 shadow-lg mb-4 cursor-pointer">
