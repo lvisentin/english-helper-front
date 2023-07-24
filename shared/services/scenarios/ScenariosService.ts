@@ -1,7 +1,7 @@
 import axios from '@/shared/configs/axios/instances/default';
 import { Scenario } from './ScenariosService.model';
 class ScenariosService {
-  private VERCEL_API_URL = 'http://localhost:4000';
+  private VERCEL_API_URL = process.env.VERCEL_API_URL;
 
   getScenarios() {
     return axios.get<Scenario[]>(`${this.VERCEL_API_URL}/scenarios`);
