@@ -24,20 +24,18 @@ class SpeakingService {
     );
   }
 
-  newSpeaking(
-    context: string,
-    title: string,
-    audio?: Blob,
-    input?: string,
-    file_url?: string
-  ): Promise<NewSpeakingResponse> {
-    return axios.post(`${this.VERCEL_API_URL}/feedbacks`, {
-      title,
-      input,
-      context,
-      file_url,
-      audio,
-    });
+  newSpeaking(formData: FormData): Promise<NewSpeakingResponse> {
+    return axios.post(
+      `${this.VERCEL_API_URL}/feedbacks`,
+      {
+        formData,
+      },
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
   }
 }
 
