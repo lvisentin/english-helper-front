@@ -85,6 +85,7 @@ export default function AssistantPage() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.input}
+                    disabled={loading}
                   />
                   <LoadingButton
                     loading={loading}

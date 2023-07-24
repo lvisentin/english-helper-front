@@ -15,6 +15,7 @@ export default function TextField({
   value,
   name,
   errors,
+  disabled,
 }: TextFieldProps) {
   const [toggleState, setToggleState] = useState(true);
 
@@ -59,6 +60,7 @@ export default function TextField({
               name={name}
               type={toggleState && trailingIcon ? 'password' : 'text'}
               placeholder={placeholder}
+              disabled={disabled}
               className={`input input-bordered flex-grow w-[inherit]`}
             />
             {renderTrailingIcon()}
@@ -70,6 +72,7 @@ export default function TextField({
             value={value}
             name={name}
             type={'text'}
+            disabled={disabled}
             placeholder={placeholder}
             className={`input input-bordered flex-grow w-[inherit]`}
           />
