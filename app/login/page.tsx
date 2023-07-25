@@ -31,14 +31,15 @@ export default function LoginPage() {
         setLoading(false);
         userService.setUserToken(data.token);
         userService.setUserData(data.userWithoutSensitiveInfo);
-        push('/internal');
+        push('/internal/dashboard');
       })
       .finally(() => setLoading(false));
   }
 
   useEffect(() => {
-    if (!(user._id.length === 0)) {
-      push('/internal');
+    console.log(user._id);
+    if (localStorage.getItem('userData')) {
+      push('/internal/dashboard');
     }
   }, []);
 
