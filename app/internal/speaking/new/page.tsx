@@ -23,9 +23,14 @@ export default function NewSpeaking() {
     title: string;
     context: string;
   }) {
+    let formData = new FormData();
+    formData.append('audio', audio, 'audio.mp3');
+    formData.append('context', context);
+    formData.append('title', title);
+
     setLoading(true);
     speakingService
-      .newSpeaking(context, title, audio)
+      .newSpeaking(formData)
       .then(() => {
         toast.success('Análise solicitada com sucesso!');
       })
