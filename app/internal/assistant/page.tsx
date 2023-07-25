@@ -4,8 +4,6 @@ import LoadingButton from '@/shared/components/LoadingButton/LoadingButton';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { assistantService } from '@/shared/services/assistant/AssistantService';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik } from 'formik';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
@@ -33,6 +31,7 @@ export default function AssistantPage() {
   }
 
   function askAssistant(input: string) {
+    setAnswer('');
     setLoading(true);
     assistantService
       .ask(input)
@@ -44,7 +43,7 @@ export default function AssistantPage() {
   }
 
   useEffect(() => {
-    if (answer) {
+    if (answer.length > 0) {
       typeWriter();
     }
   }, [answer]);
@@ -61,12 +60,6 @@ export default function AssistantPage() {
                 em perguntar
               </p>
             </div>
-            <button
-              className={'btn btn-sm btn-ghost text-xs md:text-sm lg:btn-md'}
-            >
-              <FontAwesomeIcon icon={faArrowLeft} />
-              Voltar
-            </button>
           </header>
           <Formik
             initialValues={{ input: '' }}
@@ -100,7 +93,7 @@ export default function AssistantPage() {
               </>
             )}
           </Formik>
-          {answer && (
+          {answer.length > 0 && (
             <motion.div
               variants={variants}
               initial="hidden"
