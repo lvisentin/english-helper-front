@@ -87,7 +87,7 @@ export default function NewSpeaking() {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.title}
-                      placeholder={'Título'}
+                      placeholder={'Feedback 1'}
                       className={'col-span-10'}
                     />
                     <TextField
@@ -96,7 +96,7 @@ export default function NewSpeaking() {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.context}
-                      placeholder={'Contexto'}
+                      placeholder={'In a meeting with my boss....'}
                       className={'col-span-10'}
                     />
 

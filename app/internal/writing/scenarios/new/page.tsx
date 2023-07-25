@@ -63,7 +63,7 @@ export default function NewWriting() {
   return (
     <PageTransition>
       <RouteGuard>
-        {scenario ? (
+        {scenario._id ? (
           <section className="grid">
             <header className={'flex justify-between w-full'}>
               <div className={'prose max-w-full w-full'}>
