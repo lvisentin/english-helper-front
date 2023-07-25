@@ -60,7 +60,7 @@ function Dashboard() {
                     key={key}
                     href={{
                       pathname: `/internal/speaking/scenarios/new`,
-                      query: `id=${scenario.id}`,
+                      query: `id=${scenario._id}`,
                     }}
                     className="no-underline font-normal"
                   >

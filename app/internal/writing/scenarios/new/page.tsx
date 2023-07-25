@@ -18,11 +18,13 @@ import { toast } from 'react-toastify';
 export default function NewWriting() {
   const [audio, setAudio] = useState<any>(null);
   const [scenario, setScenario] = useState<Scenario>({
-    id: '',
-    slug: '',
-    text: '',
+    _id: '',
     title: '',
     type: '',
+    text: '',
+    prompt: '',
+    createdAt: '',
+    updatedAt: '',
   });
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
