@@ -18,11 +18,13 @@ import { toast } from 'react-toastify';
 export default function NewWriting() {
   const [audio, setAudio] = useState<any>(null);
   const [scenario, setScenario] = useState<Scenario>({
-    id: '',
-    slug: '',
-    text: '',
+    _id: '',
     title: '',
     type: '',
+    text: '',
+    prompt: '',
+    createdAt: '',
+    updatedAt: '',
   });
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -61,7 +63,7 @@ export default function NewWriting() {
   return (
     <PageTransition>
       <RouteGuard>
-        {scenario ? (
+        {scenario._id ? (
           <section className="grid">
             <header className={'flex justify-between w-full'}>
               <div className={'prose max-w-full w-full'}>

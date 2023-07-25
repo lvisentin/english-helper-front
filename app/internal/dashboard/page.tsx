@@ -59,8 +59,8 @@ function Dashboard() {
                   <Link
                     key={key}
                     href={{
-                      pathname: `/internal/speaking/scenarios/new`,
-                      query: `id=${scenario.id}`,
+                      pathname: `/internal/writing/scenarios/new`,
+                      query: `id=${scenario._id}`,
                     }}
                     className="no-underline font-normal"
                   >
