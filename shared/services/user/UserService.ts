@@ -71,6 +71,10 @@ class UserService {
     return JSON.parse(convertedUser);
   }
 
+  getUserStats() {
+    return axios.get(`${this.VERCEL_API_URL}/user/status`);
+  }
+
   setUserData(userData: UserWithoutSensitiveInfo) {
     localStorage.setItem('userData', JSON.stringify(userData));
   }

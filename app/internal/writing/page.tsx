@@ -6,8 +6,9 @@ import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { Feedback } from '@/shared/models/feedbacks/feedback.model';
 import { writingService } from '@/shared/services/writing/WritingService';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowId } from '@mui/x-data-grid';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const columns: GridColDef[] = [
@@ -52,8 +53,15 @@ const columns: GridColDef[] = [
 ];
 
 export default function WritingPage() {
+  const { push } = useRouter();
+
   const [writingFeedbacks, setWritingFeedbacks] = useState<Feedback[]>([]);
   const [loadingData, setLoadingData] = useState(true);
+
+  function goToDetails(feedbackId: GridRowId) {
+    console.log('feedback', feedbackId);
+    push(`/internal/speaking/details?id=${feedbackId}`);
+  }
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
@@ -97,7 +105,7 @@ export default function WritingPage() {
                     labelRowsPerPage: 'Resultados por página',
                   },
                 }}
-                className={`${styles.dataGrid} h-fit`}
+                className={`${styles.dataGrid} h-fit cursor-pointer`}
                 getRowId={(row) => row._id}
                 classes={{
                   sortIcon: styles.dataGridIcon,
@@ -112,6 +120,7 @@ export default function WritingPage() {
                 disableColumnSelector
                 disableRowSelectionOnClick
                 disableColumnMenu
+                onRowClick={(row) => goToDetails(row.id)}
                 pageSizeOptions={[5, 10]}
               />
             ) : (

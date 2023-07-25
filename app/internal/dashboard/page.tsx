@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 
 function Dashboard() {
   const [userData, setUserData] = useState<UserWithoutSensitiveInfo>();
-
+  const [userStats, setUserStats] = useState<any>();
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -34,9 +34,16 @@ function Dashboard() {
     }
   }
 
+  function getUserStats() {
+    userService.getUserStats().then(({ data }) => {
+      setUserStats(data);
+    });
+  }
+
   useEffect(() => {
     getScenarios();
     getUserData();
+    getUserStats();
   }, []);
 
   return (
@@ -48,13 +55,15 @@ function Dashboard() {
             <div className="cards flex align-items-center gap-10">
               <div className="card w-56 bg-base-100 shadow-lg">
                 <div className="card-body p-6">
-                  <h2 className="card-title m-0">0</h2>
+                  <h2 className="card-title m-0">
+                    {userStats?.completedFeedbacksCount}
+                  </h2>
                   <p className="m-0">Cenários praticados</p>
                 </div>
               </div>
               <div className="card w-56 bg-base-100 shadow-lg">
                 <div className="card-body p-6">
-                  <h2 className="card-title m-0">0</h2>
+                  <h2 className="card-title m-0">{userStats?.sumWordsCount}</h2>
                   <p className="m-0">Palavras analisadas</p>
                 </div>
               </div>

@@ -11,9 +11,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AxiosResponse } from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import styles from './SpeakingDetails.module.scss';
+import styles from './WritingDetails.module.scss';
 
-export default function SpeakingDetails() {
+export default function WritingDetails() {
   const [feedbackData, setFeedbackData] = useState<Feedback>();
   const router = useRouter();
   const [language, setLanguage] = useState<'pt' | 'en'>('en');
