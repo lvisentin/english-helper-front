@@ -26,12 +26,11 @@ function AudioRecorder({
   const [stream, setStream] = useState<any>(null);
   const [audioChunks, setAudioChunks] = useState<any>([]);
   const [audio, setAudio] = useState<any>(null);
-  const mimeType = 'audio/webm';
 
   async function startRecording() {
     console.log('startrecording');
     setRecordingStatus('recording');
-    const media = new MediaRecorder(stream, { mimeType: mimeType });
+    const media = new MediaRecorder(stream, { mimeType: 'audio/webm' });
     mediaRecorder.current = media;
     mediaRecorder.current.start();
 
@@ -54,7 +53,7 @@ function AudioRecorder({
     setRecordingStatus('inactive');
     mediaRecorder.current.stop();
     mediaRecorder.current.onstop = () => {
-      const audioBlob = new Blob(audioChunks, { type: mimeType });
+      const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
       const audioUrl = URL.createObjectURL(audioBlob);
       setAudio(audioUrl);
       setAudioFile(audioBlob);
@@ -123,7 +122,7 @@ function AudioRecorder({
       </div>
       {audio ? (
         <div className="audio-container flex flex-col items-center justify-center gap-4">
-          <audio src={audio} controls></audio>
+          <audio id="audioField" src={audio} controls></audio>
           <div className="buttons flex gap-4">
             <LoadingButton
               loading={loading}

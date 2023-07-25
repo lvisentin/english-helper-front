@@ -24,7 +24,7 @@ export default function NewSpeaking() {
     context: string;
   }) {
     let formData = new FormData();
-    formData.append('audio', audio);
+    formData.append('audio', audio, 'audio.mp3');
     formData.append('context', context);
     formData.append('title', title);
 

@@ -1,9 +1,9 @@
 import axios from '@/shared/configs/axios/instances/default';
 import { AxiosResponse } from 'axios';
+import { userService } from '../user/UserService';
 import {
   GetSpeakingByIdResponse,
   GetSpeakingsResponse,
-  NewSpeakingResponse,
 } from './SpeakingService.model';
 class SpeakingService {
   private VERCEL_API_URL = process.env.VERCEL_API_URL;
@@ -24,18 +24,14 @@ class SpeakingService {
     );
   }
 
-  newSpeaking(formData: FormData): Promise<NewSpeakingResponse> {
-    return axios.post(
-      `${this.VERCEL_API_URL}/feedbacks`,
-      {
-        formData,
+  newSpeaking(formData: FormData): Promise<any> {
+    return fetch(`${this.VERCEL_API_URL}/feedbacks`, {
+      body: formData,
+      method: 'post',
+      headers: {
+        Authorization: `Bearer ${userService.getAuthToken()}`,
       },
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
-    );
+    });
   }
 }
 
