@@ -33,10 +33,15 @@ export default function NewSpeaking() {
     });
   }
 
-  function sendFeedback(title: string, context: string) {
+  function sendFeedback({ title, text }: { title: string; text: string }) {
+    let formData = new FormData();
+    formData.append('audio', audio, 'audio.mp3');
+    formData.append('context', text);
+    formData.append('title', title);
+
     setLoading(true);
     speakingService
-      .newSpeaking(context, title, audio)
+      .newSpeaking(formData)
       .then(() => {
         toast.success('Análise solicitada com sucesso!');
       })
@@ -73,7 +78,7 @@ export default function NewSpeaking() {
               <AudioRecorder
                 loading={loading}
                 setAudioFile={setAudio}
-                handleSubmit={() => sendFeedback(scenario.title, scenario.text)}
+                handleSubmit={() => sendFeedback(scenario)}
               />
             </main>
           </section>
