@@ -91,7 +91,7 @@ export default function NewSpeaking() {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.context}
-                      placeholder={'Em uma reunião com meu chefe.....'}
+                      placeholder={'In a meeting with my boss....'}
                       className={'col-span-10'}
                     />
 

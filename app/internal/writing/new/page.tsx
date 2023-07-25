@@ -88,7 +88,7 @@ export default function NewWritingPage() {
                   </label>
                   <textarea
                     className={
-                      'textarea textarea-bordered h-32 resize-none w-full'
+                      'textarea textarea-bordered h-32 resize-none w-full text-base'
                     }
                     name="input"
                     onChange={handleChange}
