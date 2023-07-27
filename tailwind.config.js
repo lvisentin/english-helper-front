@@ -39,6 +39,15 @@ module.exports = {
   },
   plugins: [require('@tailwindcss/typography'), require('daisyui')],
   daisyui: {
-    themes: ['corporate'],
+    themes: [
+      {
+        corporate: {
+          ...require('daisyui/src/theming/themes')['[data-theme=corporate]'],
+          '.btn-primary': {
+            color: '#fff',
+          },
+        },
+      },
+    ],
   },
 };

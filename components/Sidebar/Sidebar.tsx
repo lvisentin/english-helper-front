@@ -12,6 +12,7 @@ import {
   IconLookup,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -79,6 +80,13 @@ const Sidebar: React.FC = () => {
         'bg-base-100 min-w-320 w-80 flex flex-col h-screen justify-between shadow-sm'
       }
     >
+      <Image
+        src="/eh-blue.svg"
+        alt="English Helper Logo"
+        width={100}
+        height={100}
+        className={'w-full pt-4 px-8'}
+      />
       <div className={'flex align-items-center pt-8 px-8'}>
         <img
           src={'https://placehold.it/50x50'}
