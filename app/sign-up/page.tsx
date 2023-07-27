@@ -250,7 +250,10 @@ export default function SignUpPage() {
                       Eu concordo com os{' '}
                       <span className={'prose-a:hover:underline'}>
                         <button
-                          onClick={() => window.tec_modal!.show()}
+                          onClick={() => {
+                            //@ts-ignore
+                            window.tec_modal!.show();
+                          }}
                           className={'text-primary'}
                           type="button"
                         >
