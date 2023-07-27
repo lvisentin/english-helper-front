@@ -98,7 +98,9 @@ export default function WritingDetails() {
                             en-us
                           </span>
                         </div>
-                        <p className={`${styles.outputText} m-0 pr-4`}>
+                        <p
+                          className={`${styles.outputText} m-0 pr-4 whitespace-pre-line`}
+                        >
                           {language === 'en'
                             ? feedbackData.output
                             : feedbackData.portugueseOutput}
