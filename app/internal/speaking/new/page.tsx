@@ -16,6 +16,19 @@ export default function NewSpeaking() {
   const [audio, setAudio] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  let startTime: Date;
+  let stopTime: Date;
+  let duration = 0;
+
+  function startRecording() {
+    startTime = new Date();
+  }
+
+  function stopRecording() {
+    stopTime = new Date();
+    duration = (stopTime.getTime() - startTime.getTime()) / 1000;
+  }
+
   function sendFeedback({
     title,
     context,
@@ -26,6 +39,7 @@ export default function NewSpeaking() {
     let formData = new FormData();
     formData.append('audio', audio, 'audio.mp3');
     formData.append('context', context);
+    formData.append('duration', duration.toString());
     formData.append('title', title);
 
     setLoading(true);
@@ -103,6 +117,8 @@ export default function NewSpeaking() {
                     <AudioRecorder
                       loading={loading}
                       setAudioFile={setAudio}
+                      onStartRecording={startRecording}
+                      onStopRecording={stopRecording}
                       handleSubmit={handleSubmit}
                       handleReset={resetForm}
                     />

@@ -13,11 +13,15 @@ function AudioRecorder({
   setAudioFile,
   handleSubmit,
   loading,
+  onStartRecording,
+  onStopRecording,
   handleReset,
 }: {
   setAudioFile: any;
   handleSubmit: any;
   handleReset?: any;
+  onStartRecording?: any;
+  onStopRecording?: any;
   loading: boolean;
 }) {
   const [permission, setPermission] = useState<boolean>(false);
@@ -28,7 +32,7 @@ function AudioRecorder({
   const [audio, setAudio] = useState<any>(null);
 
   async function startRecording() {
-    console.log('startrecording');
+    onStartRecording();
     setRecordingStatus('recording');
     const media = new MediaRecorder(stream, { mimeType: 'audio/webm' });
     mediaRecorder.current = media;
@@ -48,8 +52,6 @@ function AudioRecorder({
   }
 
   function stopRecording() {
-    console.log('stopRecording');
-
     setRecordingStatus('inactive');
     mediaRecorder.current.stop();
     mediaRecorder.current.onstop = () => {
@@ -58,6 +60,7 @@ function AudioRecorder({
       setAudio(audioUrl);
       setAudioFile(audioBlob);
       setAudioChunks([]);
+      onStopRecording();
     };
   }
 
