@@ -56,6 +56,7 @@ const Sidebar: React.FC = () => {
 
   function logout() {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
     setTimeout(() => {
       push('/login');
     }, 1000);

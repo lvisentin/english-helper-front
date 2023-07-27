@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import { useCurrentUser } from '@/shared/hooks/useCurrentUser';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import styles from './Login.module.scss';
 
 export default function LoginPage() {
@@ -34,11 +35,12 @@ export default function LoginPage() {
         userService.setUserData(data.userWithoutSensitiveInfo);
         push('/internal');
       })
+      .catch(({ response: { data } }) => toast.error(data.message))
       .finally(() => setLoading(false));
   }
 
   useEffect(() => {
-    if (!(user._id.length === 0)) {
+    if (!(user._id.length === 0) && localStorage.getItem('authToken')) {
       push('/internal');
     }
   }, []);
