@@ -20,6 +20,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="light">
+      <style global>
+        {`
+          * {
+            font-family: ${poppins.style.fontFamily};
+          }
+        `}
+      </style>
       <body className={poppins.className}>
         <ToastContainer
           position="top-right"

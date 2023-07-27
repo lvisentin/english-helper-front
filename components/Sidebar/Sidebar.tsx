@@ -87,20 +87,8 @@ const Sidebar: React.FC = () => {
         height={100}
         className={'w-full pt-4 px-8'}
       />
-      <div className={'flex align-items-center pt-8 px-8'}>
-        <img
-          src={'https://placehold.it/50x50'}
-          alt={'Avatar'}
-          className="rounded-full"
-        />
-        <div className={'hidden md:block ml-4'}>
-          <p className={'truncate font-mono'}>{userData?.name}</p>
-          <p className={'truncate font-mono'}>{userData?.email}</p>
-        </div>
-      </div>
 
       <ul className="menu menu-sm lg:menu-md px-4 py-4 mb-auto">
-        <li className="my-4"></li>
         {menuItems.map((menuItem, key) => (
           <li key={key}>
             <Link
@@ -120,7 +108,12 @@ const Sidebar: React.FC = () => {
       </ul>
       <div className="footer w-full">
         <ul className="menu menu-sm lg:menu-md px-4 py-4 w-full">
-          <li className="my-4"></li>
+          <div className={'flex align-items-center px-4'}>
+            <div className={'hidden md:block'}>
+              <p className={'truncate font-mono'}>{userData?.name}</p>
+              <p className={'truncate font-mono'}>{userData?.email}</p>
+            </div>
+          </div>
           <li className="w-full">
             <button
               onClick={logout}
