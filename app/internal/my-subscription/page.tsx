@@ -155,14 +155,14 @@ export default function MySubscription() {
                       )}
 
                     <div className="content">
-                      <h2 className="card-title m-0">
+                      <h2 className="card-title m-0 mb-4">
                         {plan.name} - {recurrenceToString(plan.recurrence)}
                       </h2>
                       <ul className="benefits">
                         <li>
                           <FontAwesomeIcon icon={faCheck} />
                           <span className="ml-2">
-                            Audios de até
+                            Audios de até{' '}
                             {secondsToMinutes(plan.maxAudioDuration)} minutos
                           </span>
                         </li>
