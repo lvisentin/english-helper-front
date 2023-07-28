@@ -20,6 +20,18 @@ export default function NewSpeaking() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const scenarioId = searchParams?.get('id');
+  const [duration, setDuration] = useState<number>(0);
+  let startTime: Date;
+  let stopTime: Date;
+
+  function startRecording() {
+    startTime = new Date();
+  }
+
+  function stopRecording() {
+    stopTime = new Date();
+    setDuration((stopTime.getTime() - startTime.getTime()) / 1000);
+  }
 
   useEffect(() => {
     if (scenarioId) {
@@ -36,6 +48,7 @@ export default function NewSpeaking() {
   function sendFeedback({ title, text }: { title: string; text: string }) {
     let formData = new FormData();
     formData.append('audio', audio, 'audio.mp3');
+    formData.append('duration', duration.toFixed(2));
     formData.append('context', text);
     formData.append('title', title);
 
@@ -78,6 +91,8 @@ export default function NewSpeaking() {
               <AudioRecorder
                 loading={loading}
                 setAudioFile={setAudio}
+                onStartRecording={startRecording}
+                onStopRecording={stopRecording}
                 handleSubmit={() => sendFeedback(scenario)}
               />
             </main>

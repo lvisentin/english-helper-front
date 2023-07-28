@@ -18,15 +18,14 @@ export default function NewSpeaking() {
   const router = useRouter();
   let startTime: Date;
   let stopTime: Date;
-  let duration = 0;
-
+  const [duration, setDuration] = useState<number>(0);
   function startRecording() {
     startTime = new Date();
   }
 
   function stopRecording() {
     stopTime = new Date();
-    duration = (stopTime.getTime() - startTime.getTime()) / 1000;
+    setDuration((stopTime.getTime() - startTime.getTime()) / 1000);
   }
 
   function sendFeedback({
@@ -39,7 +38,7 @@ export default function NewSpeaking() {
     let formData = new FormData();
     formData.append('audio', audio, 'audio.mp3');
     formData.append('context', context);
-    formData.append('duration', duration.toString());
+    formData.append('duration', duration.toFixed(2));
     formData.append('title', title);
 
     setLoading(true);
