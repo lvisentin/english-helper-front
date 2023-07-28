@@ -32,7 +32,7 @@ export default function MySubscription() {
       .getSubscriptionStatus()
       .then(({ data }) => {
         setUserSubscription(data);
-        setIsSubscribed(data.trialStatus === SubscriptionStatus.active);
+        setIsSubscribed(data.subscriptionStatus === SubscriptionStatus.active);
         setLoading(false);
       })
       .catch(() => toast.error('Ocorreu um erro, tente novamente mais tarde.'));
