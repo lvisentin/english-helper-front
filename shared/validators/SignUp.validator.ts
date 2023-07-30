@@ -15,4 +15,5 @@ export const SignupSchema = Yup.object().shape({
     .oneOf([Yup.ref('password')], 'As senhas não coincidem')
     .required('Por favor, confirme sua senha.'),
   phoneNumber: Yup.string().required('Por favor, digite um telefone'),
+  acceptTerms: Yup.bool().required(),
 });
