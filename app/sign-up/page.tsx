@@ -1,5 +1,6 @@
 'use client';
 
+import PhoneInput from '@/components/PhoneInput/PhoneInput';
 import RadioButton from '@/components/RadioButton/RadioButton';
 import TextField from '@/components/TextField/TextField';
 import eyeSlashSvgSrc from '@/resources/svg/eye-slash.svg';
@@ -20,11 +21,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik } from 'formik';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import styles from './SignUp.module.scss';
 
 export default function SignUpPage() {
   const [loading, setLoading] = useState<boolean>(false);
+  const { push } = useRouter();
 
   function signUp(
     name: string,
@@ -35,11 +39,15 @@ export default function SignUpPage() {
   ) {
     setLoading(true);
 
+    const cleanedPhoneNumber = phoneNumber.replace(/\D/g, '');
+
     userService
-      .signUp(name, email, password, phoneNumber, referralCode)
-      .then((response) => {
-        console.log('response', response);
+      .signUp(name, email, password, cleanedPhoneNumber, referralCode)
+      .then(() => {
+        toast.success('Conta criada com sucesso!');
+        push('/login');
       })
+      .catch(({ response: { data } }) => toast.error(data.message))
       .finally(() => setLoading(false));
   }
 
@@ -118,12 +126,14 @@ export default function SignUpPage() {
                   className={`col-span-10 ${styles.formControl}`}
                 />
 
-                <TextField
+                <PhoneInput
                   name="phoneNumber"
                   placeholder={'Seu telefone com DDD'}
                   label={'Telefone'}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  mask="(99) 9 9999-9999"
+                  maskChar={null}
                   value={values.phoneNumber}
                   errors={touched.phoneNumber ? errors.phoneNumber : null}
                   leadingIcon={
@@ -133,7 +143,8 @@ export default function SignUpPage() {
                     />
                   }
                   className={`col-span-10 ${styles.formControl}`}
-                />
+                ></PhoneInput>
+
                 <TextField
                   name="referralCode"
                   placeholder={'Digite aqui seu código de indicação'}
@@ -175,9 +186,6 @@ export default function SignUpPage() {
                   onBlur={handleBlur}
                   value={values.password}
                   errors={touched.password ? errors.password : null}
-                  helperText={
-                    'Sua senha deve conter no mínimo uma letra maíuscula, uma letra minúscula, 1 número, 1 símbolo e ter no mínimo 8 caracteres.'
-                  }
                   leadingIcon={
                     <FontAwesomeIcon
                       icon={faLock}
