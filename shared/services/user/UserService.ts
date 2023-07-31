@@ -78,6 +78,20 @@ class UserService {
   setUserData(userData: UserWithoutSensitiveInfo) {
     localStorage.setItem('userData', JSON.stringify(userData));
   }
+
+  sendResetPasswordEmail(email: string) {
+    return axios.post(`${this.VERCEL_API_URL}/auth/send-reset-password`, {
+      email,
+    });
+  }
+
+  resetPassword(token: string, password: string, confirmPassword: string) {
+    return axios.post(`${this.VERCEL_API_URL}/auth/reset-password`, {
+      token,
+      password,
+      confirmPassword,
+    });
+  }
 }
 
 export const userService = new UserService();
