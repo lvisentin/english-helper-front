@@ -52,8 +52,15 @@ export default function LoginPage() {
       }
     >
       <div>
-        <h2 className={'text-center mt-0'}>Bem vindo de volta!</h2>
-        <p className={'text-center'}>
+        <Image
+          src="/eh-blue.svg"
+          alt="English Helper Logo"
+          width={50}
+          height={50}
+          className={'w-full m-0 max-h-16'}
+        />
+
+        <p className={'text-center mb-2'}>
           Novo aqui?{' '}
           <span className={'prose-a:hover:underline'}>
             <Link href={'/sign-up'} className={'text-primary'}>
@@ -136,7 +143,7 @@ export default function LoginPage() {
                   <LoadingButton
                     loading={loading}
                     disabled={loading}
-                    className={`${styles.loginBtn} btn btn-primary mt-6`}
+                    className={`${styles.loginBtn} btn btn-primary mt-0`}
                     type="submit"
                   >
                     Entrar

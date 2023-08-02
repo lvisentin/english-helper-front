@@ -51,7 +51,7 @@ function Dashboard() {
       <RouteGuard>
         <main className="prose w-full max-w-full">
           <div className="header">
-            <h2 className="mt-0">Bem vindo, {userData?.name}!</h2>
+            <h2 className="mt-0">Welcome, {userData?.name}!</h2>
             <div className="cards flex align-items-center gap-10">
               <div className="card w-56 bg-base-100 shadow-lg">
                 <div className="card-body p-6">
