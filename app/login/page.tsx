@@ -129,7 +129,7 @@ export default function LoginPage() {
                     <span
                       className={'prose-a:no-underline prose-a:hover:underline'}
                     >
-                      <Link href={'#'}>Esqueceu sua senha?</Link>
+                      <Link href={'/password-reset'}>Esqueceu sua senha?</Link>
                     </span>
                   </p>
 
