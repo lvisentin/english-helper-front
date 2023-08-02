@@ -50,12 +50,26 @@ export default function MySubscription() {
 
   function subscribe(stripeProductId: string) {
     setSubscribeLoading(true);
-    if (isSubscribed && userSubscription?.plan.recurrence === 'yearly') {
-      // @ts-ignore
-      window.downgrade_dialog.showModal();
-      setSubscribeLoading(false);
-      return;
+
+    if (isSubscribed) {
+      if (userSubscription?.plan.recurrence === 'yearly') {
+        // @ts-ignore
+        window.downgrade_dialog.showModal();
+        setSubscribeLoading(false);
+        return;
+      } else {
+        subscriptionService
+          .changeSubscription(stripeProductId)
+          .then(({ data: { url } }) => {
+            window.location.href = url;
+          })
+          .catch(() =>
+            toast.error('Ocorreu um erro, tente novamente mais tarde.')
+          )
+          .finally(() => setSubscribeLoading(false));
+      }
     }
+
     subscriptionService
       .subscribe(stripeProductId)
       .then(({ data: { url } }) => {

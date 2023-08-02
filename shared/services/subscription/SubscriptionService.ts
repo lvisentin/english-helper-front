@@ -21,6 +21,15 @@ class SubscriptionService {
       productId: stripeProductId,
     });
   }
+
+  changeSubscription(stripeProductId: string) {
+    return axios.post<SubscribeResponse>(
+      `${this.API_URL}/user/subscription/change`,
+      {
+        productId: stripeProductId,
+      }
+    );
+  }
 }
 
 export const subscriptionService = new SubscriptionService();
