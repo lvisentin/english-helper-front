@@ -68,15 +68,17 @@ export default function MySubscription() {
           )
           .finally(() => setSubscribeLoading(false));
       }
+    } else {
+      subscriptionService
+        .subscribe(stripeProductId)
+        .then(({ data: { url } }) => {
+          window.location.href = url;
+        })
+        .catch(() =>
+          toast.error('Ocorreu um erro, tente novamente mais tarde.')
+        )
+        .finally(() => setSubscribeLoading(false));
     }
-
-    subscriptionService
-      .subscribe(stripeProductId)
-      .then(({ data: { url } }) => {
-        window.location.href = url;
-      })
-      .catch(() => toast.error('Ocorreu um erro, tente novamente mais tarde.'))
-      .finally(() => setSubscribeLoading(false));
   }
 
   function checkRouteParameters() {
