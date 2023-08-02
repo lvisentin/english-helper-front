@@ -38,7 +38,10 @@ export default function AssistantPage() {
           }
           const chunk = decoder.decode(value);
           const lines = chunk.replace('data: "', '').replaceAll('\\', '');
-          setAnswer(lines);
+          const hasDone = lines.includes('[DONE]"');
+          if (!hasDone) {
+            setAnswer(lines);
+          }
         }
       }
     } catch (err) {
