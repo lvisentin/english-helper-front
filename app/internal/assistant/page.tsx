@@ -6,7 +6,7 @@ import RouteGuard from '@/shared/guards/RouteGuard';
 import { assistantService } from '@/shared/services/assistant/AssistantService';
 import { Formik } from 'formik';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 export default function AssistantPage() {
@@ -19,34 +19,32 @@ export default function AssistantPage() {
     exit: { opacity: 0, x: 0, y: -100 },
   };
   const transition = { duration: 0.6, ease: 'easeInOut' };
-  let i = 0;
-  const speed = 25;
 
-  function typeWriter() {
-    if (i < answer.length) {
-      document.getElementById('chat-answer')!.innerHTML += answer.charAt(i);
-      i++;
-      setTimeout(typeWriter, speed);
-    }
-  }
-
-  function askAssistant(input: string) {
+  async function askAssistant(input: string) {
     setAnswer('');
     setLoading(true);
-    assistantService
-      .ask(input)
-      .then(({ data: { answer } }) => {
-        setAnswer(answer);
-      })
-      .catch(() => toast.error('Ocorreu um erro, tente novamente'))
-      .finally(() => setLoading(false));
-  }
+    try {
+      const response = await assistantService.askRealTime(input);
+      setLoading(false);
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder('utf-8');
 
-  useEffect(() => {
-    if (answer.length > 0) {
-      typeWriter();
+      if (reader) {
+        // eslint-disable-next-line no-constant-condition
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            break;
+          }
+          const chunk = decoder.decode(value);
+          const lines = chunk.replace('data: "', '').replaceAll('\\', '');
+          setAnswer(lines);
+        }
+      }
+    } catch (err) {
+      toast.error('Ocorreu um erro, tente novamente');
     }
-  }, [answer]);
+  }
 
   return (
     <PageTransition>
@@ -111,10 +109,9 @@ export default function AssistantPage() {
                   Assistente English Helper
                   <time className="text-xs opacity-50">12:45</time>
                 </div>
-                <div
-                  className="chat-bubble w-full max-w-full"
-                  id="chat-answer"
-                ></div>
+                <div className="chat-bubble w-full max-w-full" id="chat-answer">
+                  {answer}
+                </div>
               </div>
             </motion.div>
           )}
