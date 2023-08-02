@@ -1,5 +1,6 @@
 import axios from '@/shared/configs/axios/instances/default';
 import { AxiosResponse } from 'axios';
+import { userService } from '../user/UserService';
 import { AskAssistantResponse } from './AssistantService.model';
 
 class AssistantService {
@@ -18,7 +19,7 @@ class AssistantService {
       headers: {
         'Content-type': 'application/json',
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiZmJhMTU2MWM4ZTBkZjM3YTY0ZDExIiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJpYXQiOjE2OTA5Mjc0MTEsImV4cCI6MTY5MTUzMjIxMX0.97ZuHf_3_9fi_McJQWMoYGeXtgrpyDfkvZcr0sUH5wA',
+          `Bearer ${userService.getAuthToken()}`,
       },
     });
   }
