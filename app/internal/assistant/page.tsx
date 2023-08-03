@@ -6,7 +6,7 @@ import RouteGuard from '@/shared/guards/RouteGuard';
 import { assistantService } from '@/shared/services/assistant/AssistantService';
 import { Formik } from 'formik';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 export default function AssistantPage() {
@@ -37,8 +37,12 @@ export default function AssistantPage() {
             break;
           }
           const chunk = decoder.decode(value);
-          const lines = chunk.replace('data: "', '').replaceAll('\\', '');
-          const hasDone = lines.includes('[DONE]"');
+          const lines = chunk
+            .replace('data: "', '')
+            .replaceAll(/\\(")/g, '$1')
+            .replaceAll('\\n', '\n');
+
+          const hasDone = lines.includes('[DONE]');
           if (!hasDone) {
             setAnswer(lines);
           }
@@ -48,6 +52,12 @@ export default function AssistantPage() {
       toast.error('Ocorreu um erro, tente novamente');
     }
   }
+
+  useEffect(() => {
+    if (answer.length > 0) {
+      document.getElementById('answerElement')!.innerHTML = answer;
+    }
+  }, [answer]);
 
   return (
     <PageTransition>
@@ -113,7 +123,7 @@ export default function AssistantPage() {
                   <time className="text-xs opacity-50">12:45</time>
                 </div>
                 <div className="chat-bubble w-full max-w-full" id="chat-answer">
-                  {answer}
+                  <p id="answerElement" className="whitespace-pre-line"></p>
                 </div>
               </div>
             </motion.div>
