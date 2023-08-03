@@ -77,6 +77,13 @@ export default function WritingPage() {
         })
         .finally(() => setLoadingData(false));
     }
+
+    setInterval(() => {
+      writingService.getWritings().then(({ data }) => {
+        const { feedbacks } = data;
+        setWritingFeedbacks(feedbacks);
+      });
+    }, 8000);
   }, []);
   return (
     <PageTransition className="h-full">

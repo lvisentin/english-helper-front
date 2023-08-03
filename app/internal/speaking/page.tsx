@@ -78,6 +78,13 @@ const SpeakingDashboard = (props: any, ref: any) => {
 
   useEffect(() => {
     getFeedbacks();
+
+    setInterval(() => {
+      speakingService.getSpeakings().then(({ data }) => {
+        const { feedbacks } = data;
+        setFeedbackData(feedbacks);
+      });
+    }, 8000);
   }, []);
 
   return (
