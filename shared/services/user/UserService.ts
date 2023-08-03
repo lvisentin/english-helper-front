@@ -26,7 +26,9 @@ class UserService {
       this._authToken = localStorage.getItem('authToken');
     }
 
-    return this._authToken;
+    console.log(this._authToken);
+
+    return localStorage.getItem('authToken');
   }
 
   signIn(email: string, password: string) {
