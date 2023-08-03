@@ -46,7 +46,7 @@ export default function NewWriting() {
   async function sendFeedback(title: string, input: string) {
     setLoading(true);
     try {
-      await writingService.newWritingRealTime(scenario.text, input, title);
+      await writingService.newWritingRealTime(scenario.prompt, input, title);
       setLoading(false);
       toast.success('Análise solicitada com sucessso!');
     } catch (err) {

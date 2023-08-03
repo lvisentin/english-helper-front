@@ -45,11 +45,11 @@ export default function NewSpeaking() {
     });
   }
 
-  function sendFeedback({ title, text }: { title: string; text: string }) {
+  function sendFeedback({ title, prompt }: { title: string; prompt: string }) {
     let formData = new FormData();
     formData.append('audio', audio, 'audio.mp3');
     formData.append('duration', duration.toFixed(2));
-    formData.append('context', text);
+    formData.append('context', prompt);
     formData.append('title', title);
 
     setLoading(true);
