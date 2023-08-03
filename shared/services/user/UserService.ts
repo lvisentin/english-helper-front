@@ -24,11 +24,10 @@ class UserService {
 
     if (typeof window !== 'undefined') {
       this._authToken = localStorage.getItem('authToken');
+      return localStorage.getItem('authToken');
     }
 
-    console.log(this._authToken);
-
-    return localStorage.getItem('authToken');
+    return this._authToken;
   }
 
   signIn(email: string, password: string) {
