@@ -24,6 +24,30 @@ class SpeakingService {
     );
   }
 
+  async translateSpeaking(speakingId: string) {
+    return await fetch(
+      `${this.VERCEL_API_URL}/feedbacks/${speakingId}/translate`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userService.getAuthToken()}`,
+        },
+      }
+    );
+  }
+
+  async newSpeakingRealTime(context: string, input: string, title: string) {
+    return await fetch(`${this.VERCEL_API_URL}/feedbacks`, {
+      method: 'POST',
+      body: JSON.stringify({ context, title, input }),
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userService.getAuthToken()}`,
+      },
+    });
+  }
+
   newSpeaking(formData: FormData): Promise<any> {
     return fetch(`${this.VERCEL_API_URL}/feedbacks`, {
       body: formData,

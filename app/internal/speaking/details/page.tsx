@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AxiosResponse } from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import styles from './SpeakingDetails.module.scss';
 
 export default function SpeakingDetails() {
@@ -19,6 +20,9 @@ export default function SpeakingDetails() {
   const [language, setLanguage] = useState<'pt' | 'en'>('en');
   const searchParams = useSearchParams();
   const speakingId = searchParams?.get('id');
+  const [translateLoading, setTranslateLoading] = useState<boolean>(false);
+  const [translateDone, setTranslateDone] = useState<boolean>(false);
+  const [translateAnswer, setTranslateAnswer] = useState<string>('');
 
   function getFeedbackData() {
     speakingService
@@ -38,11 +42,58 @@ export default function SpeakingDetails() {
   function toggleLanguage() {
     const newLang = language === 'pt' ? 'en' : 'pt';
     setLanguage(newLang);
+    if (newLang === 'pt' && !translateDone && !feedbackData?.portugueseOutput) {
+      translateSpeaking();
+      return;
+    }
+  }
+
+  async function translateSpeaking() {
+    setTranslateLoading(true);
+
+    try {
+      const response = await speakingService.translateSpeaking(speakingId!);
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder('utf-8');
+      setTranslateLoading(false);
+
+      if (reader) {
+        // eslint-disable-next-line no-constant-condition
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            break;
+          }
+          const chunk = decoder.decode(value);
+          const lines = chunk
+            .replace('data: "', '')
+            .replaceAll(/\\(")/g, '$1')
+            .replaceAll('\\n', '\n');
+
+          const hasDone = lines.includes('[DONE]');
+          if (!hasDone) {
+            console.log('lines', lines);
+            setTranslateAnswer(lines);
+          } else {
+            console.log('done');
+            setTranslateDone(true);
+          }
+        }
+      }
+    } catch (err) {
+      toast.error('Ocorreu um erro, tente novamente');
+    }
   }
 
   useEffect(() => {
     getFeedbackData();
   }, []);
+
+  useEffect(() => {
+    if (translateAnswer.length > 0) {
+      document.getElementById('answerElement')!.innerHTML = translateAnswer;
+    }
+  }, [translateAnswer]);
 
   return (
     <PageTransition>
@@ -98,13 +149,32 @@ export default function SpeakingDetails() {
                             en-us
                           </span>
                         </div>
-                        <p
-                          className={`${styles.outputText} m-0 pr-4 whitespace-pre-line`}
-                        >
-                          {language === 'en'
-                            ? feedbackData.output
-                            : feedbackData.portugueseOutput}
-                        </p>
+                        {language === 'en' ? (
+                          <p
+                            className={`${styles.outputText} m-0 pr-4 whitespace-pre-line`}
+                          >
+                            {feedbackData.output}
+                          </p>
+                        ) : feedbackData.portugueseOutput ? (
+                          <p
+                            className={`${styles.outputText} m-0 pr-4 whitespace-pre-line`}
+                          >
+                            {feedbackData.portugueseOutput}
+                          </p>
+                        ) : translateDone ? (
+                          <p
+                            className={`${styles.outputText} m-0 pr-4 whitespace-pre-line`}
+                          >
+                            {translateAnswer}
+                          </p>
+                        ) : translateLoading ? (
+                          <Loading />
+                        ) : (
+                          <p
+                            id="answerElement"
+                            className="whitespace-pre-line"
+                          ></p>
+                        )}
                       </div>
                     </div>
                   </aside>
