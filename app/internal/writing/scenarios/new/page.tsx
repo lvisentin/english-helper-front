@@ -43,17 +43,15 @@ export default function NewWriting() {
     });
   }
 
-  function sendFeedback(title: string, input: string) {
+  async function sendFeedback(title: string, input: string) {
     setLoading(true);
-    writingService
-      .newWriting(scenario.text, input, title)
-      .then(() => {
-        toast.success('Análise solicitada com sucesso!');
-      })
-      .finally(() => setLoading(false))
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
+    try {
+      await writingService.newWritingRealTime(scenario.text, input, title);
+      setLoading(false);
+      toast.success('Análise solicitada com sucessso!');
+    } catch (err) {
+      toast.error('Ocorreu um erro, tente novamente');
+    }
   }
 
   function goBack() {

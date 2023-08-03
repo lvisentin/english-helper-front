@@ -7,3 +7,7 @@ export interface GetWritingsResponse {
 export interface NewWritingResponse {
   message: string;
 }
+
+export interface GetWritingByIdResponse {
+  feedback: Feedback;
+}

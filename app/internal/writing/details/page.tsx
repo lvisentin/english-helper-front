@@ -4,13 +4,14 @@ import Loading from '@/shared/components/Loading/Loading';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { Feedback } from '@/shared/models/feedbacks/feedback.model';
-import { speakingService } from '@/shared/services/speaking/SpeakingService';
 import { GetSpeakingByIdResponse } from '@/shared/services/speaking/SpeakingService.model';
+import { writingService } from '@/shared/services/writing/WritingService';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AxiosResponse } from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import styles from './WritingDetails.module.scss';
 
 export default function WritingDetails() {
@@ -18,11 +19,14 @@ export default function WritingDetails() {
   const router = useRouter();
   const [language, setLanguage] = useState<'pt' | 'en'>('en');
   const searchParams = useSearchParams();
-  const speakingId = searchParams?.get('id');
+  const writingId = searchParams?.get('id');
+  const [translateLoading, setTranslateLoading] = useState<boolean>(false);
+  const [translateDone, setTranslateDone] = useState<boolean>(false);
+  const [translateAnswer, setTranslateAnswer] = useState<string>('');
 
   function getFeedbackData() {
-    speakingService
-      .getSpeakingById(speakingId!)
+    writingService
+      .getWritingById(writingId!)
       .then(
         ({ data: { feedback } }: AxiosResponse<GetSpeakingByIdResponse>) => {
           console.log(feedback);
@@ -38,11 +42,58 @@ export default function WritingDetails() {
   function toggleLanguage() {
     const newLang = language === 'pt' ? 'en' : 'pt';
     setLanguage(newLang);
+    if (newLang === 'pt' && !translateDone && !feedbackData?.portugueseOutput) {
+      translateWriting();
+      return;
+    }
+  }
+
+  async function translateWriting() {
+    setTranslateLoading(true);
+
+    try {
+      const response = await writingService.translateWriting(writingId!);
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder('utf-8');
+      setTranslateLoading(false);
+
+      if (reader) {
+        // eslint-disable-next-line no-constant-condition
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            break;
+          }
+          const chunk = decoder.decode(value);
+          const lines = chunk
+            .replace('data: "', '')
+            .replaceAll(/\\(")/g, '$1')
+            .replaceAll('\\n', '\n');
+
+          const hasDone = lines.includes('[DONE]');
+          if (!hasDone) {
+            console.log('lines', lines);
+            setTranslateAnswer(lines);
+          } else {
+            console.log('done');
+            setTranslateDone(true);
+          }
+        }
+      }
+    } catch (err) {
+      toast.error('Ocorreu um erro, tente novamente');
+    }
   }
 
   useEffect(() => {
     getFeedbackData();
   }, []);
+
+  useEffect(() => {
+    if (translateAnswer.length > 0) {
+      document.getElementById('answerElement')!.innerHTML = translateAnswer;
+    }
+  }, [translateAnswer]);
 
   return (
     <PageTransition>
@@ -98,13 +149,32 @@ export default function WritingDetails() {
                             en-us
                           </span>
                         </div>
-                        <p
-                          className={`${styles.outputText} m-0 pr-4 whitespace-pre-line`}
-                        >
-                          {language === 'en'
-                            ? feedbackData.output
-                            : feedbackData.portugueseOutput}
-                        </p>
+                        {language === 'en' ? (
+                          <p
+                            className={`${styles.outputText} m-0 pr-4 whitespace-pre-line`}
+                          >
+                            {feedbackData.output}
+                          </p>
+                        ) : feedbackData.portugueseOutput ? (
+                          <p
+                            className={`${styles.outputText} m-0 pr-4 whitespace-pre-line`}
+                          >
+                            {feedbackData.portugueseOutput}
+                          </p>
+                        ) : translateDone ? (
+                          <p
+                            className={`${styles.outputText} m-0 pr-4 whitespace-pre-line`}
+                          >
+                            {translateAnswer}
+                          </p>
+                        ) : translateLoading ? (
+                          <Loading />
+                        ) : (
+                          <p
+                            id="answerElement"
+                            className="whitespace-pre-line"
+                          ></p>
+                        )}
                       </div>
                     </div>
                   </aside>

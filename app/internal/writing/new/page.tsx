@@ -15,17 +15,16 @@ export default function NewWritingPage() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
 
-  function sendFeedback(title: string, context: string, input: string) {
+  async function sendFeedback(title: string, context: string, input: string) {
     setLoading(true);
-    writingService
-      .newWriting(context, input, title)
-      .then(() => {
-        toast.success('Análise solicitada com sucesso!');
-      })
-      .finally(() => setLoading(false))
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
+
+    try {
+      await writingService.newWritingRealTime(context, input, title);
+      setLoading(false);
+      toast.success('Análise solicitada com sucessso!');
+    } catch (err) {
+      toast.error('Ocorreu um erro, tente novamente');
+    }
   }
 
   function goBack() {

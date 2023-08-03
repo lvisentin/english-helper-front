@@ -60,7 +60,7 @@ export default function WritingPage() {
 
   function goToDetails(feedbackId: GridRowId) {
     console.log('feedback', feedbackId);
-    push(`/internal/speaking/details?id=${feedbackId}`);
+    push(`/internal/writing/details?id=${feedbackId}`);
   }
 
   useEffect(() => {
