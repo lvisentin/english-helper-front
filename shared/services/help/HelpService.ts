@@ -1,4 +1,5 @@
-import axios from '@/shared/configs/axios/instances/default';
+import axios from 'axios';
+import { userService } from '../user/UserService';
 
 class HelpService {
   private VERCEL_WEBHOOK_URL = process.env.VERCEL_WEBHOOK_URL;
@@ -29,7 +30,11 @@ class HelpService {
       ],
     };
 
-    return axios.post(`${this.VERCEL_WEBHOOK_URL}`, request);
+    return axios.post(`${this.VERCEL_WEBHOOK_URL}`, request, {
+      headers: {
+        Authorization: `Bearer ${userService.getAuthToken()}`,
+      },
+    });
   }
 }
 

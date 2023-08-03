@@ -7,6 +7,7 @@ const customInstance = axios.create({
 });
 
 const requestHandler = (request: any) => {
+  console.log('requestHandler', userService.getAuthToken());
   request.headers = {
     Authorization: `Bearer ${userService.getAuthToken()}`,
     'Content-Type': 'Application/json',

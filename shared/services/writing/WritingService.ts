@@ -1,5 +1,4 @@
-import axios from '@/shared/configs/axios/instances/default';
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { userService } from '../user/UserService';
 import {
   GetWritingByIdResponse,
@@ -15,6 +14,9 @@ class WritingService {
       params: {
         type: 'text',
       },
+      headers: {
+        Authorization: `Bearer ${userService.getAuthToken()}`,
+      },
     });
   }
 
@@ -22,7 +24,12 @@ class WritingService {
     speakingId: string
   ): Promise<AxiosResponse<GetWritingByIdResponse>> {
     return axios.get<GetWritingByIdResponse>(
-      `${this.VERCEL_API_URL}/feedbacks/${speakingId}`
+      `${this.VERCEL_API_URL}/feedbacks/${speakingId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${userService.getAuthToken()}`,
+        },
+      }
     );
   }
 
@@ -55,11 +62,19 @@ class WritingService {
     input: string,
     title: string
   ): Promise<NewWritingResponse> {
-    return axios.post(`${this.VERCEL_API_URL}/feedbacks`, {
-      title,
-      input,
-      context,
-    });
+    return axios.post(
+      `${this.VERCEL_API_URL}/feedbacks`,
+      {
+        title,
+        input,
+        context,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${userService.getAuthToken()}`,
+        },
+      }
+    );
   }
 }
 

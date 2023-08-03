@@ -17,6 +17,7 @@ const RouteGuard = ({ children }: RouteGuardProps) => {
     userService
       .getCurrentUser()
       .then(({ data }) => {
+        console.log('data', data);
         if (!data.user) {
           setAuthorized(false);
           router.push('/login');

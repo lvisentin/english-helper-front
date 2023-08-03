@@ -1,5 +1,4 @@
-import axios from '@/shared/configs/axios/instances/default';
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { userService } from '../user/UserService';
 import {
   GetSpeakingByIdResponse,
@@ -13,6 +12,7 @@ class SpeakingService {
       params: {
         type: 'audio',
       },
+      headers: { Authorization: `Bearer ${userService.getAuthToken()}` },
     });
   }
 
@@ -20,7 +20,12 @@ class SpeakingService {
     speakingId: string
   ): Promise<AxiosResponse<GetSpeakingByIdResponse>> {
     return axios.get<GetSpeakingByIdResponse>(
-      `${this.VERCEL_API_URL}/feedbacks/${speakingId}`
+      `${this.VERCEL_API_URL}/feedbacks/${speakingId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${userService.getAuthToken()}`,
+        },
+      }
     );
   }
 

@@ -1,4 +1,5 @@
-import axios from '@/shared/configs/axios/instances/default';
+import axios from 'axios';
+import { userService } from '../user/UserService';
 import {
   SubscribeResponse,
   SubscriptionPlan,
@@ -9,17 +10,33 @@ class SubscriptionService {
   private API_URL = process.env.VERCEL_API_URL;
 
   getAllPlans() {
-    return axios.get<SubscriptionPlan[]>(`${this.API_URL}/plans`);
+    return axios.get<SubscriptionPlan[]>(`${this.API_URL}/plans`, {
+      headers: {
+        Authorization: `Bearer ${userService.getAuthToken()}`,
+      },
+    });
   }
 
   getSubscriptionStatus() {
-    return axios.get<UserSubscription>(`${this.API_URL}/user/subscription`);
+    return axios.get<UserSubscription>(`${this.API_URL}/user/subscription`, {
+      headers: {
+        Authorization: `Bearer ${userService.getAuthToken()}`,
+      },
+    });
   }
 
   subscribe(stripeProductId: string) {
-    return axios.post<SubscribeResponse>(`${this.API_URL}/user/subscribe`, {
-      productId: stripeProductId,
-    });
+    return axios.post<SubscribeResponse>(
+      `${this.API_URL}/user/subscribe`,
+      {
+        productId: stripeProductId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${userService.getAuthToken()}`,
+        },
+      }
+    );
   }
 
   changeSubscription(stripeProductId: string) {
@@ -27,6 +44,11 @@ class SubscriptionService {
       `${this.API_URL}/user/subscription/change`,
       {
         productId: stripeProductId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${userService.getAuthToken()}`,
+        },
       }
     );
   }
