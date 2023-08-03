@@ -5,7 +5,8 @@ import {
   faMicrophoneSlash,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 import LoadingButton from '../LoadingButton/LoadingButton';
 import styles from './AudioRecorder.module.scss';
 
@@ -13,25 +14,27 @@ function AudioRecorder({
   setAudioFile,
   handleSubmit,
   loading,
+  onStartRecording,
+  onStopRecording,
   handleReset,
 }: {
   setAudioFile: any;
   handleSubmit: any;
   handleReset?: any;
+  onStartRecording?: any;
+  onStopRecording?: any;
   loading: boolean;
 }) {
-  const [permission, setPermission] = useState<boolean>(false);
   const mediaRecorder = useRef<any>(null);
   const [recordingStatus, setRecordingStatus] = useState<string>('inactive');
   const [stream, setStream] = useState<any>(null);
   const [audioChunks, setAudioChunks] = useState<any>([]);
   const [audio, setAudio] = useState<any>(null);
-  const mimeType = 'audio/webm';
 
   async function startRecording() {
-    console.log('startrecording');
+    onStartRecording();
     setRecordingStatus('recording');
-    const media = new MediaRecorder(stream, { mimeType: mimeType });
+    const media = new MediaRecorder(stream, { mimeType: 'audio/webm' });
     mediaRecorder.current = media;
     mediaRecorder.current.start();
 
@@ -46,45 +49,39 @@ function AudioRecorder({
 
   function clearAudio() {
     setAudio(null);
-    if (handleReset) {
-      handleReset();
-    }
   }
 
   function stopRecording() {
-    console.log('stopRecording');
-
     setRecordingStatus('inactive');
     mediaRecorder.current.stop();
     mediaRecorder.current.onstop = () => {
-      const audioBlob = new Blob(audioChunks, { type: mimeType });
+      const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
       const audioUrl = URL.createObjectURL(audioBlob);
       setAudio(audioUrl);
       setAudioFile(audioBlob);
       setAudioChunks([]);
+      onStopRecording();
     };
   }
 
   async function getMicrophonePermission() {
-    console.log('getMicrophonePermission');
     if ('MediaRecorder' in window) {
       try {
         const streamData = await navigator.mediaDevices.getUserMedia({
           audio: true,
           video: false,
         });
-        setPermission(true);
         setStream(streamData);
       } catch (err: any) {
-        alert(err.message);
+        toast.error('Por favor, autorize o uso do microfone');
       }
     } else {
-      alert('The MediaRecorder API is not supported in your browser.');
+      toast.error('The MediaRecorder API is not supported in your browser.');
     }
   }
 
   async function handleRecordingClick() {
-    if (!permission) {
+    if (!stream || !stream.active) {
       getMicrophonePermission();
     } else {
       if (recordingStatus === 'recording') {
@@ -94,6 +91,10 @@ function AudioRecorder({
       }
     }
   }
+
+  useEffect(() => {
+    getMicrophonePermission();
+  }, []);
 
   return (
     <>
@@ -105,13 +106,16 @@ function AudioRecorder({
             </p>
           ) : (
             <p className="prose-p text-center mb-4">
-              Clique no botão abaixo para iniciar a gravação...
+              {audio
+                ? 'Você pode ouvir seu áudio no player abaixo'
+                : 'Clique no botão abaixo para iniciar a gravação...'}
             </p>
           )}
         </div>
         <button
           type="button"
           className={`${styles.recordBtn} btn btn-primary rounded-full my-auto`}
+          disabled={audio}
           onClick={handleRecordingClick}
         >
           {recordingStatus === 'recording' ? (
@@ -126,7 +130,7 @@ function AudioRecorder({
       </div>
       {audio ? (
         <div className="audio-container flex flex-col items-center justify-center gap-4">
-          <audio src={audio} controls></audio>
+          <audio id="audioField" src={audio} controls></audio>
           <div className="buttons flex gap-4">
             <LoadingButton
               loading={loading}

@@ -12,28 +12,31 @@ const RouteGuard = ({ children }: RouteGuardProps) => {
   const [authorized, setAuthorized] = useState(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const user = userService.getCurrentUser();
 
-  useEffect(() => {
-    const authCheck = () => {
-      if (!user.isLoggedIn) {
+  function checkUser() {
+    userService
+      .getCurrentUser()
+      .then(({ data }) => {
+        console.log('data', data);
+        if (!data.user) {
+          setAuthorized(false);
+          router.push('/login');
+        } else {
+          setAuthorized(true);
+        }
+      })
+      .catch(() => {
+        console.error('UNAUTHORIZED USER');
         setAuthorized(false);
         router.push('/login');
-      } else {
-        setAuthorized(true);
-      }
-    };
+      });
+  }
 
-    authCheck();
-  }, [router, pathname, searchParams, user]);
+  useEffect(() => {
+    checkUser();
+  }, [router, pathname, searchParams]);
 
-  return authorized ? (
-    children
-  ) : (
-    <div className={'w-full h-full flex flex-col'}>
-      <span className="loading loading-spinner loading-lg"></span>
-    </div>
-  );
+  return children;
 };
 
 export default RouteGuard;

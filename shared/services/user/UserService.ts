@@ -1,47 +1,43 @@
-import axios from '@/shared/configs/axios/instances/default';
-import { LoginResponse, SignUpResponse } from './UserService.model';
-
-export interface CurrentUser {
-  isLoggedIn: boolean;
-}
+import axios, { AxiosResponse } from 'axios';
+import {
+  GetCurrentUserResponse,
+  LoginResponse,
+  SignUpResponse,
+  UserWithoutSensitiveInfo,
+} from './UserService.model';
 
 class UserService {
   private _authToken: string | null = null;
-  private API_URL = process.env.API_URL;
+  private VERCEL_API_URL = process.env.VERCEL_API_URL;
 
-  getCurrentUser(): CurrentUser {
-    if (!this.getAuthToken()) {
-      return {
-        isLoggedIn: false,
-      };
-    }
-    return {
-      isLoggedIn: true,
-    };
+  getCurrentUser(): Promise<AxiosResponse<GetCurrentUserResponse>> {
+    return axios.get<GetCurrentUserResponse>(
+      `${this.VERCEL_API_URL}/auth/user`,
+      {
+        headers: {
+          Authorization: `Bearer ${userService.getAuthToken()}`,
+        },
+      }
+    );
   }
 
   getAuthToken() {
-    if (this._authToken) {
-      return this._authToken;
-    }
-
-    if (typeof window !== 'undefined') {
-      this._authToken = localStorage.getItem('authToken');
-    }
-
-    return this._authToken;
+    if (typeof window !== 'undefined') return localStorage.getItem('authToken');
+    return null;
   }
 
   signIn(email: string, password: string) {
+    console.log(this.VERCEL_API_URL);
+    console.log(`${this.VERCEL_API_URL}/auth/login`);
     return axios.post<LoginResponse>(
-      `${this.API_URL}/auth/login`,
+      `${this.VERCEL_API_URL}/auth/login`,
       {
         email,
         password,
       },
       {
         headers: {
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userService.getAuthToken()}`,
         },
       }
     );
@@ -55,7 +51,7 @@ class UserService {
     referral_code: string
   ) {
     return axios.post<SignUpResponse>(
-      `${this.API_URL}/auth/register`,
+      `${this.VERCEL_API_URL}/auth/register`,
       {
         name,
         email,
@@ -65,7 +61,7 @@ class UserService {
       },
       {
         headers: {
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userService.getAuthToken()}`,
         },
       }
     );
@@ -73,11 +69,61 @@ class UserService {
 
   signOut() {
     // WIP
-    return new Promise(() => localStorage.removeItem('authToken'));
+    // return new Promise(() => localStorage.removeItem('authToken'));
   }
 
   setUserToken(token: string) {
     localStorage.setItem('authToken', token);
+  }
+
+  getUserData() {
+    const convertedUser = localStorage.getItem('userData');
+    if (!convertedUser) {
+      return;
+    }
+    return JSON.parse(convertedUser);
+  }
+
+  getUserStats() {
+    return axios.get(`${this.VERCEL_API_URL}/user/status`, {
+      headers: {
+        Authorization: `Bearer ${userService.getAuthToken()}`,
+      },
+    });
+  }
+
+  setUserData(userData: UserWithoutSensitiveInfo) {
+    localStorage.setItem('userData', JSON.stringify(userData));
+  }
+
+  sendResetPasswordEmail(email: string) {
+    return axios.post(
+      `${this.VERCEL_API_URL}/auth/send-reset-password`,
+      {
+        email,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${userService.getAuthToken()}`,
+        },
+      }
+    );
+  }
+
+  resetPassword(token: string, password: string, confirmPassword: string) {
+    return axios.post(
+      `${this.VERCEL_API_URL}/auth/reset-password`,
+      {
+        token,
+        password,
+        confirmPassword,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${userService.getAuthToken()}`,
+        },
+      }
+    );
   }
 }
 

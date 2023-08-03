@@ -20,3 +20,17 @@ export interface SignUpResponse {
 export interface CreatedUser {
   user: UserWithoutSensitiveInfo;
 }
+
+export interface User {
+  _id: string;
+  email: string;
+  name: string;
+  createdAt?: string;
+  updatedAt?: string;
+  plan: string;
+  referralCode: string;
+}
+
+export interface GetCurrentUserResponse {
+  user: User;
+}

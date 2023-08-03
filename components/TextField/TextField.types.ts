@@ -17,5 +17,6 @@ export interface TextFieldProps {
   onBlur?: (e: FocusEvent<any, Element>) => any;
   value?: any;
   name: string;
+  disabled?: boolean;
   errors?: any;
 }

@@ -2,12 +2,12 @@ import { userService } from '@/shared/services/user/UserService';
 import axios from 'axios';
 
 const customInstance = axios.create({
-  baseURL:
-    'http://english-helper-app-env-1.eba-ajas73zf.us-east-1.elasticbeanstalk.com/api/v1',
+  baseURL: '',
   timeout: 10000,
 });
 
 const requestHandler = (request: any) => {
+  console.log('requestHandler', userService.getAuthToken());
   request.headers = {
     Authorization: `Bearer ${userService.getAuthToken()}`,
     'Content-Type': 'Application/json',

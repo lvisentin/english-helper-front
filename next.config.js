@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    API_URL: process.env.API_URL,
+    VERCEL_API_URL: process.env.VERCEL_API_URL,
+    VERCEL_WEBHOOK_URL: process.env.VERCEL_WEBHOOK_URL,
+  },
+  images: {
+    domains: ['placehold.it'],
   },
 };
 

@@ -1,33 +1,65 @@
-import axios from '@/shared/configs/axios/instances/default';
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import { userService } from '../user/UserService';
 import {
+  GetSpeakingByIdResponse,
   GetSpeakingsResponse,
-  NewSpeakingResponse,
 } from './SpeakingService.model';
 class SpeakingService {
-  private API_URL = process.env.API_URL;
+  private VERCEL_API_URL = process.env.VERCEL_API_URL;
 
   getSpeakings(): Promise<AxiosResponse<GetSpeakingsResponse>> {
-    return axios.get<GetSpeakingsResponse>(`${this.API_URL}/feedbacks`, {
+    return axios.get<GetSpeakingsResponse>(`${this.VERCEL_API_URL}/feedbacks`, {
       params: {
-        type: 'text',
+        type: 'audio',
+      },
+      headers: { Authorization: `Bearer ${userService.getAuthToken()}` },
+    });
+  }
+
+  getSpeakingById(
+    speakingId: string
+  ): Promise<AxiosResponse<GetSpeakingByIdResponse>> {
+    return axios.get<GetSpeakingByIdResponse>(
+      `${this.VERCEL_API_URL}/feedbacks/${speakingId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${userService.getAuthToken()}`,
+        },
+      }
+    );
+  }
+
+  async translateSpeaking(speakingId: string) {
+    return await fetch(
+      `${this.VERCEL_API_URL}/feedbacks/${speakingId}/translate`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userService.getAuthToken()}`,
+        },
+      }
+    );
+  }
+
+  async newSpeakingRealTime(context: string, input: string, title: string) {
+    return await fetch(`${this.VERCEL_API_URL}/feedbacks`, {
+      method: 'POST',
+      body: JSON.stringify({ context, title, input }),
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userService.getAuthToken()}`,
       },
     });
   }
 
-  newSpeaking(
-    context: string,
-    title: string,
-    audio?: Blob,
-    input?: string,
-    file_url?: string
-  ): Promise<NewSpeakingResponse> {
-    return axios.post(`${this.API_URL}/feedbacks`, {
-      title,
-      input,
-      context,
-      file_url,
-      audio,
+  newSpeaking(formData: FormData): Promise<any> {
+    return fetch(`${this.VERCEL_API_URL}/feedbacks`, {
+      body: formData,
+      method: 'post',
+      headers: {
+        Authorization: `Bearer ${userService.getAuthToken()}`,
+      },
     });
   }
 }

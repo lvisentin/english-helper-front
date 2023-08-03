@@ -7,3 +7,7 @@ export interface GetSpeakingsResponse {
 export interface NewSpeakingResponse {
   message: string;
 }
+
+export interface GetSpeakingByIdResponse {
+  feedback: Feedback;
+}
