@@ -70,6 +70,7 @@ export default function MySubscription() {
       } else {
         subscriptionService
           .changeSubscription(stripeProductId)
+          .then(() => getAllPlans())
           .catch(() =>
             toast.error('Ocorreu um erro, tente novamente mais tarde.')
           )
