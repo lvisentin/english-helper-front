@@ -70,9 +70,6 @@ export default function MySubscription() {
       } else {
         subscriptionService
           .changeSubscription(stripeProductId)
-          .then(({ data: { url } }) => {
-            window.location.href = url;
-          })
           .catch(() =>
             toast.error('Ocorreu um erro, tente novamente mais tarde.')
           )
@@ -178,7 +175,7 @@ export default function MySubscription() {
               </div>
             </form>
             <form method="dialog" className="modal-backdrop">
-              <button onClick={confirmSubscribe}>close</button>
+              <button>close</button>
             </form>
           </dialog>
           <section className={'grid'}>
