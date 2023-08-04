@@ -26,6 +26,7 @@ export default function MySubscription() {
     useState<SubscriptionPlan[]>();
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
   const [userSubscription, setUserSubscription] = useState<UserSubscription>();
+  const [selectedPlan, setSelectedPlan] = useState<string>('');
 
   function getUserSubscriptionStatus() {
     subscriptionService
@@ -42,10 +43,19 @@ export default function MySubscription() {
     subscriptionService
       .getAllPlans()
       .then(({ data }) => {
+        console.log('data', data);
         setSubscriptionPlans(data);
         getUserSubscriptionStatus();
       })
       .catch(() => toast.error('Ocorreu um erro, tente novamente mais tarde.'));
+  }
+
+  function handleSubscribeClick(stripeProductId: string) {
+    if (isSubscribed && userSubscription?.plan.recurrence === 'monthly') {
+      showConfirmationModal(stripeProductId);
+    } else {
+      subscribe(stripeProductId);
+    }
   }
 
   function subscribe(stripeProductId: string) {
@@ -94,6 +104,21 @@ export default function MySubscription() {
     }
   }
 
+  function showConfirmationModal(stripeProductId: string) {
+    setSelectedPlan(stripeProductId);
+    //@ts-ignore
+    window.upgrade_dialog.showModal();
+  }
+
+  function confirmSubscribe() {
+    subscribe(selectedPlan);
+  }
+
+  function cancelSubscribe() {
+    console.log('cancelsubs');
+    setSelectedPlan('');
+  }
+
   useEffect(() => {
     setLoading(true);
     getAllPlans();
@@ -124,6 +149,36 @@ export default function MySubscription() {
             </form>
             <form method="dialog" className="modal-backdrop">
               <button>close</button>
+            </form>
+          </dialog>
+
+          <dialog
+            id="upgrade_dialog"
+            className="modal modal-bottom sm:modal-middle"
+          >
+            <form method="dialog" className="modal-box prose">
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
+              <h2 className="text-center mt-4">Upgrade de plano</h2>
+              <p>
+                Tem certeza que gostaria de fazer o upgrade do seu plano? Iremos
+                cobrar em seu cartão já salvo.
+              </p>
+              <div className="modal-actions text-center">
+                <button
+                  onClick={confirmSubscribe}
+                  className="btn btn-primary mr-4"
+                >
+                  Entendi
+                </button>
+                <button onClick={cancelSubscribe} className="btn">
+                  Cancelar
+                </button>
+              </div>
+            </form>
+            <form method="dialog" className="modal-backdrop">
+              <button onClick={confirmSubscribe}>close</button>
             </form>
           </dialog>
           <section className={'grid'}>
@@ -228,7 +283,9 @@ export default function MySubscription() {
                       ) : (
                         <LoadingButton
                           className="btn btn-primary w-full mt-2"
-                          onClick={() => subscribe(plan.stripeProductId)}
+                          onClick={() =>
+                            handleSubscribeClick(plan.stripeProductId)
+                          }
                           loading={subscribeLoading}
                         >
                           {userSubscription && isSubscribed
