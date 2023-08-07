@@ -8,6 +8,7 @@ import eyeSvgSrc from '@/resources/svg/eye.svg';
 import LoadingButton from '@/shared/components/LoadingButton/LoadingButton';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import TermsAndConditionsModal from '@/shared/components/TermsAndConditionsModal/TermsAndConditionsModal';
+import { lead } from '@/shared/fpixel/fpixel';
 import { userService } from '@/shared/services/user/UserService';
 import { SignupSchema } from '@/shared/validators/SignUp.validator';
 import {
@@ -45,6 +46,7 @@ export default function SignUpPage() {
       .signUp(name, email, password, cleanedPhoneNumber, referralCode)
       .then(() => {
         toast.success('Conta criada com sucesso!');
+        lead();
         push('/login');
       })
       .catch(({ response: { data } }) => toast.error(data.message))
