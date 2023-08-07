@@ -20,3 +20,5 @@
   'https://connect.facebook.net/en_US/fbevents.js'
 );
 fbq('init', '971543387368976');
+
+export const leadPixel = fbq('track', 'Lead');
