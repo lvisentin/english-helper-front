@@ -1,3 +1,4 @@
+import FacebookPixel from '@/components/FacebookPixel/FacebookPixel';
 import PrimaryLayout from '@/components/layouts/primary/PrimaryLayout';
 import { GlobalStateProvider } from '@/context/GlobalState/Provider';
 import { Poppins } from 'next/font/google';
@@ -28,6 +29,16 @@ export default function RootLayout({
           }
         `}
         </style>
+        {/* PIXEL */}
+        <FacebookPixel />
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            className="hidden"
+            src="https://www.facebook.com/tr?id=971543387368976&ev=PageView&noscript=1"
+          />
+        </noscript>
         <ToastContainer
           position="top-right"
           autoClose={5000}
