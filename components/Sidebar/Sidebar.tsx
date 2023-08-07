@@ -80,13 +80,15 @@ const Sidebar: React.FC = () => {
         'bg-base-100 min-w-320 w-80 flex flex-col h-screen justify-between shadow-sm'
       }
     >
-      <Image
-        src="/eh-blue.svg"
-        alt="English Helper Logo"
-        width={100}
-        height={100}
-        className={'w-full pt-4 px-8'}
-      />
+      <Link href={'/internal/dashboard'}>
+        <Image
+          src="/eh-blue.svg"
+          alt="English Helper Logo"
+          width={100}
+          height={100}
+          className={'w-full pt-4 px-8'}
+        />
+      </Link>
 
       <ul className="menu menu-sm lg:menu-md px-4 py-4 mb-auto">
         {menuItems.map((menuItem, key) => (
