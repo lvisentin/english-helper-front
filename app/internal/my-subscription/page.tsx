@@ -43,7 +43,6 @@ export default function MySubscription() {
     subscriptionService
       .getAllPlans()
       .then(({ data }) => {
-        console.log('data', data);
         setSubscriptionPlans(data);
         getUserSubscriptionStatus();
       })
@@ -113,7 +112,6 @@ export default function MySubscription() {
   }
 
   function cancelSubscribe() {
-    console.log('cancelsubs');
     setSelectedPlan('');
   }
 

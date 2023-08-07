@@ -27,8 +27,6 @@ class UserService {
   }
 
   signIn(email: string, password: string) {
-    console.log(this.VERCEL_API_URL);
-    console.log(`${this.VERCEL_API_URL}/auth/login`);
     return axios.post<LoginResponse>(
       `${this.VERCEL_API_URL}/auth/login`,
       {

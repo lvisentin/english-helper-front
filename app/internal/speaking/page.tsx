@@ -61,7 +61,6 @@ const SpeakingDashboard = (props: any, ref: any) => {
   }
 
   function goToDetails(feedbackId: GridRowId) {
-    console.log('feedback', feedbackId);
     push(`/internal/speaking/details?id=${feedbackId}`);
   }
 

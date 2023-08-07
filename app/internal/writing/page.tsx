@@ -59,7 +59,6 @@ export default function WritingPage() {
   const [loadingData, setLoadingData] = useState(true);
 
   function goToDetails(feedbackId: GridRowId) {
-    console.log('feedback', feedbackId);
     push(`/internal/writing/details?id=${feedbackId}`);
   }
 
