@@ -1,26 +1,5 @@
-$header-background: #21293d;
-
 .content {
   padding: 24px;
   width: 100%;
   max-width: 100%;
-}
-
-.dataGrid {
-  height: fit-content !important;
-  font-family: 'Poppins', sans-serif !important;
-}
-
-.dataGrid .dataGridHeader {
-  background: $header-background;
-  color: #f2f5f8;
-  padding: 0 24px;
-}
-
-.dataGrid * {
-  outline: none !important;
-}
-
-.dataGridIcon {
-  color: white;
 }
