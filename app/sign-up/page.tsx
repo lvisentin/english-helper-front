@@ -5,7 +5,6 @@ import RadioButton from '@/components/RadioButton/RadioButton';
 import TextField from '@/components/TextField/TextField';
 import eyeSlashSvgSrc from '@/resources/svg/eye-slash.svg';
 import eyeSvgSrc from '@/resources/svg/eye.svg';
-import { leadPixel } from '@/scripts/facebook-pixel/facebook-pixel.js';
 import LoadingButton from '@/shared/components/LoadingButton/LoadingButton';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import TermsAndConditionsModal from '@/shared/components/TermsAndConditionsModal/TermsAndConditionsModal';
@@ -46,7 +45,11 @@ export default function SignUpPage() {
       .signUp(name, email, password, cleanedPhoneNumber, referralCode)
       .then(() => {
         toast.success('Conta criada com sucesso!');
-        leadPixel();
+        import('react-facebook-pixel')
+          .then((x) => x.default)
+          .then((ReactPixel) => {
+            ReactPixel.track('Lead');
+          });
         push('/login');
       })
       .catch(({ response: { data } }) => toast.error(data.message))

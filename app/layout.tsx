@@ -29,16 +29,8 @@ export default function RootLayout({
           }
         `}
         </style>
-        {/* PIXEL */}
-        <FacebookPixel />
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            className="hidden"
-            src="https://www.facebook.com/tr?id=971543387368976&ev=PageView&noscript=1"
-          />
-        </noscript>
+        <FacebookPixel></FacebookPixel>
+
         <ToastContainer
           position="top-right"
           autoClose={5000}
