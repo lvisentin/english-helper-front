@@ -2,6 +2,7 @@ import FacebookPixel from '@/components/FacebookPixel/FacebookPixel';
 import PrimaryLayout from '@/components/layouts/primary/PrimaryLayout';
 import { GlobalStateProvider } from '@/context/GlobalState/Provider';
 import { Poppins } from 'next/font/google';
+import Script from 'next/script';
 import { ToastContainer } from 'react-toastify';
 import '../styles/globals.scss';
 const poppins = Poppins({
@@ -21,6 +22,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="light">
+      <Script
+        id="gtag-script-import"
+        strategy="lazyOnload"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+      />
+
+      <Script strategy="lazyOnload" id="gtag-script">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());        
+          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
+        `}
+      </Script>
+
       <body className={poppins.className}>
         <style global>
           {`
