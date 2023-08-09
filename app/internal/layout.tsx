@@ -1,6 +1,5 @@
 import HelpButton from '@/components/HelpButton/HelpButton';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import Head from 'next/head';
 import React from 'react';
 import styles from './layout.module.scss';
 
@@ -12,9 +11,6 @@ const InternalLayout: React.FC<IInternalLayout> = ({ children }) => {
   return (
     <>
       <HelpButton></HelpButton>
-      <Head>
-        <title>Primary Layout Example</title>
-      </Head>
       <div className={`main flex flex-row h-full w-full`}>
         <Sidebar />
 
