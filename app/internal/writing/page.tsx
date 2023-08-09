@@ -1,12 +1,13 @@
 'use client';
 
 import styles from '@/app/internal/speaking/SpeakingDashboard.module.scss';
+import DataTable from '@/components/DataTable/DataTable';
 import Loading from '@/shared/components/Loading/Loading';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { Feedback } from '@/shared/models/feedbacks/feedback.model';
 import { writingService } from '@/shared/services/writing/WritingService';
-import { DataGrid, GridColDef, GridRowId } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -15,7 +16,6 @@ const columns: GridColDef[] = [
   {
     field: 'title',
     headerName: 'Título',
-    headerClassName: styles.dataGridHeader,
     flex: 1,
     minWidth: 200,
     filterable: false,
@@ -23,7 +23,6 @@ const columns: GridColDef[] = [
   {
     field: 'context',
     headerName: 'Contexto',
-    headerClassName: styles.dataGridHeader,
     flex: 1,
     minWidth: 200,
     filterable: false,
@@ -31,7 +30,6 @@ const columns: GridColDef[] = [
   {
     field: 'status',
     headerName: 'Status',
-    headerClassName: styles.dataGridHeader,
     flex: 1,
     minWidth: 200,
     filterable: false,
@@ -39,7 +37,6 @@ const columns: GridColDef[] = [
   {
     field: 'createdAt',
     headerName: 'Data',
-    headerClassName: styles.dataGridHeader,
     flex: 1,
     minWidth: 200,
     filterable: false,
@@ -58,8 +55,8 @@ export default function WritingPage() {
   const [writingFeedbacks, setWritingFeedbacks] = useState<Feedback[]>([]);
   const [loadingData, setLoadingData] = useState(true);
 
-  function goToDetails(feedbackId: GridRowId) {
-    push(`/internal/writing/details?id=${feedbackId}`);
+  function goToDetails(feedbackRow: Feedback) {
+    push(`/internal/writing/details?id=${feedbackRow._id}`);
   }
 
   useEffect(() => {
@@ -103,31 +100,13 @@ export default function WritingPage() {
             {loadingData ? (
               <Loading />
             ) : writingFeedbacks.length > 0 ? (
-              <DataGrid
-                localeText={{
-                  MuiTablePagination: {
-                    labelDisplayedRows: ({ from, to }) =>
-                      `Mostrando de ${from} até ${to}`,
-                    labelRowsPerPage: 'Resultados por página',
-                  },
-                }}
-                className={`${styles.dataGrid} h-fit cursor-pointer`}
-                getRowId={(row) => row._id}
+              <DataTable
+                columns={columns}
+                onRowClick={goToDetails}
+                data={writingFeedbacks}
                 classes={{
                   sortIcon: styles.dataGridIcon,
                 }}
-                rows={writingFeedbacks}
-                columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
-                  },
-                }}
-                disableColumnSelector
-                disableRowSelectionOnClick
-                disableColumnMenu
-                onRowClick={(row) => goToDetails(row.id)}
-                pageSizeOptions={[5, 10]}
               />
             ) : (
               <div className="flex items-center justify-center h-full">
