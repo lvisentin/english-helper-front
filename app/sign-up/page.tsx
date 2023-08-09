@@ -89,7 +89,6 @@ export default function SignUpPage() {
               confirmPassword,
             }) => {
               if (password !== confirmPassword) {
-                console.log('senhas divcrgentes');
                 return;
               }
 
