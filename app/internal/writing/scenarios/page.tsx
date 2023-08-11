@@ -41,7 +41,7 @@ export default function NewWriting() {
               </h1>
             </div>
             <button className={'btn btn-primary'} onClick={goToCustom}>
-              Não encontrei o que queria
+              Criar Cenário Personalizado
             </button>
           </header>
 
