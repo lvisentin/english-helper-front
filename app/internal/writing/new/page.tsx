@@ -16,15 +16,19 @@ export default function NewWritingPage() {
   const [loading, setLoading] = useState<boolean>(false);
 
   async function sendFeedback(title: string, context: string, input: string) {
-    setLoading(true);
-
-    try {
-      await writingService.newWritingRealTime(context, input, title);
-      setLoading(false);
-      toast.success('Análise solicitada com sucessso!');
-    } catch (err) {
-      toast.error('Ocorreu um erro, tente novamente');
+    if (!context) {
+      toast.error('Por favor, digite um contexto');
+      return;
     }
+
+    setLoading(true);
+    writingService
+      .newWritingRealTime(context, input, title)
+      .then(() => {
+        toast.success('Análise solicitada com sucessso!');
+      })
+      .finally(() => setLoading(false))
+      .catch(() => toast.error('Ocorreu um erro, tente novamente'));
   }
 
   function goBack() {

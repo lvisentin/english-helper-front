@@ -41,6 +41,11 @@ export default function NewSpeaking() {
     formData.append('duration', duration.toFixed(2));
     formData.append('title', title);
 
+    if (!context) {
+      toast.error('Por favor, digite um contexto');
+      return;
+    }
+
     setLoading(true);
     speakingService
       .newSpeaking(formData)
