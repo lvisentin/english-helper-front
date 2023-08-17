@@ -1,3 +1,4 @@
+import { FeedbackStatus } from '@/shared/models/feedbacks/feedback.model';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
@@ -114,8 +115,14 @@ function DataTable({
           labelRowsPerPage: 'Resultados por página',
         },
       }}
-      className={`${styles.dataGrid} h-fit cursor-pointer`}
+      className={`${styles.dataGrid} h-fit`}
       getRowId={(row) => row._id}
+      getRowClassName={(params) =>
+        params.row.status === FeedbackStatus.PENDING ||
+        params.row.status === FeedbackStatus.FAILED
+          ? 'cursor-not-allowed'
+          : 'cursor-pointer'
+      }
       classes={classes}
       rows={data}
       columns={columns}
