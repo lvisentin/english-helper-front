@@ -4,10 +4,16 @@ export interface Feedback {
   portugueseOutput: String;
   context: String;
   title: String;
-  status: String;
+  status: FeedbackStatus;
   audioUrl: String;
   duration: Number;
   wordsCount: Number;
   tokenUsage: any;
   _id?: string;
+}
+
+export enum FeedbackStatus {
+  PENDING = 'pending',
+  FAILED = 'failed',
+  COMPLETED = 'completed',
 }
