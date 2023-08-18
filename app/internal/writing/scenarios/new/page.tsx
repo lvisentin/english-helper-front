@@ -165,7 +165,7 @@ export default function NewWriting() {
                       ></textarea>
                     </div>
                     <LoadingButton
-                      loading={loading}
+                      loading={loading || loadingAnswer}
                       className={
                         'btn w-full btn-primary justify-self-end mt-8 md:w-fit'
                       }
