@@ -49,6 +49,7 @@ function AudioRecorder({
 
   function clearAudio() {
     setAudio(null);
+    handleReset();
   }
 
   function stopRecording() {
@@ -145,6 +146,7 @@ function AudioRecorder({
               type="button"
               className="btn btn-primary"
               onClick={clearAudio}
+              disabled={loading}
             >
               Gravar outro áudio
             </button>

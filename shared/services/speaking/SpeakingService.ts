@@ -42,12 +42,11 @@ class SpeakingService {
     );
   }
 
-  async newSpeakingRealTime(context: string, input: string, title: string) {
+  async newSpeakingRealTime(formData: FormData) {
     return await fetch(`${this.VERCEL_API_URL}/feedbacks`, {
       method: 'POST',
-      body: JSON.stringify({ context, title, input }),
+      body: formData,
       headers: {
-        'Content-type': 'application/json',
         Authorization: `Bearer ${userService.getAuthToken()}`,
       },
     });
