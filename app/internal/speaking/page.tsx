@@ -62,7 +62,6 @@ const SpeakingDashboard = (props: any, ref: any) => {
   }
 
   function goToDetails(feedback: Feedback) {
-    console.log(feedback._id);
     push(`/internal/speaking/details?id=${feedback._id}`);
   }
 
@@ -92,7 +91,7 @@ const SpeakingDashboard = (props: any, ref: any) => {
     <PageTransition className="h-full">
       <RouteGuard>
         <section className={'h-full'}>
-          <header className={'flex justify-between w-full'}>
+          <header className={'flex justify-between w-full pb-6'}>
             <div className={'prose'}>
               <h1 className={'mb-0 prose-h1 pb-1'}>
                 Speaking - Análises Recebidas
