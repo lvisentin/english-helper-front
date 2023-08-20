@@ -2,7 +2,7 @@
 
 import { Feedback } from '@/shared/models/feedbacks/feedback.model';
 import { speakingService } from '@/shared/services/speaking/SpeakingService';
-import { GridColDef, GridRowId } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
 
 import DataTable from '@/components/DataTable/DataTable';
 import Loading from '@/shared/components/Loading/Loading';
@@ -61,8 +61,9 @@ const SpeakingDashboard = (props: any, ref: any) => {
     push('/internal/speaking/scenarios');
   }
 
-  function goToDetails(feedbackId: GridRowId) {
-    push(`/internal/speaking/details?id=${feedbackId}`);
+  function goToDetails(feedback: Feedback) {
+    console.log(feedback._id);
+    push(`/internal/speaking/details?id=${feedback._id}`);
   }
 
   function getFeedbacks() {
