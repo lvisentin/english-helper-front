@@ -16,12 +16,14 @@ function AudioRecorder({
   loading,
   onStartRecording,
   onStopRecording,
+  disabled,
   handleReset,
 }: {
   setAudioFile: any;
   handleSubmit: any;
   handleReset?: any;
   onStartRecording?: any;
+  disabled?: boolean;
   onStopRecording?: any;
   loading: boolean;
 }) {
@@ -135,6 +137,7 @@ function AudioRecorder({
           <div className="buttons flex gap-4">
             <LoadingButton
               loading={loading}
+              disabled={disabled}
               type="submit"
               className="btn btn-primary"
               onClick={handleSubmit}

@@ -8,6 +8,7 @@ import RouteGuard from '@/shared/guards/RouteGuard';
 import { scenariosService } from '@/shared/services/scenarios/ScenariosService';
 import { Scenario } from '@/shared/services/scenarios/ScenariosService.model';
 import { writingService } from '@/shared/services/writing/WritingService';
+import { ScenarioWritingFeedbackValidator } from '@/shared/validators/FeedbackValidator';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik } from 'formik';
@@ -125,10 +126,19 @@ export default function NewWriting() {
 
             <main className={'mt-4'}>
               <Formik
+                validationSchema={ScenarioWritingFeedbackValidator}
                 initialValues={{ title: '', input: '' }}
                 onSubmit={({ title, input }) => sendFeedback(title, input)}
               >
-                {({ values, handleChange, handleBlur, handleSubmit }) => (
+                {({
+                  values,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  isValid,
+                  touched,
+                  errors,
+                }) => (
                   <form
                     className={'flex flex-col justify-end items-end gap-y-2'}
                     onSubmit={handleSubmit}
@@ -140,6 +150,7 @@ export default function NewWriting() {
                       }
                       label={'Titulo'}
                       onChange={handleChange}
+                      errors={touched.title ? errors.title : null}
                       onBlur={handleBlur}
                       disabled={loading || loadingAnswer}
                       value={values.title}
@@ -163,9 +174,17 @@ export default function NewWriting() {
                           'Good morning boss, I wanted to let you know ...'
                         }
                       ></textarea>
+                      {touched.input && errors.input && (
+                        <label className={'label-text'}>
+                          <span className={`label-text-alt error text-error`}>
+                            {errors.input}
+                          </span>
+                        </label>
+                      )}
                     </div>
                     <LoadingButton
-                      loading={loading || loadingAnswer}
+                      loading={loading}
+                      disabled={!isValid || !touched.input}
                       className={
                         'btn w-full btn-primary justify-self-end mt-8 md:w-fit'
                       }

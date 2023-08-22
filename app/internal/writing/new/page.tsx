@@ -4,6 +4,7 @@ import LoadingButton from '@/shared/components/LoadingButton/LoadingButton';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { writingService } from '@/shared/services/writing/WritingService';
+import { FullWritingFeedbackValidator } from '@/shared/validators/FeedbackValidator';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik } from 'formik';
@@ -99,11 +100,20 @@ export default function NewWritingPage() {
 
           <Formik
             initialValues={{ title: '', context: '', input: '' }}
+            validationSchema={FullWritingFeedbackValidator}
             onSubmit={({ title, context, input }) =>
               sendFeedback(title, context, input)
             }
           >
-            {({ values, handleChange, handleBlur, handleSubmit }) => (
+            {({
+              values,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isValid,
+              touched,
+              errors,
+            }) => (
               <form
                 className={'flex flex-col justify-end items-end gap-y-2 pt-4'}
                 onSubmit={handleSubmit}
@@ -114,6 +124,7 @@ export default function NewWritingPage() {
                   label={'Titulo'}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  errors={touched.title ? errors.title : null}
                   value={values.title}
                   disabled={loading || loadingAnswer}
                   className={'w-full'}
@@ -126,7 +137,7 @@ export default function NewWritingPage() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.context}
-                  disabled={loading || loadingAnswer}
+                  errors={touched.context ? errors.context : null}
                   className={'w-full'}
                 />
                 <div className={'form-control w-full'}>
@@ -146,9 +157,17 @@ export default function NewWritingPage() {
                       'Good morning boss, I wanted to let you know ...'
                     }
                   ></textarea>
+                  {touched.input && errors.input && (
+                    <label className={'label-text'}>
+                      <span className={`label-text-alt error text-error`}>
+                        {errors.input}
+                      </span>
+                    </label>
+                  )}
                 </div>
                 <LoadingButton
-                  loading={loading || loadingAnswer}
+                  loading={loading}
+                  disabled={!isValid || !touched.input}
                   className={
                     'btn w-full btn-primary justify-self-end mt-8 md:w-fit'
                   }

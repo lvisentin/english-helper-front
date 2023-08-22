@@ -5,6 +5,7 @@ import AudioRecorder from '@/shared/components/AudioRecorder/AudioRecorder';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { speakingService } from '@/shared/services/speaking/SpeakingService';
+import { FullSpeakingFeedbackValidator } from '@/shared/validators/FeedbackValidator';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik } from 'formik';
@@ -136,6 +137,7 @@ export default function NewSpeaking() {
 
           <main className={'mt-4'}>
             <Formik
+              validationSchema={FullSpeakingFeedbackValidator}
               initialValues={{ title: '', context: '' }}
               onSubmit={(values) => sendFeedback(values)}
             >
@@ -145,6 +147,9 @@ export default function NewSpeaking() {
                 handleBlur,
                 handleSubmit,
                 resetForm,
+                touched,
+                isValid,
+                errors,
               }) => (
                 <>
                   <form onSubmit={handleSubmit}>
@@ -154,7 +159,7 @@ export default function NewSpeaking() {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.title}
-                      disabled={loading || loadingAnswer}
+                      errors={touched.title ? errors.title : null}
                       placeholder={'Feedback 1'}
                       className={'col-span-10'}
                     />
@@ -165,12 +170,14 @@ export default function NewSpeaking() {
                       onBlur={handleBlur}
                       disabled={loading || loadingAnswer}
                       value={values.context}
+                      errors={touched.context ? errors.context : null}
                       placeholder={'In a meeting with my boss....'}
                       className={'col-span-10'}
                     />
 
                     <AudioRecorder
-                      loading={loading || loadingAnswer}
+                      loading={loading}
+                      disabled={!touched.context || !isValid}
                       setAudioFile={setAudio}
                       onStartRecording={startRecording}
                       onStopRecording={stopRecording}
