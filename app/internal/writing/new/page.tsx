@@ -113,6 +113,7 @@ export default function NewWritingPage() {
               isValid,
               touched,
               errors,
+              setFieldTouched,
             }) => (
               <form
                 className={'flex flex-col justify-end items-end gap-y-2 pt-4'}
@@ -122,7 +123,10 @@ export default function NewWritingPage() {
                   name="title"
                   placeholder={'Digite um titulo para identificar o feedback'}
                   label={'Titulo'}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    setFieldTouched('title', true, true);
+                    handleChange(e);
+                  }}
                   onBlur={handleBlur}
                   errors={touched.title ? errors.title : null}
                   value={values.title}
@@ -134,7 +138,10 @@ export default function NewWritingPage() {
                   name="context"
                   placeholder={'A meeting with my boss'}
                   label={'Contexto'}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    setFieldTouched('context', true, true);
+                    handleChange(e);
+                  }}
                   onBlur={handleBlur}
                   value={values.context}
                   errors={touched.context ? errors.context : null}
@@ -149,7 +156,10 @@ export default function NewWritingPage() {
                       'textarea textarea-bordered h-32 resize-none w-full text-base'
                     }
                     name="input"
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      setFieldTouched('input', true, true);
+                      handleChange(e);
+                    }}
                     onBlur={handleBlur}
                     value={values.input}
                     disabled={loading || loadingAnswer}

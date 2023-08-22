@@ -150,13 +150,17 @@ export default function NewSpeaking() {
                 touched,
                 isValid,
                 errors,
+                setFieldTouched,
               }) => (
                 <>
                   <form onSubmit={handleSubmit}>
                     <TextField
                       name="title"
                       label="Título"
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        setFieldTouched('title', true, true);
+                        handleChange(e);
+                      }}
                       onBlur={handleBlur}
                       value={values.title}
                       errors={touched.title ? errors.title : null}
@@ -166,7 +170,10 @@ export default function NewSpeaking() {
                     <TextField
                       name="context"
                       label="Contexto"
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        setFieldTouched('context', true, true);
+                        handleChange(e);
+                      }}
                       onBlur={handleBlur}
                       disabled={loading || loadingAnswer}
                       value={values.context}

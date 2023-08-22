@@ -126,6 +126,8 @@ export default function NewWriting() {
 
             <main className={'mt-4'}>
               <Formik
+                validateOnChange={true}
+                validateOnBlur={true}
                 validationSchema={ScenarioWritingFeedbackValidator}
                 initialValues={{ title: '', input: '' }}
                 onSubmit={({ title, input }) => sendFeedback(title, input)}
@@ -138,6 +140,7 @@ export default function NewWriting() {
                   isValid,
                   touched,
                   errors,
+                  setFieldTouched,
                 }) => (
                   <form
                     className={'flex flex-col justify-end items-end gap-y-2'}
@@ -149,7 +152,10 @@ export default function NewWriting() {
                         'Digite um titulo para identificar o feedback'
                       }
                       label={'Titulo'}
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        setFieldTouched('title', true, true);
+                        handleChange(e);
+                      }}
                       errors={touched.title ? errors.title : null}
                       onBlur={handleBlur}
                       disabled={loading || loadingAnswer}
@@ -166,7 +172,10 @@ export default function NewWriting() {
                           'textarea textarea-bordered h-32 resize-none w-full text-base'
                         }
                         name="input"
-                        onChange={handleChange}
+                        onChange={(e) => {
+                          setFieldTouched('input', true, true);
+                          handleChange(e);
+                        }}
                         onBlur={handleBlur}
                         disabled={loading || loadingAnswer}
                         value={values.input}
