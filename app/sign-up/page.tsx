@@ -45,6 +45,11 @@ export default function SignUpPage() {
       .signUp(name, email, password, cleanedPhoneNumber, referralCode)
       .then(() => {
         toast.success('Conta criada com sucesso!');
+        import('react-facebook-pixel')
+          .then((x) => x.default)
+          .then((ReactPixel) => {
+            ReactPixel.track('Lead');
+          });
         push('/login');
       })
       .catch(({ response: { data } }) => toast.error(data.message))

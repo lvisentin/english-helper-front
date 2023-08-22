@@ -66,6 +66,15 @@ export default function NewWritingPage() {
     } catch (err) {
       toast.error('Ocorreu um erro, tente novamente');
     }
+
+    setLoading(true);
+    writingService
+      .newWritingRealTime(context, input, title)
+      .then(() => {
+        toast.success('Análise solicitada com sucessso!');
+      })
+      .finally(() => setLoading(false))
+      .catch(() => toast.error('Ocorreu um erro, tente novamente'));
   }
 
   useEffect(() => {

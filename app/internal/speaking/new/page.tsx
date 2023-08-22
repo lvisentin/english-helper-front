@@ -60,6 +60,11 @@ export default function NewSpeaking() {
     formData.append('context', context);
     formData.append('title', title);
 
+    if (!context) {
+      toast.error('Por favor, digite um contexto');
+      return;
+    }
+
     setLoading(true);
 
     try {
