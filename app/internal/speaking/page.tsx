@@ -2,8 +2,9 @@
 
 import { Feedback } from '@/shared/models/feedbacks/feedback.model';
 import { speakingService } from '@/shared/services/speaking/SpeakingService';
-import { DataGrid, GridColDef, GridRowId } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
 
+import DataTable from '@/components/DataTable/DataTable';
 import Loading from '@/shared/components/Loading/Loading';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
@@ -60,9 +61,8 @@ const SpeakingDashboard = (props: any, ref: any) => {
     push('/internal/speaking/scenarios');
   }
 
-  function goToDetails(feedbackId: GridRowId) {
-    console.log('feedback', feedbackId);
-    push(`/internal/speaking/details?id=${feedbackId}`);
+  function goToDetails(feedback: Feedback) {
+    push(`/internal/speaking/details?id=${feedback._id}`);
   }
 
   function getFeedbacks() {
@@ -91,7 +91,7 @@ const SpeakingDashboard = (props: any, ref: any) => {
     <PageTransition className="h-full">
       <RouteGuard>
         <section className={'h-full'}>
-          <header className={'flex justify-between w-full'}>
+          <header className={'flex justify-between w-full pb-6'}>
             <div className={'prose'}>
               <h1 className={'mb-0 prose-h1 pb-1'}>
                 Speaking - Análises Recebidas
@@ -104,31 +104,13 @@ const SpeakingDashboard = (props: any, ref: any) => {
           {loading ? (
             <Loading />
           ) : feedbackData.length > 0 ? (
-            <DataGrid
-              localeText={{
-                MuiTablePagination: {
-                  labelDisplayedRows: ({ from, to }) =>
-                    `Mostrando de ${from} até ${to}`,
-                  labelRowsPerPage: 'Resultados por página',
-                },
-              }}
-              className={`${styles.dataGrid} h-fit mt-6`}
-              getRowId={(row) => row._id}
+            <DataTable
+              columns={columns}
+              onRowClick={goToDetails}
+              data={feedbackData}
               classes={{
                 sortIcon: styles.dataGridIcon,
               }}
-              rows={feedbackData}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 5 },
-                },
-              }}
-              disableColumnSelector
-              disableRowSelectionOnClick
-              disableColumnMenu
-              onRowClick={(row) => goToDetails(row.id)}
-              pageSizeOptions={[5, 10]}
             />
           ) : (
             <div className="flex items-center justify-center h-full">

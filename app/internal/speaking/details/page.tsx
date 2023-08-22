@@ -29,7 +29,6 @@ export default function SpeakingDetails() {
       .getSpeakingById(speakingId!)
       .then(
         ({ data: { feedback } }: AxiosResponse<GetSpeakingByIdResponse>) => {
-          console.log(feedback);
           setFeedbackData(feedback);
         }
       );
@@ -72,10 +71,8 @@ export default function SpeakingDetails() {
 
           const hasDone = lines.includes('[DONE]');
           if (!hasDone) {
-            console.log('lines', lines);
             setTranslateAnswer(lines);
           } else {
-            console.log('done');
             setTranslateDone(true);
           }
         }

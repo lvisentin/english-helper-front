@@ -43,7 +43,6 @@ export default function MySubscription() {
     subscriptionService
       .getAllPlans()
       .then(({ data }) => {
-        console.log('data', data);
         setSubscriptionPlans(data);
         getUserSubscriptionStatus();
       })
@@ -113,7 +112,6 @@ export default function MySubscription() {
   }
 
   function cancelSubscribe() {
-    console.log('cancelsubs');
     setSelectedPlan('');
   }
 
@@ -192,8 +190,10 @@ export default function MySubscription() {
               SubscriptionStatus.inactive && (
               <header className="prose w-full max-w-full">
                 <h3 className="mb-8 text-center w-full font-normal">
-                  Você está em Free Trial, seu trial acaba em:{' '}
-                  {userSubscription.leftDays} dias.
+                  {userSubscription.trialEndsAt
+                    ? `Você está em Free Trial, seu trial acaba em:
+                  ${userSubscription.leftDays} dias.`
+                    : `Você tem acesso vitalício ao English Helper, aproveite!`}
                 </h3>
               </header>
             )}

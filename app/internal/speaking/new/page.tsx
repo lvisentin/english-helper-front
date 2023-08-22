@@ -5,11 +5,13 @@ import AudioRecorder from '@/shared/components/AudioRecorder/AudioRecorder';
 import PageTransition from '@/shared/components/PageTransition/PageTransition';
 import RouteGuard from '@/shared/guards/RouteGuard';
 import { speakingService } from '@/shared/services/speaking/SpeakingService';
+import { FullSpeakingFeedbackValidator } from '@/shared/validators/FeedbackValidator';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik } from 'formik';
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 export default function NewSpeaking() {
@@ -19,6 +21,17 @@ export default function NewSpeaking() {
   let startTime: Date;
   let stopTime: Date;
   const [duration, setDuration] = useState<number>(0);
+
+  const [answer, setAnswer] = useState<string>('');
+  const [loadingAnswer, setLoadingAnswer] = useState<boolean>(false);
+
+  const variants = {
+    hidden: { opacity: 0, x: 0, y: 40 },
+    enter: { opacity: 1, x: 0, y: 0 },
+    exit: { opacity: 0, x: 0, y: -100 },
+  };
+  const transition = { duration: 0.6, ease: 'easeInOut' };
+
   function startRecording() {
     startTime = new Date();
   }
@@ -28,7 +41,13 @@ export default function NewSpeaking() {
     setDuration((stopTime.getTime() - startTime.getTime()) / 1000);
   }
 
-  function sendFeedback({
+  useEffect(() => {
+    if (answer.length > 0) {
+      document.getElementById('answerElement')!.innerHTML = answer;
+    }
+  }, [answer]);
+
+  async function sendFeedback({
     title,
     context,
   }: {
@@ -37,8 +56,8 @@ export default function NewSpeaking() {
   }) {
     let formData = new FormData();
     formData.append('audio', audio, 'audio.mp3');
-    formData.append('context', context);
     formData.append('duration', duration.toFixed(2));
+    formData.append('context', context);
     formData.append('title', title);
 
     if (!context) {
@@ -47,15 +66,51 @@ export default function NewSpeaking() {
     }
 
     setLoading(true);
-    speakingService
-      .newSpeaking(formData)
-      .then(() => {
-        toast.success('Análise solicitada com sucesso!');
-      })
-      .finally(() => setLoading(false))
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
+
+    try {
+      const response = await speakingService.newSpeakingRealTime(formData);
+
+      setLoading(false);
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder('utf-8');
+
+      if (reader) {
+        // eslint-disable-next-line no-constant-condition
+        while (true) {
+          setLoadingAnswer(true);
+          const { done, value } = await reader.read();
+          if (done) {
+            setLoadingAnswer(false);
+            break;
+          }
+          const chunk = decoder.decode(value);
+          const lines = chunk
+            .replace('data: "', '')
+            .replaceAll(/\\(")/g, '$1')
+            .replaceAll('\\n', '\n');
+
+          const hasDone = lines.includes('[DONE]');
+          if (!hasDone) {
+            setAnswer(lines);
+          } else {
+            setLoadingAnswer(false);
+          }
+        }
+      }
+    } catch (err) {
+      toast.error('Ocorreu um erro, tente novamente');
+    }
+
+    // speakingService
+    //   .newSpeaking(formData)
+    //   .then(() => {
+    //     toast.success('Análise solicitada com sucesso!');
+    //   })
+    //   .finally(() => setLoading(false))
+    //   .catch((err) => {
+    //     toast.error(err.response.data.message);
+    //   });
   }
 
   function goBack() {
@@ -87,6 +142,7 @@ export default function NewSpeaking() {
 
           <main className={'mt-4'}>
             <Formik
+              validationSchema={FullSpeakingFeedbackValidator}
               initialValues={{ title: '', context: '' }}
               onSubmit={(values) => sendFeedback(values)}
             >
@@ -96,41 +152,91 @@ export default function NewSpeaking() {
                 handleBlur,
                 handleSubmit,
                 resetForm,
+                touched,
+                isValid,
+                errors,
+                setFieldTouched,
               }) => (
                 <>
                   <form onSubmit={handleSubmit}>
                     <TextField
                       name="title"
                       label="Título"
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        setFieldTouched('title', true, true);
+                        handleChange(e);
+                      }}
                       onBlur={handleBlur}
                       value={values.title}
+                      disabled={loading || loadingAnswer}
+                      errors={touched.title ? errors.title : null}
                       placeholder={'Feedback 1'}
                       className={'col-span-10'}
                     />
                     <TextField
                       name="context"
                       label="Contexto"
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        setFieldTouched('context', true, true);
+                        handleChange(e);
+                      }}
                       onBlur={handleBlur}
+                      disabled={loading || loadingAnswer}
                       value={values.context}
+                      errors={touched.context ? errors.context : null}
                       placeholder={'In a meeting with my boss....'}
                       className={'col-span-10'}
                     />
 
                     <AudioRecorder
                       loading={loading}
+                      disabled={!touched.context || !isValid}
                       setAudioFile={setAudio}
                       onStartRecording={startRecording}
                       onStopRecording={stopRecording}
                       handleSubmit={handleSubmit}
-                      handleReset={resetForm}
+                      handleReset={() => {
+                        setAnswer('');
+                        resetForm();
+                      }}
                     />
                   </form>
                 </>
               )}
             </Formik>
           </main>
+
+          {answer.length > 0 && (
+            <motion.div
+              variants={variants}
+              initial="hidden"
+              animate="enter"
+              exit="exit"
+              transition={transition}
+            >
+              {/* <div className="chat chat-start mt-8">
+                <div className="chat-image avatar">
+                  <div className="w-10 rounded-full">
+                    <img src="https://placehold.it/50x50" />
+                  </div>
+                </div>
+                <div className="chat-header w-full flex justify-between mb-1">
+                  Assistente English Helper
+                  <time className="text-xs opacity-50">12:45</time>
+                </div>
+                <div className="chat-bubble w-full max-w-full" id="chat-answer">
+                  <p id="answerElement" className="whitespace-pre-line"></p>
+                </div>
+              </div> */}
+
+              <div className="card w-full bg-base-100 shadow-lg mb-4 mt-4">
+                <div className="card-body p-6">
+                  <h2 className="card-title m-0">Aqui está sua resposta:</h2>
+                  <p id="answerElement" className="whitespace-pre-line"></p>
+                </div>
+              </div>
+            </motion.div>
+          )}
         </section>
       </RouteGuard>
     </PageTransition>

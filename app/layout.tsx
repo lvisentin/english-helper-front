@@ -40,7 +40,7 @@ export default function RootLayout({
       </Script>
 
       <body className={poppins.className}>
-        <style global>
+        <style>
           {`
           * {
             font-family: ${poppins.style.fontFamily};
