@@ -144,6 +144,7 @@ export default function NewWritingPage() {
                   }}
                   onBlur={handleBlur}
                   value={values.context}
+                  disabled={loading || loadingAnswer}
                   errors={touched.context ? errors.context : null}
                   className={'w-full'}
                 />

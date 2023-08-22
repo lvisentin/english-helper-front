@@ -163,6 +163,7 @@ export default function NewSpeaking() {
                       }}
                       onBlur={handleBlur}
                       value={values.title}
+                      disabled={loading || loadingAnswer}
                       errors={touched.title ? errors.title : null}
                       placeholder={'Feedback 1'}
                       className={'col-span-10'}
