@@ -184,7 +184,7 @@ export default function NewSpeaking() {
                 </div>
               </div> */}
 
-                <div className="card w-full bg-base-100 shadow-lg mb-4 mt-4 cursor-pointer">
+                <div className="card w-full bg-base-100 shadow-lg mb-4 mt-4">
                   <div className="card-body p-6">
                     <h2 className="card-title m-0">Aqui está sua resposta:</h2>
                     <p id="answerElement" className="whitespace-pre-line"></p>
